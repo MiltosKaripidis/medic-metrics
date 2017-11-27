@@ -6,16 +6,16 @@ import android.support.annotation.NonNull;
 
 import com.george.medicmetrics.behavior.bluetooth.BluetoothScanBehavior;
 import com.george.medicmetrics.data.Device;
+import com.george.medicmetrics.ui.base.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
-class ScanDevicePresenter implements ScanDeviceContract.Presenter {
+class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> implements ScanDeviceContract.Presenter {
 
     private static final int REQUEST_ENABLE_BLUETOOTH = 1;
     private static final long SCAN_PERIOD = 10000;
-    private ScanDeviceContract.View mView;
     private BluetoothScanBehavior mBluetoothScanBehavior;
     private Handler mHandler;
     private boolean mScanning;
@@ -40,16 +40,6 @@ class ScanDevicePresenter implements ScanDeviceContract.Presenter {
         mBluetoothScanBehavior = bluetoothScanBehavior;
         mExecutor = executor;
         mDeviceList = new ArrayList<>();
-    }
-
-    @Override
-    public void attachView(@NonNull ScanDeviceContract.View view) {
-        mView = view;
-    }
-
-    @Override
-    public void detachView() {
-        mView = null;
     }
 
     @Override

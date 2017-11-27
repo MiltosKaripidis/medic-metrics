@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,33 +17,37 @@ import com.george.medicmetrics.R;
 import com.george.medicmetrics.behavior.bluetooth.BluetoothScanBehavior;
 import com.george.medicmetrics.data.Device;
 import com.george.medicmetrics.injection.Injection;
+import com.george.medicmetrics.ui.base.BaseFragment;
+import com.george.medicmetrics.ui.connect.ConnectDeviceActivity;
 
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 
-public class ScanDeviceFragment extends Fragment implements ScanDeviceContract.View {
+public class ScanDeviceFragment extends BaseFragment<ScanDeviceContract.Presenter> implements ScanDeviceContract.View {
 
     private DeviceAdapter mDeviceAdapter;
-    private ScanDeviceContract.Presenter mPresenter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     public static ScanDeviceFragment newInstance() {
         return new ScanDeviceFragment();
     }
 
+    @NonNull
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-
+    protected ScanDeviceContract.Presenter createPresenter() {
         Handler handler = new Handler();
         BluetoothScanBehavior bluetoothScanBehavior = Injection.provideBluetoothScanBehavior(getContext());
         Executor executor = Executors.newSingleThreadExecutor();
 
-        mPresenter = new ScanDevicePresenter(handler, bluetoothScanBehavior, executor);
-        mPresenter.attachView(this);
+        return new ScanDevicePresenter(handler, bluetoothScanBehavior, executor);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -80,7 +83,8 @@ public class ScanDeviceFragment extends Fragment implements ScanDeviceContract.V
         mDeviceAdapter.setOnItemClickListener(new DeviceAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(Device device) {
-                // TODO: Connect to device
+                Intent intent = ConnectDeviceActivity.newIntent(getContext(), device.getName(), device.getAddress());
+                startActivity(intent);
             }
         });
     }
