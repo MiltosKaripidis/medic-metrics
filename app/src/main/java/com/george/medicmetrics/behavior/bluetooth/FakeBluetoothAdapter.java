@@ -1,10 +1,12 @@
 package com.george.medicmetrics.behavior.bluetooth;
 
 import android.os.Handler;
+import android.support.annotation.Nullable;
 
-import com.george.medicmetrics.data.Device;
+import com.george.medicmetrics.behavior.device.Device;
+import com.george.medicmetrics.behavior.device.FakeBluetoothDevice;
 
-public class FakeBluetoothAdapter implements BluetoothScanBehavior {
+public class FakeBluetoothAdapter implements Adapter {
 
     private static final long SAMSUNG_SCAN_DELAY = 2000;
     private static final long EIMO_SCAN_DELAY = 4000;
@@ -16,14 +18,13 @@ public class FakeBluetoothAdapter implements BluetoothScanBehavior {
     }
 
     @Override
-    public void startScanning(final ScanDeviceCallback callback) {
-        final Device samsungGearIconx = new Device();
-        samsungGearIconx.setName("Samsung Gear Iconx");
-        samsungGearIconx.setAddress("68:76:4f:21:88:5a");
+    public void startScanning(@Nullable final ScanDeviceCallback callback) {
+        if (callback == null) {
+            throw new IllegalArgumentException("ScanDeviceCallback == null");
+        }
 
-        final Device eimo = new Device();
-        eimo.setName("Eimo");
-        eimo.setAddress("5a:88:21:4f:76:68");
+        final Device samsungGearIconx = new FakeBluetoothDevice("Samsung Gear Iconx", "68:76:4f:21:88:5a");
+        final Device eimo = new FakeBluetoothDevice("Eimo", "5a:88:21:4f:76:68");
 
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -41,7 +42,24 @@ public class FakeBluetoothAdapter implements BluetoothScanBehavior {
     }
 
     @Override
-    public void stopScanning(ScanDeviceCallback callback) {
-        // Do nothing.
+    public void stopScanning(@Nullable ScanDeviceCallback callback) {
+        if (callback == null) {
+            throw new IllegalArgumentException("ScanDeviceCallback == null");
+        }
+    }
+
+    @Nullable
+    @Override
+    public Device getDevice(@Nullable String address) {
+        if (address == null) return null;
+
+        switch (address) {
+            case "68:76:4f:21:88:5a":
+                return new FakeBluetoothDevice("Samsung Gear Iconx", "68:76:4f:21:88:5a");
+            case "5a:88:21:4f:76:68":
+                return new FakeBluetoothDevice("Eimo", "5a:88:21:4f:76:68");
+            default:
+                return null;
+        }
     }
 }

@@ -25,6 +25,8 @@
         </activity>
 
         <activity android:name=".ui.connect.ConnectDeviceActivity" />
+
+        <service android:name=".data.BluetoothService" />
     </application>
 
 </manifest>

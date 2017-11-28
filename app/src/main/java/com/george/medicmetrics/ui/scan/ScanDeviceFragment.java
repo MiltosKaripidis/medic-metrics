@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.george.medicmetrics.R;
-import com.george.medicmetrics.behavior.bluetooth.BluetoothScanBehavior;
-import com.george.medicmetrics.data.Device;
+import com.george.medicmetrics.behavior.bluetooth.Adapter;
+import com.george.medicmetrics.behavior.device.Device;
 import com.george.medicmetrics.injection.Injection;
 import com.george.medicmetrics.ui.base.BaseFragment;
 import com.george.medicmetrics.ui.connect.ConnectDeviceActivity;
@@ -38,7 +38,7 @@ public class ScanDeviceFragment extends BaseFragment<ScanDeviceContract.Presente
     @Override
     protected ScanDeviceContract.Presenter createPresenter() {
         Handler handler = new Handler();
-        BluetoothScanBehavior bluetoothScanBehavior = Injection.provideBluetoothScanBehavior(getContext());
+        Adapter bluetoothScanBehavior = Injection.provideAdapter(getContext());
         Executor executor = Executors.newSingleThreadExecutor();
 
         return new ScanDevicePresenter(handler, bluetoothScanBehavior, executor);
@@ -82,7 +82,7 @@ public class ScanDeviceFragment extends BaseFragment<ScanDeviceContract.Presente
         mDeviceAdapter = new DeviceAdapter(null);
         mDeviceAdapter.setOnItemClickListener(new DeviceAdapter.OnItemClickListener() {
             @Override
-            public void onItemClicked(Device device) {
+            public void onItemClicked(@NonNull Device device) {
                 Intent intent = ConnectDeviceActivity.newIntent(getContext(), device.getName(), device.getAddress());
                 startActivity(intent);
             }

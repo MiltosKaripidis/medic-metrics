@@ -2,23 +2,29 @@ package com.george.medicmetrics.behavior.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
-import com.george.medicmetrics.data.Device;
+import com.george.medicmetrics.behavior.device.Device;
+import com.george.medicmetrics.behavior.device.RealBluetoothDevice;
 
-public class RealBluetoothAdapter implements BluetoothScanBehavior {
+public class RealBluetoothAdapter implements Adapter {
 
     private BluetoothAdapter mBluetoothAdapter;
     private ScanDeviceCallback mScanDeviceCallback;
 
     private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
         @Override
-        public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
-            Device scannedDevice = new Device(device);
+        public void onLeScan(@NonNull BluetoothDevice device, int rssi, byte[] scanRecord) {
+            Device scannedDevice = new RealBluetoothDevice(device);
             mScanDeviceCallback.onDeviceScanned(scannedDevice);
         }
     };
 
-    public RealBluetoothAdapter(BluetoothAdapter bluetoothAdapter) {
+    public RealBluetoothAdapter(@Nullable BluetoothAdapter bluetoothAdapter) {
+        if (bluetoothAdapter == null) {
+            throw new IllegalArgumentException("BluetoothAdapter == null");
+        }
         mBluetoothAdapter = bluetoothAdapter;
     }
 
@@ -28,14 +34,29 @@ public class RealBluetoothAdapter implements BluetoothScanBehavior {
     }
 
     @Override
-    public void startScanning(final ScanDeviceCallback callback) {
+    public void startScanning(@Nullable final ScanDeviceCallback callback) {
+        if (callback == null) {
+            throw new IllegalArgumentException("ScanDeviceCallback == null");
+        }
+
         mScanDeviceCallback = callback;
         mBluetoothAdapter.startLeScan(mLeScanCallback);
     }
 
     @Override
-    public void stopScanning(final ScanDeviceCallback callback) {
+    public void stopScanning(@Nullable final ScanDeviceCallback callback) {
+        if (callback == null) {
+            throw new IllegalArgumentException("ScanDeviceCallback == null");
+        }
+
         mScanDeviceCallback = callback;
         mBluetoothAdapter.stopLeScan(mLeScanCallback);
+    }
+
+    @Nullable
+    @Override
+    public Device getDevice(@Nullable String address) {
+        BluetoothDevice bluetoothDevice = mBluetoothAdapter.getRemoteDevice(address);
+        return new RealBluetoothDevice(bluetoothDevice);
     }
 }

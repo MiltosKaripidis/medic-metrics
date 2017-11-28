@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 
-import com.george.medicmetrics.behavior.bluetooth.BluetoothScanBehavior;
-import com.george.medicmetrics.data.Device;
+import com.george.medicmetrics.behavior.bluetooth.Adapter;
+import com.george.medicmetrics.behavior.device.Device;
 import com.george.medicmetrics.ui.base.BasePresenter;
 
 import java.util.ArrayList;
@@ -16,25 +16,22 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
 
     private static final int REQUEST_ENABLE_BLUETOOTH = 1;
     private static final long SCAN_PERIOD = 10000;
-    private BluetoothScanBehavior mBluetoothScanBehavior;
+    private Adapter mBluetoothScanBehavior;
     private Handler mHandler;
     private boolean mScanning;
     private List<Device> mDeviceList;
     private Executor mExecutor;
 
-    private BluetoothScanBehavior.ScanDeviceCallback mScanDeviceCallback = new BluetoothScanBehavior.ScanDeviceCallback() {
+    private Adapter.ScanDeviceCallback mScanDeviceCallback = new Adapter.ScanDeviceCallback() {
         @Override
-        public void onDeviceScanned(Device device) {
-            Device scannedDevice = new Device();
-            scannedDevice.setName(device.getName());
-            scannedDevice.setAddress(device.getAddress());
-            mDeviceList.add(scannedDevice);
+        public void onDeviceScanned(@NonNull Device device) {
+            mDeviceList.add(device);
             mView.showDevices(mDeviceList);
         }
     };
 
     ScanDevicePresenter(@NonNull Handler handler,
-                        @NonNull BluetoothScanBehavior bluetoothScanBehavior,
+                        @NonNull Adapter bluetoothScanBehavior,
                         @NonNull Executor executor) {
         mHandler = handler;
         mBluetoothScanBehavior = bluetoothScanBehavior;

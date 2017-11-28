@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.george.medicmetrics.R;
-import com.george.medicmetrics.data.Device;
+import com.george.medicmetrics.behavior.device.Device;
 
 import java.util.List;
 
@@ -76,6 +76,6 @@ class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHolder> {
 
     interface OnItemClickListener {
 
-        void onItemClicked(Device device);
+        void onItemClicked(@NonNull Device device);
     }
 }
