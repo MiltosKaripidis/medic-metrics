@@ -1,0 +1,50 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/heart_rate_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/heart_rate"
+        android:textColor="@color/primary_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/heart_rate_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/not_available"
+        app:layout_constraintStart_toEndOf="@+id/heart_rate_label"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="65 bpm" />
+
+    <TextView
+        android:id="@+id/body_temperature_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/body_temperature"
+        android:textColor="@color/primary_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heart_rate_label" />
+
+    <TextView
+        android:id="@+id/body_temperature_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/not_available"
+        app:layout_constraintStart_toEndOf="@+id/body_temperature_label"
+        app:layout_constraintTop_toBottomOf="@+id/heart_rate_text_view"
+        tools:text="36.6 C" />
+</android.support.constraint.ConstraintLayout>

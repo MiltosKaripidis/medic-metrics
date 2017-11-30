@@ -7,6 +7,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.george.medicmetrics.behavior.gatt.ConnectGattCallback;
 import com.george.medicmetrics.behavior.gatt.Gatt;
 import com.george.medicmetrics.behavior.gatt.RealBluetoothGatt;
 

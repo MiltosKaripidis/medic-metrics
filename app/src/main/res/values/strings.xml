@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Medic Metrics</string>
+    <string name="heart_rate">Heart rate:</string>
+    <string name="format_heart_rate">%1$s bpm</string>
+    <string name="not_available">n/a</string>
+    <string name="body_temperature">Body temperature:</string>
+    <string name="format_body_temperature">%1$s C</string>
 </resources>

@@ -1,7 +1,7 @@
 package com.george.medicmetrics.data;
 
 import android.app.Service;
-import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +12,13 @@ import android.support.annotation.Nullable;
 
 import com.george.medicmetrics.behavior.bluetooth.Adapter;
 import com.george.medicmetrics.behavior.device.Device;
+import com.george.medicmetrics.behavior.gatt.ConnectGattCallback;
 import com.george.medicmetrics.behavior.gatt.Gatt;
+import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
+import com.george.medicmetrics.behavior.gatt.service.GattService;
 import com.george.medicmetrics.injection.Injection;
+
+import java.util.List;
 
 public class BluetoothService extends Service {
 
@@ -22,6 +27,9 @@ public class BluetoothService extends Service {
     public final static String ACTION_GATT_SERVICES_DISCOVERED = "com.george.medicmetrics.data.GATT_SERVICES_DISCOVERED";
     public final static String ACTION_DATA_AVAILABLE = "com.george.medicmetrics.data.DATA_AVAILABLE";
     public final static String EXTRA_DATA = "com.george.medicmetrics.data.DATA";
+    public final static String EXTRA_UUID = "com.george.medicmetrics.data.UUID";
+    public static final String UUID_HEART_RATE = "00002a37-0000-1000-8000-00805f9b34fb";
+    public static final String UUID_BODY_TEMPERATURE = "00002902-0000-1000-8000-00805f9b34fb";
     private final IBinder mIBinder = new LocalBinder();
     private Adapter mAdapter;
     private Gatt mGatt;
@@ -32,7 +40,7 @@ public class BluetoothService extends Service {
         }
     }
 
-    private Device.ConnectGattCallback mConnectGattCallback = new Device.ConnectGattCallback() {
+    private ConnectGattCallback mConnectGattCallback = new ConnectGattCallback() {
         @Override
         public void onConnectionStateChange(@NonNull Gatt gatt, int status, int newState) {
             String intentAction;
@@ -48,17 +56,19 @@ public class BluetoothService extends Service {
 
         @Override
         public void onServicesDiscovered(@NonNull Gatt gatt, int status) {
-            // TODO: Implement
+            if (status != BluetoothGatt.GATT_SUCCESS) return;
+            broadcastUpdate(ACTION_GATT_SERVICES_DISCOVERED);
         }
 
         @Override
-        public void onCharacteristicRead(@NonNull Gatt gatt, @NonNull BluetoothGattCharacteristic characteristic, int status) {
-            // TODO: Implement
+        public void onCharacteristicRead(@NonNull Gatt gatt, @NonNull GattCharacteristic characteristic, int status) {
+            if (status != BluetoothGatt.GATT_SUCCESS) return;
+            broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
         }
 
         @Override
-        public void onCharacteristicChanged(@NonNull Gatt gatt, @NonNull BluetoothGattCharacteristic characteristic) {
-            // TODO: Implement
+        public void onCharacteristicChanged(@NonNull Gatt gatt, @NonNull GattCharacteristic characteristic) {
+            broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
         }
     };
 
@@ -67,10 +77,59 @@ public class BluetoothService extends Service {
         sendBroadcast(intent);
     }
 
+    private void broadcastUpdate(@NonNull String action, @NonNull GattCharacteristic characteristic) {
+        // TODO: Implement
+        String data;
+        String uuid = characteristic.getUuid().toString();
+        switch (uuid) {
+            case UUID_HEART_RATE:
+                data = getHeartRate(characteristic);
+                break;
+            case UUID_BODY_TEMPERATURE:
+                data = getBodyTemperature(characteristic);
+                break;
+            default:
+                data = null;
+                break;
+        }
+
+        Intent intent = new Intent(action);
+        intent.putExtra(EXTRA_UUID, uuid);
+        intent.putExtra(EXTRA_DATA, data);
+        sendBroadcast(intent);
+    }
+
+    // TODO: Implement
+    private String getHeartRate(@NonNull GattCharacteristic characteristic) {
+        Integer heartRateInt = characteristic.getIntValue(0, 0);
+        return String.valueOf(heartRateInt);
+    }
+
+    // TODO: Implement
+    private String getBodyTemperature(@NonNull GattCharacteristic characteristic) {
+        Integer heartRateInt = characteristic.getIntValue(0, 0);
+        return String.valueOf(heartRateInt);
+    }
+
     @Nullable
     @Override
     public IBinder onBind(@NonNull Intent intent) {
         return mIBinder;
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        close();
+        return super.onUnbind(intent);
+    }
+
+    public void close() {
+        if (mGatt == null) {
+            return;
+        }
+
+        mGatt.close();
+        mGatt = null;
     }
 
     public static Intent newIntent(@NonNull Context context) {
@@ -87,5 +146,18 @@ public class BluetoothService extends Service {
 
         mGatt = device.connectGatt(this, false, mConnectGattCallback);
         return true;
+    }
+
+    @Nullable
+    public List<GattService> getGattServices() {
+        return mGatt == null ? null : mGatt.getServices();
+    }
+
+    public boolean readGattCharacteristic(GattCharacteristic gattCharacteristic) {
+        return !(mAdapter == null || mGatt == null) && mGatt.readCharacteristic(gattCharacteristic);
+    }
+
+    public boolean notifyGattCharacteristic(GattCharacteristic gattCharacteristic, boolean enabled) {
+        return !(mAdapter == null || mGatt == null) && mGatt.notifyCharacteristic(gattCharacteristic, enabled);
     }
 }
