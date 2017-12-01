@@ -79,8 +79,7 @@ public class ScanDeviceFragment extends BaseFragment<ScanDeviceContract.Presente
     }
 
     private void setupAdapter() {
-        mDeviceAdapter = new DeviceAdapter(null);
-        mDeviceAdapter.setOnItemClickListener(new DeviceAdapter.OnItemClickListener() {
+        mDeviceAdapter = new DeviceAdapter(null, new DeviceAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(@NonNull Device device) {
                 Intent intent = ConnectDeviceActivity.newIntent(getContext(), device.getName(), device.getAddress());

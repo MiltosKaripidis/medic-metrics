@@ -19,16 +19,13 @@ class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHolder> {
     private List<Device> mDeviceList;
     private OnItemClickListener mOnItemClickListener;
 
-    DeviceAdapter(@Nullable List<Device> deviceList) {
+    DeviceAdapter(@Nullable List<Device> deviceList, @NonNull OnItemClickListener onItemClickListener) {
         mDeviceList = deviceList;
+        mOnItemClickListener = onItemClickListener;
     }
 
     void setDeviceList(@Nullable List<Device> deviceList) {
         mDeviceList = deviceList;
-    }
-
-    void setOnItemClickListener(@NonNull OnItemClickListener onItemClickListener) {
-        mOnItemClickListener = onItemClickListener;
     }
 
     @Override
