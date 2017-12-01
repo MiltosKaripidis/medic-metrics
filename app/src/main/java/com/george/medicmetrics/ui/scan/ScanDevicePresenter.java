@@ -16,7 +16,7 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
 
     private static final int REQUEST_ENABLE_BLUETOOTH = 1;
     private static final long SCAN_PERIOD = 10000;
-    private Adapter mBluetoothScanBehavior;
+    private Adapter mAdapter;
     private Handler mHandler;
     private boolean mScanning;
     private List<Device> mDeviceList;
@@ -31,10 +31,10 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
     };
 
     ScanDevicePresenter(@NonNull Handler handler,
-                        @NonNull Adapter bluetoothScanBehavior,
+                        @NonNull Adapter adapter,
                         @NonNull Executor executor) {
         mHandler = handler;
-        mBluetoothScanBehavior = bluetoothScanBehavior;
+        mAdapter = adapter;
         mExecutor = executor;
         mDeviceList = new ArrayList<>();
     }
@@ -50,7 +50,7 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
 
     @Override
     public void scanDevices() {
-        if (!mBluetoothScanBehavior.isEnabled()) {
+        if (!mAdapter.isEnabled()) {
             mView.openBluetoothSettings(REQUEST_ENABLE_BLUETOOTH);
             return;
         }
@@ -75,7 +75,7 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
         mExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                mBluetoothScanBehavior.startScanning(mScanDeviceCallback);
+                mAdapter.startScanning(mScanDeviceCallback);
             }
         });
     }
@@ -84,6 +84,6 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
     public void stopScanning() {
         mView.hideProgressIndicator();
         mScanning = false;
-        mBluetoothScanBehavior.stopScanning(mScanDeviceCallback);
+        mAdapter.stopScanning(mScanDeviceCallback);
     }
 }
