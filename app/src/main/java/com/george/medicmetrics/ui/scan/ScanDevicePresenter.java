@@ -110,7 +110,9 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
 
     @Override
     public void stopScanning() {
-        mView.hideProgressIndicator();
+        if (mView != null) {
+            mView.hideProgressIndicator();
+        }
         mScanning = false;
         mAdapter.stopScanning(mScanDeviceCallback);
     }
