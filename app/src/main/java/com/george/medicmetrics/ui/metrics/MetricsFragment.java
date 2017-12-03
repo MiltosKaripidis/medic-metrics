@@ -41,7 +41,6 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> {
         public void onServiceConnected(ComponentName name, IBinder service) {
             ConnectDeviceService.LocalBinder localBinder = (ConnectDeviceService.LocalBinder) service;
             mConnectDeviceService = localBinder.getService();
-            mConnectDeviceService.initialize();
             mConnectDeviceService.connect(mDeviceAddress);
             mBound = true;
         }
@@ -65,8 +64,8 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> {
                     break;
                 case ConnectDeviceService.ACTION_GATT_SERVICES_DISCOVERED:
                     // TODO: Implement
-                    GattCharacteristic heartRateCharacteristic = getCharacteristic(mConnectDeviceService.getGattServices(), ConnectDeviceService.UUID_HEART_RATE);
-                    GattCharacteristic bodyTemperatureCharacteristic = getCharacteristic(mConnectDeviceService.getGattServices(), ConnectDeviceService.UUID_BODY_TEMPERATURE);
+                    GattCharacteristic heartRateCharacteristic = getCharacteristic(mConnectDeviceService.getGattServices(), GattCharacteristic.UUID_HEART_RATE);
+                    GattCharacteristic bodyTemperatureCharacteristic = getCharacteristic(mConnectDeviceService.getGattServices(), GattCharacteristic.UUID_BODY_TEMPERATURE);
 
                     handleCharacteristic(heartRateCharacteristic);
                     handleCharacteristic(bodyTemperatureCharacteristic);
@@ -85,11 +84,11 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> {
 
     private void showData(@NonNull String uuid, @NonNull String data) {
         switch (uuid) {
-            case ConnectDeviceService.UUID_HEART_RATE:
+            case GattCharacteristic.UUID_HEART_RATE:
                 String heartRate = getString(R.string.format_heart_rate, data);
                 mHeartRateTextView.setText(heartRate);
                 break;
-            case ConnectDeviceService.UUID_BODY_TEMPERATURE:
+            case GattCharacteristic.UUID_BODY_TEMPERATURE:
                 String bodyTemperature = getString(R.string.format_body_temperature, data);
                 mBodyTemperatureTextView.setText(bodyTemperature);
                 break;

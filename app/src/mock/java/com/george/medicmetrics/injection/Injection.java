@@ -13,7 +13,6 @@ import com.george.medicmetrics.behavior.gatt.characteristic.FakeGattCharacterist
 import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
 import com.george.medicmetrics.behavior.gatt.service.FakeGattService;
 import com.george.medicmetrics.behavior.gatt.service.GattService;
-import com.george.medicmetrics.ui.connect.ConnectDeviceService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +46,8 @@ public class Injection {
 
     private static List<GattCharacteristic> getCharacteristics() {
         List<GattCharacteristic> gattCharacteristicList = new ArrayList<>();
-        GattCharacteristic heartRateCharacteristic = new FakeGattCharacteristic(ConnectDeviceService.UUID_HEART_RATE, getHeartRates());
-        GattCharacteristic bodyTemperatureCharacteristic = new FakeGattCharacteristic(ConnectDeviceService.UUID_BODY_TEMPERATURE, getBodyTemperatures());
+        GattCharacteristic heartRateCharacteristic = new FakeGattCharacteristic(GattCharacteristic.UUID_HEART_RATE, getHeartRates());
+        GattCharacteristic bodyTemperatureCharacteristic = new FakeGattCharacteristic(GattCharacteristic.UUID_BODY_TEMPERATURE, getBodyTemperatures());
         gattCharacteristicList.add(heartRateCharacteristic);
         gattCharacteristicList.add(bodyTemperatureCharacteristic);
         return gattCharacteristicList;

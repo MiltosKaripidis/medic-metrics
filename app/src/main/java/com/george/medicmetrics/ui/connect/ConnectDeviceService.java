@@ -1,8 +1,5 @@
 package com.george.medicmetrics.ui.connect;
 
-import android.app.Service;
-import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
@@ -17,98 +14,59 @@ import com.george.medicmetrics.behavior.gatt.Gatt;
 import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
 import com.george.medicmetrics.behavior.gatt.service.GattService;
 import com.george.medicmetrics.injection.Injection;
+import com.george.medicmetrics.ui.base.BaseService;
 
 import java.util.List;
 
-public class ConnectDeviceService extends Service {
+public class ConnectDeviceService extends BaseService<ConnectDeviceContract.Presenter> implements ConnectDeviceContract.View {
 
     public final static String ACTION_GATT_CONNECTED = "com.george.medicmetrics.data.GATT_CONNECTED";
     public final static String ACTION_GATT_DISCONNECTED = "com.george.medicmetrics.data.GATT_DISCONNECTED";
     public final static String ACTION_GATT_SERVICES_DISCOVERED = "com.george.medicmetrics.data.GATT_SERVICES_DISCOVERED";
     public final static String ACTION_DATA_AVAILABLE = "com.george.medicmetrics.data.DATA_AVAILABLE";
+
     public final static String EXTRA_DATA = "com.george.medicmetrics.data.DATA";
     public final static String EXTRA_UUID = "com.george.medicmetrics.data.UUID";
-    public static final String UUID_HEART_RATE = "00002a37-0000-1000-8000-00805f9b34fb";
-    public static final String UUID_BODY_TEMPERATURE = "00002902-0000-1000-8000-00805f9b34fb";
+
     private final IBinder mIBinder = new LocalBinder();
-    private Adapter mAdapter;
-    private Gatt mGatt;
+
+    private ConnectGattCallback mConnectGattCallback = new ConnectGattCallback() {
+        @Override
+        public void onConnectionStateChange(@NonNull Gatt gatt, int status, int newState) {
+            mPresenter.onConnectionStateChange(gatt, newState);
+        }
+
+        @Override
+        public void onServicesDiscovered(@NonNull Gatt gatt, int status) {
+            mPresenter.onServicesDiscovered(status);
+        }
+
+        @Override
+        public void onCharacteristicRead(@NonNull Gatt gatt, @NonNull GattCharacteristic characteristic, int status) {
+            mPresenter.onCharacteristicRead(characteristic, status);
+        }
+
+        @Override
+        public void onCharacteristicChanged(@NonNull Gatt gatt, @NonNull GattCharacteristic characteristic) {
+            mPresenter.onCharacteristicChanged(characteristic);
+        }
+    };
+
+    public static Intent newIntent(@NonNull Context context) {
+        return new Intent(context, ConnectDeviceService.class);
+    }
+
+    @NonNull
+    @Override
+    protected ConnectDeviceContract.Presenter createPresenter() {
+        Adapter adapter = Injection.provideAdapter(this);
+        return new ConnectDevicePresenter(adapter);
+    }
 
     public class LocalBinder extends Binder {
         public ConnectDeviceService getService() {
             return ConnectDeviceService.this;
         }
-    }
-
-    private ConnectGattCallback mConnectGattCallback = new ConnectGattCallback() {
-        @Override
-        public void onConnectionStateChange(@NonNull Gatt gatt, int status, int newState) {
-            String intentAction;
-            if (newState == BluetoothProfile.STATE_CONNECTED) {
-                intentAction = ACTION_GATT_CONNECTED;
-                broadcastUpdate(intentAction);
-                gatt.discoverServices();
-            } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-                intentAction = ACTION_GATT_DISCONNECTED;
-                broadcastUpdate(intentAction);
-            }
-        }
-
-        @Override
-        public void onServicesDiscovered(@NonNull Gatt gatt, int status) {
-            if (status != BluetoothGatt.GATT_SUCCESS) return;
-            broadcastUpdate(ACTION_GATT_SERVICES_DISCOVERED);
-        }
-
-        @Override
-        public void onCharacteristicRead(@NonNull Gatt gatt, @NonNull GattCharacteristic characteristic, int status) {
-            if (status != BluetoothGatt.GATT_SUCCESS) return;
-            broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
-        }
-
-        @Override
-        public void onCharacteristicChanged(@NonNull Gatt gatt, @NonNull GattCharacteristic characteristic) {
-            broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
-        }
-    };
-
-    private void broadcastUpdate(@NonNull String action) {
-        Intent intent = new Intent(action);
-        sendBroadcast(intent);
-    }
-
-    private void broadcastUpdate(@NonNull String action, @NonNull GattCharacteristic characteristic) {
-        // TODO: Implement
-        String data;
-        String uuid = characteristic.getUuid().toString();
-        switch (uuid) {
-            case UUID_HEART_RATE:
-                data = getHeartRate(characteristic);
-                break;
-            case UUID_BODY_TEMPERATURE:
-                data = getBodyTemperature(characteristic);
-                break;
-            default:
-                data = null;
-                break;
-        }
-
-        Intent intent = new Intent(action);
-        intent.putExtra(EXTRA_UUID, uuid);
-        intent.putExtra(EXTRA_DATA, data);
-        sendBroadcast(intent);
-    }
-
-    // TODO: Implement
-    private String getHeartRate(@NonNull GattCharacteristic characteristic) {
-        Integer heartRateInt = characteristic.getIntValue(0, 0);
-        return String.valueOf(heartRateInt);
-    }
-
-    // TODO: Implement
-    private String getBodyTemperature(@NonNull GattCharacteristic characteristic) {
-        Integer heartRateInt = characteristic.getIntValue(0, 0);
-        return String.valueOf(heartRateInt);
     }
 
     @Nullable
@@ -117,47 +75,41 @@ public class ConnectDeviceService extends Service {
         return mIBinder;
     }
 
-    @Override
-    public boolean onUnbind(Intent intent) {
-        close();
-        return super.onUnbind(intent);
-    }
-
-    public void close() {
-        if (mGatt == null) {
-            return;
-        }
-
-        mGatt.close();
-        mGatt = null;
-    }
-
-    public static Intent newIntent(@NonNull Context context) {
-        return new Intent(context, ConnectDeviceService.class);
-    }
-
-    public void initialize() {
-        mAdapter = Injection.provideAdapter(this);
-    }
-
     public boolean connect(@NonNull String deviceAddress) {
-        Device device = mAdapter.getDevice(deviceAddress);
-        if (device == null) return false;
-
-        mGatt = device.connectGatt(this, false, mConnectGattCallback);
+        mPresenter.connect(deviceAddress);
         return true;
     }
 
     @Nullable
+    @Override
+    public Gatt getDeviceGatt(@NonNull Device device, boolean autoConnect) {
+        return device.connectGatt(this, autoConnect, mConnectGattCallback);
+    }
+
+    @Nullable
     public List<GattService> getGattServices() {
-        return mGatt == null ? null : mGatt.getServices();
+        return mPresenter.getGattServices();
     }
 
-    public boolean readGattCharacteristic(GattCharacteristic gattCharacteristic) {
-        return !(mAdapter == null || mGatt == null) && mGatt.readCharacteristic(gattCharacteristic);
+    public boolean readGattCharacteristic(@NonNull GattCharacteristic gattCharacteristic) {
+        return mPresenter.readGattCharacteristic(gattCharacteristic);
     }
 
-    public boolean notifyGattCharacteristic(GattCharacteristic gattCharacteristic, boolean enabled) {
-        return !(mAdapter == null || mGatt == null) && mGatt.notifyCharacteristic(gattCharacteristic, enabled);
+    public boolean notifyGattCharacteristic(@NonNull GattCharacteristic gattCharacteristic, boolean enabled) {
+        return mPresenter.notifyGattCharacteristic(gattCharacteristic, enabled);
+    }
+
+    @Override
+    public void broadcastAction(@NonNull String action) {
+        Intent intent = new Intent(action);
+        sendBroadcast(intent);
+    }
+
+    @Override
+    public void broadcastAction(@NonNull String action, @NonNull String uuid, @NonNull String data) {
+        Intent intent = new Intent(action);
+        intent.putExtra(EXTRA_UUID, uuid);
+        intent.putExtra(EXTRA_DATA, data);
+        sendBroadcast(intent);
     }
 }
