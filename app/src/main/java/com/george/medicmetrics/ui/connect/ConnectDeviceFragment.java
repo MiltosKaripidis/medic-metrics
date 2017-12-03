@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.george.medicmetrics.R;
 import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
 import com.george.medicmetrics.behavior.gatt.service.GattService;
-import com.george.medicmetrics.data.BluetoothService;
 import com.george.medicmetrics.ui.base.BaseFragment;
 
 import java.util.List;

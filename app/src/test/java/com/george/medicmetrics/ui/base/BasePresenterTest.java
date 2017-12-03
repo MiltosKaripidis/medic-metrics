@@ -8,7 +8,7 @@ import com.george.medicmetrics.behavior.gatt.characteristic.FakeGattCharacterist
 import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
 import com.george.medicmetrics.behavior.gatt.service.FakeGattService;
 import com.george.medicmetrics.behavior.gatt.service.GattService;
-import com.george.medicmetrics.data.BluetoothService;
+import com.george.medicmetrics.ui.connect.BluetoothService;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;

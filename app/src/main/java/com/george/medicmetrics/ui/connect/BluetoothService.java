@@ -1,4 +1,4 @@
-package com.george.medicmetrics.data;
+package com.george.medicmetrics.ui.connect;
 
 import android.app.Service;
 import android.bluetooth.BluetoothGatt;
