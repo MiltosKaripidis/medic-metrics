@@ -1,6 +1,5 @@
 package com.george.medicmetrics.ui.metrics;
 
-import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -19,13 +18,10 @@ import android.widget.Toast;
 
 import com.george.medicmetrics.R;
 import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
-import com.george.medicmetrics.behavior.gatt.service.GattService;
 import com.george.medicmetrics.ui.base.BaseFragment;
 import com.george.medicmetrics.ui.connect.ConnectDeviceService;
 
-import java.util.List;
-
-public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> {
+public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> implements MetricsContract.View {
 
     private static final String ARG_DEVICE_NAME = "device_name";
     private static final String ARG_DEVICE_ADDRESS = "device_address";
@@ -55,70 +51,27 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
+            if (action == null) return;
             switch (action) {
                 case ConnectDeviceService.ACTION_GATT_CONNECTED:
-                    Toast.makeText(context, "Connected!", Toast.LENGTH_SHORT).show();
+                    showDeviceConnected();
                     break;
                 case ConnectDeviceService.ACTION_GATT_DISCONNECTED:
                     // TODO: Implement
                     break;
                 case ConnectDeviceService.ACTION_GATT_SERVICES_DISCOVERED:
-                    // TODO: Implement
-                    GattCharacteristic heartRateCharacteristic = getCharacteristic(mConnectDeviceService.getGattServices(), GattCharacteristic.UUID_HEART_RATE);
-                    GattCharacteristic bodyTemperatureCharacteristic = getCharacteristic(mConnectDeviceService.getGattServices(), GattCharacteristic.UUID_BODY_TEMPERATURE);
-
-                    handleCharacteristic(heartRateCharacteristic);
-                    handleCharacteristic(bodyTemperatureCharacteristic);
+                    mPresenter.handleGattServices(mConnectDeviceService.getGattServices());
                     break;
                 case ConnectDeviceService.ACTION_DATA_AVAILABLE:
-                    // TODO: Implement
                     String uuid = intent.getStringExtra(ConnectDeviceService.EXTRA_UUID);
                     String data = intent.getStringExtra(ConnectDeviceService.EXTRA_DATA);
-                    showData(uuid, data);
+                    mPresenter.handleData(uuid, data);
                     break;
                 default:
                     break;
             }
         }
     };
-
-    private void showData(@NonNull String uuid, @NonNull String data) {
-        switch (uuid) {
-            case GattCharacteristic.UUID_HEART_RATE:
-                String heartRate = getString(R.string.format_heart_rate, data);
-                mHeartRateTextView.setText(heartRate);
-                break;
-            case GattCharacteristic.UUID_BODY_TEMPERATURE:
-                String bodyTemperature = getString(R.string.format_body_temperature, data);
-                mBodyTemperatureTextView.setText(bodyTemperature);
-                break;
-        }
-    }
-
-    @Nullable
-    private GattCharacteristic getCharacteristic(@Nullable List<GattService> gattServiceList, @NonNull String uuid) {
-        if (gattServiceList == null) return null;
-
-        for (GattService gattService : gattServiceList) {
-            for (GattCharacteristic characteristic : gattService.getCharacteristics()) {
-                String currentUuid = characteristic.getUuid().toString();
-                if (uuid.equals(currentUuid)) {
-                    return characteristic;
-                }
-            }
-        }
-        return null;
-    }
-
-    private void handleCharacteristic(@Nullable GattCharacteristic characteristic) {
-        if (characteristic == null) return;
-
-        if ((characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
-            mConnectDeviceService.readGattCharacteristic(characteristic);
-        } else if ((characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
-            mConnectDeviceService.notifyGattCharacteristic(characteristic, true);
-        }
-    }
 
     @NonNull
     @Override
@@ -188,5 +141,32 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> {
         getActivity().unbindService(mServiceConnection);
         mConnectDeviceService = null;
         super.onDestroy();
+    }
+
+    @Override
+    public void showDeviceConnected() {
+        Toast.makeText(getContext(), "Connected!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean readGattCharacteristic(@NonNull GattCharacteristic characteristic) {
+        return mConnectDeviceService.readGattCharacteristic(characteristic);
+    }
+
+    @Override
+    public boolean notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled) {
+        return mConnectDeviceService.notifyGattCharacteristic(characteristic, enabled);
+    }
+
+    @Override
+    public void showHeartRate(@NonNull String bpm) {
+        String heartRate = getString(R.string.format_heart_rate, bpm);
+        mHeartRateTextView.setText(heartRate);
+    }
+
+    @Override
+    public void showBodyTemperature(@NonNull String temperature) {
+        String bodyTemperature = getString(R.string.format_body_temperature, temperature);
+        mBodyTemperatureTextView.setText(bodyTemperature);
     }
 }
