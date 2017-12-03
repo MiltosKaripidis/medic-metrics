@@ -3,6 +3,7 @@ package com.george.medicmetrics.behavior.device;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
+import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,6 +11,8 @@ import android.support.annotation.Nullable;
 import com.george.medicmetrics.behavior.gatt.ConnectGattCallback;
 import com.george.medicmetrics.behavior.gatt.Gatt;
 import com.george.medicmetrics.behavior.gatt.RealBluetoothGatt;
+import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
+import com.george.medicmetrics.behavior.gatt.characteristic.RealGattCharacteristic;
 
 public class RealBluetoothDevice implements Device {
 
@@ -39,5 +42,15 @@ public class RealBluetoothDevice implements Device {
             }
         });
         return new RealBluetoothGatt(bluetoothGatt);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof RealBluetoothDevice)) {
+            return false;
+        }
+
+        RealBluetoothDevice device = (RealBluetoothDevice) obj;
+        return getAddress().equals(device.getAddress());
     }
 }

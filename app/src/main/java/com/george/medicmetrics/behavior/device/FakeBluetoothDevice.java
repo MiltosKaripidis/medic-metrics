@@ -46,4 +46,14 @@ public class FakeBluetoothDevice implements Device {
 
         return mGatt;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof FakeBluetoothDevice)) {
+            return false;
+        }
+
+        FakeBluetoothDevice device = (FakeBluetoothDevice) obj;
+        return mAddress.equals(device.getAddress());
+    }
 }

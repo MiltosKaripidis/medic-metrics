@@ -26,6 +26,10 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
     private Adapter.ScanDeviceCallback mScanDeviceCallback = new Adapter.ScanDeviceCallback() {
         @Override
         public void onDeviceScanned(@NonNull Device device) {
+            if (mDeviceList.contains(device)) {
+                return;
+            }
+
             mDeviceList.add(device);
             mView.showDevices(mDeviceList);
         }
