@@ -133,6 +133,9 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
     @Override
     public void onPause() {
         getActivity().unregisterReceiver(mGattReceiver);
+        if (mConnectDeviceService != null) {
+            mConnectDeviceService.disconnect();
+        }
         super.onPause();
     }
 

@@ -58,6 +58,10 @@ public class FakeBluetoothGatt implements Gatt {
             return true;
         }
 
+        if (mScheduledExecutorService.isShutdown()) {
+            mScheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+        }
+
         mScheduledExecutorService.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {

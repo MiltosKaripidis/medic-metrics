@@ -24,12 +24,7 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
     }
 
     @Override
-    public void detachView() {
-        disconnect();
-        super.detachView();
-    }
-
-    private void disconnect() {
+    public void disconnect() {
         if (mGatt == null) {
             return;
         }

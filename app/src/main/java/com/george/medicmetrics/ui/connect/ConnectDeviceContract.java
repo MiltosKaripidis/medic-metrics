@@ -27,6 +27,8 @@ interface ConnectDeviceContract {
 
         void connect(@NonNull String address);
 
+        void disconnect();
+
         void onConnectionStateChange(@NonNull Gatt gatt, int newState);
 
         void onServicesDiscovered(int status);

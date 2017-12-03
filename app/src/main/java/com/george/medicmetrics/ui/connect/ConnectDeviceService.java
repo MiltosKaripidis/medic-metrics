@@ -75,9 +75,19 @@ public class ConnectDeviceService extends BaseService<ConnectDeviceContract.Pres
         return mIBinder;
     }
 
+    @Override
+    public void onDestroy() {
+        mPresenter.disconnect();
+        super.onDestroy();
+    }
+
     public boolean connect(@NonNull String deviceAddress) {
         mPresenter.connect(deviceAddress);
         return true;
+    }
+
+    public void disconnect() {
+        mPresenter.disconnect();
     }
 
     @Nullable
