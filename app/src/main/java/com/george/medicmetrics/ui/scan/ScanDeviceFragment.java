@@ -146,6 +146,16 @@ public class ScanDeviceFragment extends BaseFragment<ScanDeviceContract.Presente
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_ACCESS_FINE_LOCATION:
+                mPresenter.handleAccessFineLocationPermissionResult(grantResults);
+                break;
+        }
+    }
+
+
+    @Override
     public void scanDevices() {
         mPresenter.scanDevices();
     }
