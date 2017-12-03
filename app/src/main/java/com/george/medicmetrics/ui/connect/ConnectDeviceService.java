@@ -20,10 +20,15 @@ import java.util.List;
 
 public class ConnectDeviceService extends BaseService<ConnectDeviceContract.Presenter> implements ConnectDeviceContract.View, DeviceConnection {
 
-    public final static String ACTION_GATT_CONNECTED = "com.george.medicmetrics.data.GATT_CONNECTED";
-    public final static String ACTION_GATT_DISCONNECTED = "com.george.medicmetrics.data.GATT_DISCONNECTED";
-    public final static String ACTION_GATT_SERVICES_DISCOVERED = "com.george.medicmetrics.data.GATT_SERVICES_DISCOVERED";
-    public final static String ACTION_DATA_AVAILABLE = "com.george.medicmetrics.data.DATA_AVAILABLE";
+    /**
+     * Defines the intent actions that will be sent through the broadcast.
+     *
+     * @see DeviceConnection
+     */
+    public final static String ACTION_GATT_CONNECTED = "com.george.medicmetrics.ui.connect.GATT_CONNECTED";
+    public final static String ACTION_GATT_DISCONNECTED = "com.george.medicmetrics.ui.connect.GATT_DISCONNECTED";
+    public final static String ACTION_GATT_SERVICES_DISCOVERED = "com.george.medicmetrics.ui.connect.GATT_SERVICES_DISCOVERED";
+    public final static String ACTION_DATA_AVAILABLE = "com.george.medicmetrics.ui.connect.DATA_AVAILABLE";
 
     public final static String EXTRA_DATA = "com.george.medicmetrics.data.DATA";
     public final static String EXTRA_UUID = "com.george.medicmetrics.data.UUID";
