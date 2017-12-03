@@ -34,11 +34,28 @@ public class RealBluetoothDevice implements Device {
 
     @Nullable
     public Gatt connectGatt(@NonNull Context context, boolean autoConnect, @NonNull final ConnectGattCallback callback) {
+        // TODO: Don't create additional GATTs
         BluetoothGatt bluetoothGatt = mBluetoothDevice.connectGatt(context, autoConnect, new BluetoothGattCallback() {
             @Override
             public void onConnectionStateChange(BluetoothGatt bluetoothGatt, int status, int newState) {
-                Gatt gatt = new RealBluetoothGatt(bluetoothGatt);
-                callback.onConnectionStateChange(gatt, status, newState);
+                callback.onConnectionStateChange(new RealBluetoothGatt(bluetoothGatt), status, newState);
+            }
+
+            @Override
+            public void onServicesDiscovered(BluetoothGatt bluetoothGatt, int status) {
+                callback.onServicesDiscovered(new RealBluetoothGatt(bluetoothGatt), status);
+            }
+
+            @Override
+            public void onCharacteristicRead(BluetoothGatt bluetoothGatt, BluetoothGattCharacteristic characteristic, int status) {
+                GattCharacteristic gattCharacteristic = new RealGattCharacteristic(characteristic);
+                callback.onCharacteristicRead(new RealBluetoothGatt(bluetoothGatt), gattCharacteristic, status);
+            }
+
+            @Override
+            public void onCharacteristicChanged(BluetoothGatt bluetoothGatt, BluetoothGattCharacteristic characteristic) {
+                GattCharacteristic gattCharacteristic = new RealGattCharacteristic(characteristic);
+                callback.onCharacteristicChanged(new RealBluetoothGatt(bluetoothGatt), gattCharacteristic);
             }
         });
         return new RealBluetoothGatt(bluetoothGatt);
