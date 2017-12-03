@@ -1,11 +1,16 @@
 package com.george.medicmetrics.ui.scan;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +32,7 @@ import java.util.concurrent.Executors;
 
 public class ScanDeviceFragment extends BaseFragment<ScanDeviceContract.Presenter> implements ScanDeviceContract.View {
 
+    private static final int PERMISSION_ACCESS_FINE_LOCATION = 0;
     private DeviceAdapter mDeviceAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -116,9 +122,38 @@ public class ScanDeviceFragment extends BaseFragment<ScanDeviceContract.Presente
     }
 
     @Override
+    public boolean needsRuntimePermission() {
+        return Build.VERSION.SDK_INT >= 23;
+    }
+
+    @Override
+    public boolean hasFineLocationPermission() {
+        return ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Override
+    public void requestFineLocationPermission() {
+        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_ACCESS_FINE_LOCATION);
+    }
+
+    @Override
+    public void showGpsError() {
+        if (getView() == null) {
+            return;
+        }
+
+        Snackbar.make(getView(), R.string.gps_disabled, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void scanDevices() {
+        mPresenter.scanDevices();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        mPresenter.scanDevices();
+        mPresenter.tryToGetUserLocation();
     }
 
     @Override

@@ -19,12 +19,26 @@ interface ScanDeviceContract {
 
         void finish();
 
+        boolean needsRuntimePermission();
+
+        boolean hasFineLocationPermission();
+
+        void requestFineLocationPermission();
+
+        void showGpsError();
+
+        void scanDevices();
+
         void showDevices(@NonNull List<Device> deviceList);
     }
 
     interface Presenter extends BaseContract.Presenter<View> {
 
         void handleBluetoothSettingsResult(int requestCode, int resultCode);
+
+        void tryToGetUserLocation();
+
+        void handleAccessFineLocationPermissionResult(int[] grantResults);
 
         void scanDevices();
 

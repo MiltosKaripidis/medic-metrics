@@ -1,6 +1,7 @@
 package com.george.medicmetrics.ui.scan;
 
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 
@@ -46,6 +47,29 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
         }
 
         mView.finish();
+    }
+
+    @Override
+    public void tryToGetUserLocation() {
+        if (!mView.needsRuntimePermission()) {
+            return;
+        }
+
+        if (!mView.hasFineLocationPermission()) {
+            mView.requestFineLocationPermission();
+            return;
+        }
+
+        mView.scanDevices();
+    }
+
+    @Override
+    public void handleAccessFineLocationPermissionResult(int[] grantResults) {
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            mView.scanDevices();
+        } else {
+            mView.showGpsError();
+        }
     }
 
     @Override
