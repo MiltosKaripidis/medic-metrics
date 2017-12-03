@@ -30,28 +30,6 @@ public class ConnectDeviceService extends BaseService<ConnectDeviceContract.Pres
 
     private final IBinder mIBinder = new LocalBinder();
 
-    private ConnectGattCallback mConnectGattCallback = new ConnectGattCallback() {
-        @Override
-        public void onConnectionStateChange(@NonNull Gatt gatt, int status, int newState) {
-            mPresenter.onConnectionStateChange(gatt, newState);
-        }
-
-        @Override
-        public void onServicesDiscovered(@NonNull Gatt gatt, int status) {
-            mPresenter.onServicesDiscovered(status);
-        }
-
-        @Override
-        public void onCharacteristicRead(@NonNull Gatt gatt, @NonNull GattCharacteristic characteristic, int status) {
-            mPresenter.onCharacteristicRead(characteristic, status);
-        }
-
-        @Override
-        public void onCharacteristicChanged(@NonNull Gatt gatt, @NonNull GattCharacteristic characteristic) {
-            mPresenter.onCharacteristicChanged(characteristic);
-        }
-    };
-
     public static Intent newIntent(@NonNull Context context) {
         return new Intent(context, ConnectDeviceService.class);
     }
@@ -75,15 +53,8 @@ public class ConnectDeviceService extends BaseService<ConnectDeviceContract.Pres
         return mIBinder;
     }
 
-    @Override
-    public void onDestroy() {
-        mPresenter.disconnect();
-        super.onDestroy();
-    }
-
-    public boolean connect(@NonNull String deviceAddress) {
+    public void connect(@NonNull String deviceAddress) {
         mPresenter.connect(deviceAddress);
-        return true;
     }
 
     public void disconnect() {
@@ -92,8 +63,8 @@ public class ConnectDeviceService extends BaseService<ConnectDeviceContract.Pres
 
     @Nullable
     @Override
-    public Gatt getDeviceGatt(@NonNull Device device, boolean autoConnect) {
-        return device.connectGatt(this, autoConnect, mConnectGattCallback);
+    public Gatt getDeviceGatt(@NonNull Device device, boolean autoConnect, @NonNull ConnectGattCallback callback) {
+        return device.connectGatt(this, autoConnect, callback);
     }
 
     @Nullable

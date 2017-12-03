@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 
 import com.george.medicmetrics.behavior.bluetooth.Adapter;
 import com.george.medicmetrics.behavior.device.Device;
+import com.george.medicmetrics.behavior.gatt.ConnectGattCallback;
 import com.george.medicmetrics.behavior.gatt.Gatt;
 import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
 import com.george.medicmetrics.behavior.gatt.service.GattService;
@@ -19,8 +20,51 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
     private Adapter mAdapter;
     private Gatt mGatt;
 
+    private ConnectGattCallback mConnectGattCallback = new ConnectGattCallback() {
+        @Override
+        public void onConnectionStateChange(@NonNull Gatt gatt, int status, int newState) {
+            if (newState == BluetoothProfile.STATE_CONNECTED) {
+                mView.broadcastAction(ConnectDeviceService.ACTION_GATT_CONNECTED);
+                mGatt.discoverServices();
+            } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+                mView.broadcastAction(ConnectDeviceService.ACTION_GATT_DISCONNECTED);
+            }
+        }
+
+        @Override
+        public void onServicesDiscovered(@NonNull Gatt gatt, int status) {
+            if (status != BluetoothGatt.GATT_SUCCESS) return;
+            mView.broadcastAction(ConnectDeviceService.ACTION_GATT_SERVICES_DISCOVERED);
+        }
+
+        @Override
+        public void onCharacteristicRead(@NonNull Gatt gatt, @NonNull GattCharacteristic characteristic, int status) {
+            if (status != BluetoothGatt.GATT_SUCCESS) return;
+            String uuid = characteristic.getUuid().toString();
+            String data = getData(uuid, characteristic);
+            if (data == null) return;
+            mView.broadcastAction(ConnectDeviceService.ACTION_DATA_AVAILABLE, uuid, data);
+        }
+
+        @Override
+        public void onCharacteristicChanged(@NonNull Gatt gatt, @NonNull GattCharacteristic characteristic) {
+            String uuid = characteristic.getUuid().toString();
+            String data = getData(uuid, characteristic);
+            if (data == null) return;
+            mView.broadcastAction(ConnectDeviceService.ACTION_DATA_AVAILABLE, uuid, data);
+        }
+    };
+
     ConnectDevicePresenter(@NonNull Adapter adapter) {
         mAdapter = adapter;
+    }
+
+    @Override
+    public void connect(@NonNull String deviceAddress) {
+        Device device = mAdapter.getDevice(deviceAddress);
+        if (device == null) return;
+
+        mGatt = mView.getDeviceGatt(device, false, mConnectGattCallback);
     }
 
     @Override
@@ -33,45 +77,20 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
         mGatt = null;
     }
 
+    @Nullable
     @Override
-    public void connect(@NonNull String deviceAddress) {
-        Device device = mAdapter.getDevice(deviceAddress);
-        if (device == null) return;
-
-        mGatt = mView.getDeviceGatt(device, false);
+    public List<GattService> getGattServices() {
+        return mGatt == null ? null : mGatt.getServices();
     }
 
     @Override
-    public void onConnectionStateChange(@NonNull final Gatt gatt, final int newState) {
-        if (newState == BluetoothProfile.STATE_CONNECTED) {
-            mView.broadcastAction(ConnectDeviceService.ACTION_GATT_CONNECTED);
-            mGatt.discoverServices();
-        } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-            mView.broadcastAction(ConnectDeviceService.ACTION_GATT_DISCONNECTED);
-        }
+    public boolean readGattCharacteristic(@NonNull GattCharacteristic characteristic) {
+        return !(mAdapter == null || mGatt == null) && mGatt.readCharacteristic(characteristic);
     }
 
     @Override
-    public void onServicesDiscovered(final int status) {
-        if (status != BluetoothGatt.GATT_SUCCESS) return;
-        mView.broadcastAction(ConnectDeviceService.ACTION_GATT_SERVICES_DISCOVERED);
-    }
-
-    @Override
-    public void onCharacteristicRead(@NonNull final GattCharacteristic characteristic, final int status) {
-        if (status != BluetoothGatt.GATT_SUCCESS) return;
-        String uuid = characteristic.getUuid().toString();
-        String data = getData(uuid, characteristic);
-        if (data == null) return;
-        mView.broadcastAction(ConnectDeviceService.ACTION_DATA_AVAILABLE, uuid, data);
-    }
-
-    @Override
-    public void onCharacteristicChanged(@NonNull final GattCharacteristic characteristic) {
-        String uuid = characteristic.getUuid().toString();
-        String data = getData(uuid, characteristic);
-        if (data == null) return;
-        mView.broadcastAction(ConnectDeviceService.ACTION_DATA_AVAILABLE, uuid, data);
+    public boolean notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled) {
+        return !(mAdapter == null || mGatt == null) && mGatt.notifyCharacteristic(characteristic, enabled);
     }
 
     @Nullable
@@ -96,21 +115,5 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
     private String getBodyTemperature(@NonNull GattCharacteristic characteristic) {
         Integer heartRateInt = characteristic.getIntValue(0, 0);
         return String.valueOf(heartRateInt);
-    }
-
-    @Nullable
-    @Override
-    public List<GattService> getGattServices() {
-        return mGatt == null ? null : mGatt.getServices();
-    }
-
-    @Override
-    public boolean readGattCharacteristic(@NonNull GattCharacteristic characteristic) {
-        return !(mAdapter == null || mGatt == null) && mGatt.readCharacteristic(characteristic);
-    }
-
-    @Override
-    public boolean notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled) {
-        return !(mAdapter == null || mGatt == null) && mGatt.notifyCharacteristic(characteristic, enabled);
     }
 }

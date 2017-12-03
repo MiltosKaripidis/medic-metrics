@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.george.medicmetrics.behavior.device.Device;
+import com.george.medicmetrics.behavior.gatt.ConnectGattCallback;
 import com.george.medicmetrics.behavior.gatt.Gatt;
 import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
 import com.george.medicmetrics.behavior.gatt.service.GattService;
@@ -16,7 +17,7 @@ interface ConnectDeviceContract {
     interface View extends BaseContract.View {
 
         @Nullable
-        Gatt getDeviceGatt(@NonNull Device device, boolean autoConnect);
+        Gatt getDeviceGatt(@NonNull Device device, boolean autoConnect, @NonNull ConnectGattCallback callback);
 
         void broadcastAction(@NonNull String action);
 
@@ -28,14 +29,6 @@ interface ConnectDeviceContract {
         void connect(@NonNull String address);
 
         void disconnect();
-
-        void onConnectionStateChange(@NonNull Gatt gatt, int newState);
-
-        void onServicesDiscovered(int status);
-
-        void onCharacteristicRead(@NonNull GattCharacteristic characteristic, int status);
-
-        void onCharacteristicChanged(@NonNull GattCharacteristic characteristic);
 
         @Nullable
         List<GattService> getGattServices();
