@@ -20,12 +20,13 @@ import com.george.medicmetrics.R;
 import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
 import com.george.medicmetrics.ui.base.BaseFragment;
 import com.george.medicmetrics.ui.connect.ConnectDeviceService;
+import com.george.medicmetrics.ui.connect.DeviceConnection;
 
 public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> implements MetricsContract.View {
 
     private static final String ARG_DEVICE_NAME = "device_name";
     private static final String ARG_DEVICE_ADDRESS = "device_address";
-    private ConnectDeviceService mConnectDeviceService;
+    private DeviceConnection mDeviceConnection;
     private boolean mBound;
     private String mDeviceName;
     private String mDeviceAddress;
@@ -36,8 +37,8 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             ConnectDeviceService.LocalBinder localBinder = (ConnectDeviceService.LocalBinder) service;
-            mConnectDeviceService = localBinder.getService();
-            mConnectDeviceService.connect(mDeviceAddress);
+            mDeviceConnection = localBinder.getService();
+            mDeviceConnection.connect(mDeviceAddress);
             mBound = true;
         }
 
@@ -60,7 +61,7 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
                     // TODO: Implement
                     break;
                 case ConnectDeviceService.ACTION_GATT_SERVICES_DISCOVERED:
-                    mPresenter.handleGattServices(mConnectDeviceService.getGattServices());
+                    mPresenter.handleGattServices(mDeviceConnection.getGattServices());
                     break;
                 case ConnectDeviceService.ACTION_DATA_AVAILABLE:
                     String uuid = intent.getStringExtra(ConnectDeviceService.EXTRA_UUID);
@@ -116,8 +117,8 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
     public void onResume() {
         super.onResume();
         getActivity().registerReceiver(mGattReceiver, createGattIntentFilter());
-        if (mConnectDeviceService != null) {
-            mConnectDeviceService.connect(mDeviceAddress);
+        if (mDeviceConnection != null) {
+            mDeviceConnection.connect(mDeviceAddress);
         }
     }
 
@@ -133,8 +134,8 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
     @Override
     public void onPause() {
         getActivity().unregisterReceiver(mGattReceiver);
-        if (mConnectDeviceService != null) {
-            mConnectDeviceService.disconnect();
+        if (mDeviceConnection != null) {
+            mDeviceConnection.disconnect();
         }
         super.onPause();
     }
@@ -142,7 +143,7 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
     @Override
     public void onDestroy() {
         getActivity().unbindService(mServiceConnection);
-        mConnectDeviceService = null;
+        mDeviceConnection = null;
         super.onDestroy();
     }
 
@@ -153,12 +154,12 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
 
     @Override
     public boolean readGattCharacteristic(@NonNull GattCharacteristic characteristic) {
-        return mConnectDeviceService.readGattCharacteristic(characteristic);
+        return mDeviceConnection.readGattCharacteristic(characteristic);
     }
 
     @Override
     public boolean notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled) {
-        return mConnectDeviceService.notifyGattCharacteristic(characteristic, enabled);
+        return mDeviceConnection.notifyGattCharacteristic(characteristic, enabled);
     }
 
     @Override

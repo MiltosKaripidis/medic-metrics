@@ -18,7 +18,7 @@ import com.george.medicmetrics.ui.base.BaseService;
 
 import java.util.List;
 
-public class ConnectDeviceService extends BaseService<ConnectDeviceContract.Presenter> implements ConnectDeviceContract.View {
+public class ConnectDeviceService extends BaseService<ConnectDeviceContract.Presenter> implements ConnectDeviceContract.View, DeviceConnection {
 
     public final static String ACTION_GATT_CONNECTED = "com.george.medicmetrics.data.GATT_CONNECTED";
     public final static String ACTION_GATT_DISCONNECTED = "com.george.medicmetrics.data.GATT_DISCONNECTED";
@@ -53,10 +53,12 @@ public class ConnectDeviceService extends BaseService<ConnectDeviceContract.Pres
         return mIBinder;
     }
 
+    @Override
     public void connect(@NonNull String deviceAddress) {
         mPresenter.connect(deviceAddress);
     }
 
+    @Override
     public void disconnect() {
         mPresenter.disconnect();
     }
@@ -68,14 +70,17 @@ public class ConnectDeviceService extends BaseService<ConnectDeviceContract.Pres
     }
 
     @Nullable
+    @Override
     public List<GattService> getGattServices() {
         return mPresenter.getGattServices();
     }
 
+    @Override
     public boolean readGattCharacteristic(@NonNull GattCharacteristic gattCharacteristic) {
         return mPresenter.readGattCharacteristic(gattCharacteristic);
     }
 
+    @Override
     public boolean notifyGattCharacteristic(@NonNull GattCharacteristic gattCharacteristic, boolean enabled) {
         return mPresenter.notifyGattCharacteristic(gattCharacteristic, enabled);
     }
