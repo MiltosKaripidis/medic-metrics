@@ -82,6 +82,7 @@ public class ScanDeviceFragment extends BaseFragment<ScanDeviceContract.Presente
         mDeviceAdapter = new DeviceAdapter(null, new DeviceAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(@NonNull Device device) {
+                mPresenter.stopScanning();
                 Intent intent = MetricsActivity.newIntent(getContext(), device.getName(), device.getAddress());
                 startActivity(intent);
             }
