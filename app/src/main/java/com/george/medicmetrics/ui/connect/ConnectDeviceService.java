@@ -20,7 +20,7 @@ import com.george.medicmetrics.injection.Injection;
 
 import java.util.List;
 
-public class BluetoothService extends Service {
+public class ConnectDeviceService extends Service {
 
     public final static String ACTION_GATT_CONNECTED = "com.george.medicmetrics.data.GATT_CONNECTED";
     public final static String ACTION_GATT_DISCONNECTED = "com.george.medicmetrics.data.GATT_DISCONNECTED";
@@ -35,8 +35,8 @@ public class BluetoothService extends Service {
     private Gatt mGatt;
 
     public class LocalBinder extends Binder {
-        public BluetoothService getService() {
-            return BluetoothService.this;
+        public ConnectDeviceService getService() {
+            return ConnectDeviceService.this;
         }
     }
 
@@ -133,7 +133,7 @@ public class BluetoothService extends Service {
     }
 
     public static Intent newIntent(@NonNull Context context) {
-        return new Intent(context, BluetoothService.class);
+        return new Intent(context, ConnectDeviceService.class);
     }
 
     public void initialize() {

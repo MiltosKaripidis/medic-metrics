@@ -1,4 +1,4 @@
-package com.george.medicmetrics.ui.connect;
+package com.george.medicmetrics.ui.metrics;
 
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.BroadcastReceiver;
@@ -21,14 +21,15 @@ import com.george.medicmetrics.R;
 import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
 import com.george.medicmetrics.behavior.gatt.service.GattService;
 import com.george.medicmetrics.ui.base.BaseFragment;
+import com.george.medicmetrics.ui.connect.ConnectDeviceService;
 
 import java.util.List;
 
-public class ConnectDeviceFragment extends BaseFragment<ConnectDeviceContract.Presenter> {
+public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> {
 
     private static final String ARG_DEVICE_NAME = "device_name";
     private static final String ARG_DEVICE_ADDRESS = "device_address";
-    private BluetoothService mBluetoothService;
+    private ConnectDeviceService mConnectDeviceService;
     private boolean mBound;
     private String mDeviceName;
     private String mDeviceAddress;
@@ -38,10 +39,10 @@ public class ConnectDeviceFragment extends BaseFragment<ConnectDeviceContract.Pr
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            BluetoothService.LocalBinder localBinder = (BluetoothService.LocalBinder) service;
-            mBluetoothService = localBinder.getService();
-            mBluetoothService.initialize();
-            mBluetoothService.connect(mDeviceAddress);
+            ConnectDeviceService.LocalBinder localBinder = (ConnectDeviceService.LocalBinder) service;
+            mConnectDeviceService = localBinder.getService();
+            mConnectDeviceService.initialize();
+            mConnectDeviceService.connect(mDeviceAddress);
             mBound = true;
         }
 
@@ -56,24 +57,24 @@ public class ConnectDeviceFragment extends BaseFragment<ConnectDeviceContract.Pr
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             switch (action) {
-                case BluetoothService.ACTION_GATT_CONNECTED:
+                case ConnectDeviceService.ACTION_GATT_CONNECTED:
                     Toast.makeText(context, "Connected!", Toast.LENGTH_SHORT).show();
                     break;
-                case BluetoothService.ACTION_GATT_DISCONNECTED:
+                case ConnectDeviceService.ACTION_GATT_DISCONNECTED:
                     // TODO: Implement
                     break;
-                case BluetoothService.ACTION_GATT_SERVICES_DISCOVERED:
+                case ConnectDeviceService.ACTION_GATT_SERVICES_DISCOVERED:
                     // TODO: Implement
-                    GattCharacteristic heartRateCharacteristic = getCharacteristic(mBluetoothService.getGattServices(), BluetoothService.UUID_HEART_RATE);
-                    GattCharacteristic bodyTemperatureCharacteristic = getCharacteristic(mBluetoothService.getGattServices(), BluetoothService.UUID_BODY_TEMPERATURE);
+                    GattCharacteristic heartRateCharacteristic = getCharacteristic(mConnectDeviceService.getGattServices(), ConnectDeviceService.UUID_HEART_RATE);
+                    GattCharacteristic bodyTemperatureCharacteristic = getCharacteristic(mConnectDeviceService.getGattServices(), ConnectDeviceService.UUID_BODY_TEMPERATURE);
 
                     handleCharacteristic(heartRateCharacteristic);
                     handleCharacteristic(bodyTemperatureCharacteristic);
                     break;
-                case BluetoothService.ACTION_DATA_AVAILABLE:
+                case ConnectDeviceService.ACTION_DATA_AVAILABLE:
                     // TODO: Implement
-                    String uuid = intent.getStringExtra(BluetoothService.EXTRA_UUID);
-                    String data = intent.getStringExtra(BluetoothService.EXTRA_DATA);
+                    String uuid = intent.getStringExtra(ConnectDeviceService.EXTRA_UUID);
+                    String data = intent.getStringExtra(ConnectDeviceService.EXTRA_DATA);
                     showData(uuid, data);
                     break;
                 default:
@@ -84,11 +85,11 @@ public class ConnectDeviceFragment extends BaseFragment<ConnectDeviceContract.Pr
 
     private void showData(@NonNull String uuid, @NonNull String data) {
         switch (uuid) {
-            case BluetoothService.UUID_HEART_RATE:
+            case ConnectDeviceService.UUID_HEART_RATE:
                 String heartRate = getString(R.string.format_heart_rate, data);
                 mHeartRateTextView.setText(heartRate);
                 break;
-            case BluetoothService.UUID_BODY_TEMPERATURE:
+            case ConnectDeviceService.UUID_BODY_TEMPERATURE:
                 String bodyTemperature = getString(R.string.format_body_temperature, data);
                 mBodyTemperatureTextView.setText(bodyTemperature);
                 break;
@@ -114,25 +115,25 @@ public class ConnectDeviceFragment extends BaseFragment<ConnectDeviceContract.Pr
         if (characteristic == null) return;
 
         if ((characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
-            mBluetoothService.readGattCharacteristic(characteristic);
+            mConnectDeviceService.readGattCharacteristic(characteristic);
         } else if ((characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
-            mBluetoothService.notifyGattCharacteristic(characteristic, true);
+            mConnectDeviceService.notifyGattCharacteristic(characteristic, true);
         }
     }
 
     @NonNull
     @Override
-    protected ConnectDeviceContract.Presenter createPresenter() {
-        return new ConnectDevicePresenter();
+    protected MetricsContract.Presenter createPresenter() {
+        return new MetricsPresenter();
     }
 
-    public static ConnectDeviceFragment newInstance(@NonNull String deviceName,
-                                                    @NonNull String deviceAddress) {
+    public static MetricsFragment newInstance(@NonNull String deviceName,
+                                              @NonNull String deviceAddress) {
         Bundle bundle = new Bundle();
         bundle.putString(ARG_DEVICE_NAME, deviceName);
         bundle.putString(ARG_DEVICE_ADDRESS, deviceAddress);
 
-        ConnectDeviceFragment fragment = new ConnectDeviceFragment();
+        MetricsFragment fragment = new MetricsFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -144,7 +145,7 @@ public class ConnectDeviceFragment extends BaseFragment<ConnectDeviceContract.Pr
         mDeviceName = getArguments().getString(ARG_DEVICE_NAME);
         mDeviceAddress = getArguments().getString(ARG_DEVICE_ADDRESS);
 
-        Intent intent = BluetoothService.newIntent(getContext());
+        Intent intent = ConnectDeviceService.newIntent(getContext());
         getActivity().bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
@@ -163,17 +164,17 @@ public class ConnectDeviceFragment extends BaseFragment<ConnectDeviceContract.Pr
     public void onResume() {
         super.onResume();
         getActivity().registerReceiver(mGattReceiver, createGattIntentFilter());
-        if (mBluetoothService != null) {
-            mBluetoothService.connect(mDeviceAddress);
+        if (mConnectDeviceService != null) {
+            mConnectDeviceService.connect(mDeviceAddress);
         }
     }
 
     private IntentFilter createGattIntentFilter() {
         final IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BluetoothService.ACTION_GATT_CONNECTED);
-        intentFilter.addAction(BluetoothService.ACTION_GATT_DISCONNECTED);
-        intentFilter.addAction(BluetoothService.ACTION_GATT_SERVICES_DISCOVERED);
-        intentFilter.addAction(BluetoothService.ACTION_DATA_AVAILABLE);
+        intentFilter.addAction(ConnectDeviceService.ACTION_GATT_CONNECTED);
+        intentFilter.addAction(ConnectDeviceService.ACTION_GATT_DISCONNECTED);
+        intentFilter.addAction(ConnectDeviceService.ACTION_GATT_SERVICES_DISCOVERED);
+        intentFilter.addAction(ConnectDeviceService.ACTION_DATA_AVAILABLE);
         return intentFilter;
     }
 
@@ -186,7 +187,7 @@ public class ConnectDeviceFragment extends BaseFragment<ConnectDeviceContract.Pr
     @Override
     public void onDestroy() {
         getActivity().unbindService(mServiceConnection);
-        mBluetoothService = null;
+        mConnectDeviceService = null;
         super.onDestroy();
     }
 }

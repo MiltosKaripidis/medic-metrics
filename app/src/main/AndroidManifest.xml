@@ -24,9 +24,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.connect.ConnectDeviceActivity" />
+        <activity android:name=".ui.metrics.MetricsActivity" />
 
-        <service android:name=".ui.connect.BluetoothService" />
+        <service android:name=".ui.connect.ConnectDeviceService" />
     </application>
 
 </manifest>

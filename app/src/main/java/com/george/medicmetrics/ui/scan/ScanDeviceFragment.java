@@ -18,7 +18,7 @@ import com.george.medicmetrics.behavior.bluetooth.Adapter;
 import com.george.medicmetrics.behavior.device.Device;
 import com.george.medicmetrics.injection.Injection;
 import com.george.medicmetrics.ui.base.BaseFragment;
-import com.george.medicmetrics.ui.connect.ConnectDeviceActivity;
+import com.george.medicmetrics.ui.metrics.MetricsActivity;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -82,7 +82,7 @@ public class ScanDeviceFragment extends BaseFragment<ScanDeviceContract.Presente
         mDeviceAdapter = new DeviceAdapter(null, new DeviceAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(@NonNull Device device) {
-                Intent intent = ConnectDeviceActivity.newIntent(getContext(), device.getName(), device.getAddress());
+                Intent intent = MetricsActivity.newIntent(getContext(), device.getName(), device.getAddress());
                 startActivity(intent);
             }
         });

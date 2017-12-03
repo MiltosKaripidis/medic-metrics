@@ -1,8 +1,8 @@
-package com.george.medicmetrics.ui.connect;
+package com.george.medicmetrics.ui.metrics;
 
 import com.george.medicmetrics.ui.base.BaseContract;
 
-interface ConnectDeviceContract {
+interface MetricsContract {
 
     interface View extends BaseContract.View {
 
