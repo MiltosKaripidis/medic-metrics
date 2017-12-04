@@ -4,6 +4,8 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.george.medicmetrics.behavior.gatt.descriptor.Descriptor;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -36,5 +38,12 @@ public class FakeGattCharacteristic implements GattCharacteristic {
             mCurrent = 0;
         }
         return mIntegerList.get(mCurrent++);
+    }
+
+    @NonNull
+    @Override
+    public Descriptor getDescriptor(@NonNull UUID uuid) {
+        // TODO: Implement
+        return null;
     }
 }

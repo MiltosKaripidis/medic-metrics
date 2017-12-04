@@ -2,11 +2,14 @@ package com.george.medicmetrics.behavior.gatt;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.support.annotation.NonNull;
 
 import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
 import com.george.medicmetrics.behavior.gatt.characteristic.RealGattCharacteristic;
+import com.george.medicmetrics.behavior.gatt.descriptor.Descriptor;
+import com.george.medicmetrics.behavior.gatt.descriptor.RealDescriptor;
 import com.george.medicmetrics.behavior.gatt.service.GattService;
 import com.george.medicmetrics.behavior.gatt.service.RealGattService;
 
@@ -48,6 +51,12 @@ public class RealBluetoothGatt implements Gatt {
     public void notifyCharacteristic(@NonNull GattCharacteristic gattCharacteristic, boolean enabled) {
         BluetoothGattCharacteristic bluetoothGattCharacteristic = ((RealGattCharacteristic) gattCharacteristic).getBluetoothGattCharacteristic();
         mBluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, enabled);
+    }
+
+    @Override
+    public void writeDescriptor(@NonNull Descriptor descriptor) {
+        BluetoothGattDescriptor bluetoothGattDescriptor = ((RealDescriptor) descriptor).getBluetoothGattDescriptor();
+        mBluetoothGatt.writeDescriptor(bluetoothGattDescriptor);
     }
 
     @Override

@@ -1,8 +1,12 @@
 package com.george.medicmetrics.behavior.gatt.characteristic;
 
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattDescriptor;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.george.medicmetrics.behavior.gatt.descriptor.Descriptor;
+import com.george.medicmetrics.behavior.gatt.descriptor.RealDescriptor;
 
 import java.util.UUID;
 
@@ -29,6 +33,13 @@ public class RealGattCharacteristic implements GattCharacteristic {
     @Override
     public Integer getIntValue(int formatType, int offset) {
         return mBluetoothGattCharacteristic.getIntValue(formatType, offset);
+    }
+
+    @NonNull
+    @Override
+    public Descriptor getDescriptor(@NonNull UUID uuid) {
+        BluetoothGattDescriptor bluetoothGattDescriptor = mBluetoothGattCharacteristic.getDescriptor(uuid);
+        return new RealDescriptor(bluetoothGattDescriptor);
     }
 
     public BluetoothGattCharacteristic getBluetoothGattCharacteristic() {

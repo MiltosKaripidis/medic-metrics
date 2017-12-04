@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 
 import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
+import com.george.medicmetrics.behavior.gatt.descriptor.Descriptor;
 import com.george.medicmetrics.behavior.gatt.service.GattService;
 
 import java.util.List;
@@ -67,6 +68,11 @@ public class FakeBluetoothGatt implements Gatt {
                 mCallback.onCharacteristicChanged(FakeBluetoothGatt.this, gattCharacteristic);
             }
         }, 0, 1, TimeUnit.SECONDS);
+    }
+
+    @Override
+    public void writeDescriptor(@NonNull Descriptor descriptor) {
+        // TODO: Implement
     }
 
     @Override

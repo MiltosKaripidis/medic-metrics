@@ -1,6 +1,8 @@
 package com.george.medicmetrics.ui.connect;
 
 import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothProfile;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,10 +12,12 @@ import com.george.medicmetrics.behavior.device.Device;
 import com.george.medicmetrics.behavior.gatt.ConnectGattCallback;
 import com.george.medicmetrics.behavior.gatt.Gatt;
 import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
+import com.george.medicmetrics.behavior.gatt.descriptor.Descriptor;
 import com.george.medicmetrics.behavior.gatt.service.GattService;
 import com.george.medicmetrics.ui.base.BasePresenter;
 
 import java.util.List;
+import java.util.UUID;
 
 class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> implements ConnectDeviceContract.Presenter {
 
@@ -91,8 +95,16 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
 
     @Override
     public void notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled) {
-        if (mAdapter == null || mGatt == null) return;
+        if ((mAdapter == null || mGatt == null)) return;
+
         mGatt.notifyCharacteristic(characteristic, enabled);
+
+        String uuid = characteristic.getUuid().toString();
+        if (uuid.equals(GattCharacteristic.UUID_HEART_RATE)) {
+            Descriptor descriptor = characteristic.getDescriptor(UUID.fromString(GattCharacteristic.CLIENT_CHARACTERISTIC_CONFIG));
+            descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+            mGatt.writeDescriptor(descriptor);
+        }
     }
 
     @Nullable
@@ -107,15 +119,23 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
         }
     }
 
-    // TODO: Implement
+    @NonNull
     private String getHeartRate(@NonNull GattCharacteristic characteristic) {
-        Integer heartRateInt = characteristic.getIntValue(0, 0);
-        return String.valueOf(heartRateInt);
+        int flag = characteristic.getProperties();
+        int format;
+        if ((flag & 0x01) != 0) {
+            format = BluetoothGattCharacteristic.FORMAT_UINT16;
+        } else {
+            format = BluetoothGattCharacteristic.FORMAT_UINT8;
+        }
+        Integer heartRate = characteristic.getIntValue(format, 1);
+        return String.valueOf(heartRate);
     }
 
     // TODO: Implement
+    @NonNull
     private String getBodyTemperature(@NonNull GattCharacteristic characteristic) {
-        Integer heartRateInt = characteristic.getIntValue(0, 0);
-        return String.valueOf(heartRateInt);
+        Integer temperature = characteristic.getIntValue(0, 0);
+        return String.valueOf(temperature);
     }
 }
