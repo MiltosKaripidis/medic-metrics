@@ -25,6 +25,10 @@ interface ScanDeviceContract {
 
         void requestFineLocationPermission();
 
+        void showEmptyDevices();
+
+        void hideEmptyDevices();
+
         void showDevices(@NonNull List<Device> deviceList);
     }
 

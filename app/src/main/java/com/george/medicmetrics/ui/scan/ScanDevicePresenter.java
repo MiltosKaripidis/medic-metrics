@@ -79,6 +79,8 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
 
     @Override
     public void scanDevices() {
+        mView.hideEmptyDevices();
+
         if (!mAdapter.isEnabled()) {
             mView.openBluetoothSettings(REQUEST_ENABLE_BLUETOOTH);
             return;
@@ -113,6 +115,11 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
     public void stopScanning() {
         if (mView != null) {
             mView.hideProgressIndicator();
+            if (mDeviceList.isEmpty()) {
+                mView.showEmptyDevices();
+            } else {
+                mView.hideEmptyDevices();
+            }
         }
         mScanning = false;
         mAdapter.stopScanning(mScanDeviceCallback);

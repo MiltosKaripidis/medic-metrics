@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.george.medicmetrics.R;
 import com.george.medicmetrics.behavior.adapter.Adapter;
@@ -34,6 +35,7 @@ public class ScanDeviceFragment extends BaseFragment<ScanDeviceContract.Presente
     private static final int PERMISSION_ACCESS_FINE_LOCATION = 0;
     private DeviceAdapter mDeviceAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private TextView mEmptyTextView;
 
     public static ScanDeviceFragment newInstance() {
         return new ScanDeviceFragment();
@@ -55,6 +57,7 @@ public class ScanDeviceFragment extends BaseFragment<ScanDeviceContract.Presente
         View view = inflater.inflate(R.layout.fragment_scan_device, container, false);
 
         setupRefreshLayout(view);
+        mEmptyTextView = view.findViewById(R.id.empty_text_view);
         setupAdapter();
         setupRecyclerView(view);
 
@@ -134,6 +137,16 @@ public class ScanDeviceFragment extends BaseFragment<ScanDeviceContract.Presente
     @Override
     public void requestFineLocationPermission() {
         requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_ACCESS_FINE_LOCATION);
+    }
+
+    @Override
+    public void showEmptyDevices() {
+        mEmptyTextView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideEmptyDevices() {
+        mEmptyTextView.setVisibility(View.GONE);
     }
 
     @Override
