@@ -54,8 +54,9 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
     }
 
     @Override
-    public void tryToGetUserLocation() {
+    public void tryToScanDevices() {
         if (!mView.needsRuntimePermission()) {
+            scanDevices();
             return;
         }
 
@@ -64,15 +65,15 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
             return;
         }
 
-        mView.scanDevices();
+        scanDevices();
     }
 
     @Override
     public void handleAccessFineLocationPermissionResult(int[] grantResults) {
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            mView.scanDevices();
+            // Permission granted.
         } else {
-            mView.showGpsError();
+            mView.finish();
         }
     }
 

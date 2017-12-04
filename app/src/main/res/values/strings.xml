@@ -5,5 +5,4 @@
     <string name="not_available">n/a</string>
     <string name="body_temperature">Body temperature:</string>
     <string name="format_body_temperature">%1$s C</string>
-    <string name="gps_disabled">Needs location permission</string>
 </resources>

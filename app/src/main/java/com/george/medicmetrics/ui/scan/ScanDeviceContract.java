@@ -25,10 +25,6 @@ interface ScanDeviceContract {
 
         void requestFineLocationPermission();
 
-        void showGpsError();
-
-        void scanDevices();
-
         void showDevices(@NonNull List<Device> deviceList);
     }
 
@@ -36,7 +32,7 @@ interface ScanDeviceContract {
 
         void handleBluetoothSettingsResult(int requestCode, int resultCode);
 
-        void tryToGetUserLocation();
+        void tryToScanDevices();
 
         void handleAccessFineLocationPermissionResult(int[] grantResults);
 

@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -138,15 +137,6 @@ public class ScanDeviceFragment extends BaseFragment<ScanDeviceContract.Presente
     }
 
     @Override
-    public void showGpsError() {
-        if (getView() == null) {
-            return;
-        }
-
-        Snackbar.make(getView(), R.string.gps_disabled, Snackbar.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_ACCESS_FINE_LOCATION:
@@ -155,16 +145,10 @@ public class ScanDeviceFragment extends BaseFragment<ScanDeviceContract.Presente
         }
     }
 
-
-    @Override
-    public void scanDevices() {
-        mPresenter.scanDevices();
-    }
-
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.tryToGetUserLocation();
+        mPresenter.tryToScanDevices();
     }
 
     @Override
