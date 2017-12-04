@@ -81,13 +81,13 @@ public class ConnectDeviceService extends BaseService<ConnectDeviceContract.Pres
     }
 
     @Override
-    public boolean readGattCharacteristic(@NonNull GattCharacteristic gattCharacteristic) {
-        return mPresenter.readGattCharacteristic(gattCharacteristic);
+    public void readGattCharacteristic(@NonNull GattCharacteristic gattCharacteristic) {
+        mPresenter.readGattCharacteristic(gattCharacteristic);
     }
 
     @Override
-    public boolean notifyGattCharacteristic(@NonNull GattCharacteristic gattCharacteristic, boolean enabled) {
-        return mPresenter.notifyGattCharacteristic(gattCharacteristic, enabled);
+    public void notifyGattCharacteristic(@NonNull GattCharacteristic gattCharacteristic, boolean enabled) {
+        mPresenter.notifyGattCharacteristic(gattCharacteristic, enabled);
     }
 
     @Override

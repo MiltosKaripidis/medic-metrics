@@ -14,9 +14,9 @@ public interface Gatt {
     @NonNull
     List<GattService> getServices();
 
-    boolean readCharacteristic(@NonNull GattCharacteristic gattCharacteristic);
+    void readCharacteristic(@NonNull GattCharacteristic gattCharacteristic);
 
-    boolean notifyCharacteristic(@NonNull GattCharacteristic gattCharacteristic, boolean enabled);
+    void notifyCharacteristic(@NonNull GattCharacteristic gattCharacteristic, boolean enabled);
 
     void close();
 }

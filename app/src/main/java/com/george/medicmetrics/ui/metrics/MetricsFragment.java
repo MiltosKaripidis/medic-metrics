@@ -153,13 +153,13 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
     }
 
     @Override
-    public boolean readGattCharacteristic(@NonNull GattCharacteristic characteristic) {
-        return mDeviceConnection.readGattCharacteristic(characteristic);
+    public void readGattCharacteristic(@NonNull GattCharacteristic characteristic) {
+        mDeviceConnection.readGattCharacteristic(characteristic);
     }
 
     @Override
-    public boolean notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled) {
-        return mDeviceConnection.notifyGattCharacteristic(characteristic, enabled);
+    public void notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled) {
+        mDeviceConnection.notifyGattCharacteristic(characteristic, enabled);
     }
 
     @Override

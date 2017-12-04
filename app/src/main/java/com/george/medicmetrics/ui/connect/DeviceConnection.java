@@ -40,9 +40,8 @@ public interface DeviceConnection {
      * Tries to read a specific bluetooth GATT characteristic.
      *
      * @param characteristic The {@link GattCharacteristic}'s data that will be read.
-     * @return A boolean indicating whether the operation has started.
      */
-    boolean readGattCharacteristic(@NonNull GattCharacteristic characteristic);
+    void readGattCharacteristic(@NonNull GattCharacteristic characteristic);
 
     /**
      * This method will notify the client periodically for the specific characteristic's data. An
@@ -51,7 +50,6 @@ public interface DeviceConnection {
      *
      * @param characteristic The {@link GattCharacteristic}'s data that will be read.
      * @param enabled        A boolean indicating whether the notification operation should start.
-     * @return A boolean indicating whether the operation has started.
      */
-    boolean notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled);
+    void notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled);
 }

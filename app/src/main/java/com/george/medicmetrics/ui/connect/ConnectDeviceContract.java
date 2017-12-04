@@ -33,8 +33,8 @@ interface ConnectDeviceContract {
         @Nullable
         List<GattService> getGattServices();
 
-        boolean readGattCharacteristic(@NonNull GattCharacteristic characteristic);
+        void readGattCharacteristic(@NonNull GattCharacteristic characteristic);
 
-        boolean notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled);
+        void notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled);
     }
 }

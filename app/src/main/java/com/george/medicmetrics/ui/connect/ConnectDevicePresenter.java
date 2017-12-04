@@ -84,13 +84,15 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
     }
 
     @Override
-    public boolean readGattCharacteristic(@NonNull GattCharacteristic characteristic) {
-        return !(mAdapter == null || mGatt == null) && mGatt.readCharacteristic(characteristic);
+    public void readGattCharacteristic(@NonNull GattCharacteristic characteristic) {
+        if (mAdapter == null || mGatt == null) return;
+        mGatt.readCharacteristic(characteristic);
     }
 
     @Override
-    public boolean notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled) {
-        return !(mAdapter == null || mGatt == null) && mGatt.notifyCharacteristic(characteristic, enabled);
+    public void notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled) {
+        if (mAdapter == null || mGatt == null) return;
+        mGatt.notifyCharacteristic(characteristic, enabled);
     }
 
     @Nullable

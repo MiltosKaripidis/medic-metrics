@@ -15,9 +15,9 @@ interface MetricsContract {
 
         void showDeviceConnected();
 
-        boolean readGattCharacteristic(@NonNull GattCharacteristic characteristic);
+        void readGattCharacteristic(@NonNull GattCharacteristic characteristic);
 
-        boolean notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled);
+        void notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled);
 
         void showHeartRate(@NonNull String bpm);
 

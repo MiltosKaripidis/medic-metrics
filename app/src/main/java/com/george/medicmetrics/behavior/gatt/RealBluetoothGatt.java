@@ -39,15 +39,15 @@ public class RealBluetoothGatt implements Gatt {
     }
 
     @Override
-    public boolean readCharacteristic(@NonNull GattCharacteristic gattCharacteristic) {
+    public void readCharacteristic(@NonNull GattCharacteristic gattCharacteristic) {
         BluetoothGattCharacteristic bluetoothGattCharacteristic = ((RealGattCharacteristic) gattCharacteristic).getBluetoothGattCharacteristic();
-        return mBluetoothGatt.readCharacteristic(bluetoothGattCharacteristic);
+        mBluetoothGatt.readCharacteristic(bluetoothGattCharacteristic);
     }
 
     @Override
-    public boolean notifyCharacteristic(@NonNull GattCharacteristic gattCharacteristic, boolean enabled) {
+    public void notifyCharacteristic(@NonNull GattCharacteristic gattCharacteristic, boolean enabled) {
         BluetoothGattCharacteristic bluetoothGattCharacteristic = ((RealGattCharacteristic) gattCharacteristic).getBluetoothGattCharacteristic();
-        return mBluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, enabled);
+        mBluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, enabled);
     }
 
     @Override

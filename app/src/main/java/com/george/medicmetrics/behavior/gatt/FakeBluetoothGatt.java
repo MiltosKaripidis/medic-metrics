@@ -46,16 +46,15 @@ public class FakeBluetoothGatt implements Gatt {
     }
 
     @Override
-    public boolean readCharacteristic(@NonNull GattCharacteristic gattCharacteristic) {
+    public void readCharacteristic(@NonNull GattCharacteristic gattCharacteristic) {
         mCallback.onCharacteristicRead(FakeBluetoothGatt.this, gattCharacteristic, BluetoothGatt.GATT_SUCCESS);
-        return true;
     }
 
     @Override
-    public boolean notifyCharacteristic(@NonNull final GattCharacteristic gattCharacteristic, boolean enabled) {
+    public void notifyCharacteristic(@NonNull final GattCharacteristic gattCharacteristic, boolean enabled) {
         if (!enabled) {
             mScheduledExecutorService.shutdown();
-            return true;
+            return;
         }
 
         if (mScheduledExecutorService.isShutdown()) {
@@ -68,7 +67,6 @@ public class FakeBluetoothGatt implements Gatt {
                 mCallback.onCharacteristicChanged(FakeBluetoothGatt.this, gattCharacteristic);
             }
         }, 0, 1, TimeUnit.SECONDS);
-        return true;
     }
 
     @Override
