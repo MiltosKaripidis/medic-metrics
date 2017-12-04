@@ -24,7 +24,7 @@ public class RealBluetoothDevice implements Device {
 
     @NonNull
     public String getName() {
-        return mBluetoothDevice.getName();
+        return mBluetoothDevice.getName() == null ? "n/a" : mBluetoothDevice.getName();
     }
 
     @NonNull
