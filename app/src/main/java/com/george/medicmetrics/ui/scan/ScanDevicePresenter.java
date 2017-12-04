@@ -45,7 +45,7 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
     }
 
     @Override
-    public void handleBluetoothSettingsResult(int requestCode, int resultCode) {
+    public void handleSettingsResult(int requestCode, int resultCode) {
         if (requestCode == REQUEST_ENABLE_BLUETOOTH && resultCode == Activity.RESULT_OK) {
             return;
         }
@@ -83,6 +83,11 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
 
         if (!mAdapter.isEnabled()) {
             mView.openBluetoothSettings(REQUEST_ENABLE_BLUETOOTH);
+            return;
+        }
+
+        if (!mView.isGpsEnabled()) {
+            mView.showLocationEnableDialog();
             return;
         }
 

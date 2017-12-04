@@ -60,19 +60,19 @@ public class ScanDevicePresenterTest extends BasePresenterTest {
 
     @Test
     public void handleBluetoothSettingsResult_shouldFinish_whenResultCanceled() {
-        mPresenter.handleBluetoothSettingsResult(REQUEST_ENABLE_BLUETOOTH, Activity.RESULT_CANCELED);
+        mPresenter.handleSettingsResult(REQUEST_ENABLE_BLUETOOTH, Activity.RESULT_CANCELED);
         verify(mView).finish();
     }
 
     @Test
     public void handleBluetoothSettingsResult_shouldFinish_whenWrongRequestCode() {
-        mPresenter.handleBluetoothSettingsResult(REQUEST_WRONG, Activity.RESULT_OK);
+        mPresenter.handleSettingsResult(REQUEST_WRONG, Activity.RESULT_OK);
         verify(mView).finish();
     }
 
     @Test
     public void handleBluetoothSettingsResult_shouldNotFinish_whenCorrectRequestAndResultOk() {
-        mPresenter.handleBluetoothSettingsResult(REQUEST_ENABLE_BLUETOOTH, Activity.RESULT_OK);
+        mPresenter.handleSettingsResult(REQUEST_ENABLE_BLUETOOTH, Activity.RESULT_OK);
         verify(mView, never()).finish();
     }
 

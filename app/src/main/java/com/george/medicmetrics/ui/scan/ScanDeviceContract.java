@@ -25,6 +25,10 @@ interface ScanDeviceContract {
 
         void requestFineLocationPermission();
 
+        boolean isGpsEnabled();
+
+        void showLocationEnableDialog();
+
         void showEmptyDevices();
 
         void hideEmptyDevices();
@@ -34,7 +38,7 @@ interface ScanDeviceContract {
 
     interface Presenter extends BaseContract.Presenter<View> {
 
-        void handleBluetoothSettingsResult(int requestCode, int resultCode);
+        void handleSettingsResult(int requestCode, int resultCode);
 
         void tryToScanDevices();
 
