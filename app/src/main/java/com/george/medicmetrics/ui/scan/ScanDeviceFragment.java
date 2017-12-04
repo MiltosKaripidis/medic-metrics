@@ -19,7 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.george.medicmetrics.R;
-import com.george.medicmetrics.behavior.bluetooth.Adapter;
+import com.george.medicmetrics.behavior.adapter.Adapter;
 import com.george.medicmetrics.behavior.device.Device;
 import com.george.medicmetrics.injection.Injection;
 import com.george.medicmetrics.ui.base.BaseFragment;

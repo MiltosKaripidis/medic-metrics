@@ -3,7 +3,7 @@ package com.george.medicmetrics.ui.scan;
 import android.app.Activity;
 import android.os.Handler;
 
-import com.george.medicmetrics.behavior.bluetooth.Adapter;
+import com.george.medicmetrics.behavior.adapter.Adapter;
 import com.george.medicmetrics.behavior.device.Device;
 import com.george.medicmetrics.ui.base.BasePresenterTest;
 

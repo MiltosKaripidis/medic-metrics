@@ -7,7 +7,7 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.george.medicmetrics.behavior.bluetooth.Adapter;
+import com.george.medicmetrics.behavior.adapter.Adapter;
 import com.george.medicmetrics.behavior.device.Device;
 import com.george.medicmetrics.behavior.gatt.ConnectGattCallback;
 import com.george.medicmetrics.behavior.gatt.Gatt;

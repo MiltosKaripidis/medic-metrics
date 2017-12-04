@@ -3,8 +3,8 @@ package com.george.medicmetrics.injection;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.george.medicmetrics.behavior.bluetooth.Adapter;
-import com.george.medicmetrics.behavior.bluetooth.FakeBluetoothAdapter;
+import com.george.medicmetrics.behavior.adapter.Adapter;
+import com.george.medicmetrics.behavior.adapter.FakeBluetoothAdapter;
 import com.george.medicmetrics.behavior.device.Device;
 import com.george.medicmetrics.behavior.device.FakeBluetoothDevice;
 import com.george.medicmetrics.behavior.gatt.FakeBluetoothGatt;

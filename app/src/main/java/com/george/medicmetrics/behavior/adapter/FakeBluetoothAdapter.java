@@ -1,4 +1,4 @@
-package com.george.medicmetrics.behavior.bluetooth;
+package com.george.medicmetrics.behavior.adapter;
 
 import android.os.Handler;
 import android.support.annotation.Nullable;
