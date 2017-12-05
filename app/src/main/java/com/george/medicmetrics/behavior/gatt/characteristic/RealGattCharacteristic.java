@@ -35,6 +35,12 @@ public class RealGattCharacteristic implements GattCharacteristic {
         return mBluetoothGattCharacteristic.getIntValue(formatType, offset);
     }
 
+    @Nullable
+    @Override
+    public byte[] getValue() {
+        return mBluetoothGattCharacteristic.getValue();
+    }
+
     @NonNull
     @Override
     public Descriptor getDescriptor(@NonNull UUID uuid) {

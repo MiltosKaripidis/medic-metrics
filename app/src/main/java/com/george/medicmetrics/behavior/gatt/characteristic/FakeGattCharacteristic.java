@@ -40,6 +40,13 @@ public class FakeGattCharacteristic implements GattCharacteristic {
         return mIntegerList.get(mCurrent++);
     }
 
+    @Nullable
+    @Override
+    public byte[] getValue() {
+        // TODO: Implement
+        return new byte[0];
+    }
+
     @NonNull
     @Override
     public Descriptor getDescriptor(@NonNull UUID uuid) {

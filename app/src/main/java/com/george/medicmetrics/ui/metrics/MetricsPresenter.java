@@ -17,8 +17,8 @@ class MetricsPresenter extends BasePresenter<MetricsContract.View> implements Me
         GattCharacteristic heartRateCharacteristic = getCharacteristic(gattServiceList, GattCharacteristic.UUID_HEART_RATE);
         GattCharacteristic bodyTemperatureCharacteristic = getCharacteristic(gattServiceList, GattCharacteristic.UUID_BODY_TEMPERATURE);
 
-        handleCharacteristic(heartRateCharacteristic);
-        handleCharacteristic(bodyTemperatureCharacteristic);
+        notifyCharacteristic(heartRateCharacteristic);
+        notifyCharacteristic(bodyTemperatureCharacteristic);
     }
 
     @Override
@@ -48,12 +48,18 @@ class MetricsPresenter extends BasePresenter<MetricsContract.View> implements Me
         return null;
     }
 
-    private void handleCharacteristic(@Nullable GattCharacteristic characteristic) {
+    private void readCharacteristic(@Nullable GattCharacteristic characteristic) {
         if (characteristic == null) return;
 
         if ((characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
             mView.readGattCharacteristic(characteristic);
-        } else if ((characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
+        }
+    }
+
+    private void notifyCharacteristic(@Nullable GattCharacteristic characteristic) {
+        if (characteristic == null) return;
+
+        if ((characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
             mView.notifyGattCharacteristic(characteristic, true);
         }
     }
