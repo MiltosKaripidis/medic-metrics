@@ -153,15 +153,15 @@ public class ScanDeviceFragment extends BaseFragment<ScanDeviceContract.Presente
     @Override
     public void showLocationEnableDialog() {
         new AlertDialog.Builder(getContext())
-                .setMessage("Bluetooth needs the GPS enabled in order to scan devices properly.")
+                .setMessage(R.string.location_dialog)
                 .setCancelable(false)
-                .setPositiveButton("Enable", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.enable, new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
                         Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                         startActivity(intent);
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
                         finish();
                     }
