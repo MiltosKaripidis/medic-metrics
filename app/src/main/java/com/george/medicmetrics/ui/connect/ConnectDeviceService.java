@@ -30,8 +30,8 @@ public class ConnectDeviceService extends BaseService<ConnectDeviceContract.Pres
     public final static String ACTION_GATT_SERVICES_DISCOVERED = "com.george.medicmetrics.ui.connect.GATT_SERVICES_DISCOVERED";
     public final static String ACTION_DATA_AVAILABLE = "com.george.medicmetrics.ui.connect.DATA_AVAILABLE";
 
-    public final static String EXTRA_DATA = "com.george.medicmetrics.data.DATA";
-    public final static String EXTRA_UUID = "com.george.medicmetrics.data.UUID";
+    public final static String EXTRA_DATA = "com.george.medicmetrics.ui.connect.DATA";
+    public final static String EXTRA_UUID = "com.george.medicmetrics.ui.connect.UUID";
 
     private final IBinder mIBinder = new LocalBinder();
 
