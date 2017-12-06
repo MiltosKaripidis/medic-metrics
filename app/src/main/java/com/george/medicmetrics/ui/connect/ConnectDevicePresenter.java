@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothProfile;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.george.medicmetrics.behavior.adapter.Adapter;
 import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
@@ -117,6 +118,11 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
             case GattCharacteristic.UUID_HEART_RATE:
                 return getHeartRate(characteristic);
             case GattCharacteristic.UUID_BODY_TEMPERATURE:
+                Log.d("ConnectDevicePresenter", "---Metrics---");
+                String heartRate = getEimoHeartRate(characteristic);
+                getBloodOxygen(characteristic);
+                getBloodPressureDiastolic(characteristic, Double.valueOf(heartRate));
+                getBloodPressureSystolic(characteristic, Double.valueOf(heartRate));
                 return getBodyTemperature(characteristic);
             default:
                 return null;
@@ -150,6 +156,7 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
             heartRate = 80;
         }
 
+        Log.d("ConnectDevicePresenter", "Heart rate: " + String.valueOf(heartRate));
         return String.valueOf(heartRate);
     }
 
@@ -190,6 +197,7 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
             r_spo2 = 70;
         }
 
+        Log.d("ConnectDevicePresenter", "Blood oxygen: " + String.valueOf(r_spo2));
         return String.valueOf(r_spo2);
     }
 
@@ -239,8 +247,10 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
 
         switch (bloodPressureType) {
             case 0:
+                Log.d("ConnectDevicePresenter", "Blood pressure systolic: " + String.valueOf(bloodPressureSystolic));
                 return String.valueOf(bloodPressureSystolic);
             case 1:
+                Log.d("ConnectDevicePresenter", "Blood pressure diastolic: " + String.valueOf(bloodPressureDiastolic));
                 return String.valueOf(bloodPressureDiastolic);
         }
 
@@ -278,6 +288,8 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
 
         double bodyTemperature = (-tb + Math.sqrt(td)) / 2 / calia;
         bodyTemperature = bodyTemperature - 0.5;
+
+        Log.d("ConnectDevicePresenter", "Body temperature: " + String.format(Locale.getDefault(), "%.1f", bodyTemperature));
         return String.format(Locale.getDefault(), "%.1f", bodyTemperature);
     }
 }
