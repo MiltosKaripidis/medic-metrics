@@ -4,8 +4,8 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
-import com.george.medicmetrics.behavior.gatt.service.GattService;
+import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
+import com.george.medicmetrics.behavior.service.GattService;
 import com.george.medicmetrics.ui.base.BasePresenter;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.george.medicmetrics.behavior.gatt.descriptor;
+package com.george.medicmetrics.behavior.descriptor;
 
 import android.support.annotation.NonNull;
 

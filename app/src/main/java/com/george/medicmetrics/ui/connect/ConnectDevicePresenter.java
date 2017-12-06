@@ -11,9 +11,9 @@ import com.george.medicmetrics.behavior.adapter.Adapter;
 import com.george.medicmetrics.behavior.device.Device;
 import com.george.medicmetrics.behavior.gatt.ConnectGattCallback;
 import com.george.medicmetrics.behavior.gatt.Gatt;
-import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
-import com.george.medicmetrics.behavior.gatt.descriptor.Descriptor;
-import com.george.medicmetrics.behavior.gatt.service.GattService;
+import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
+import com.george.medicmetrics.behavior.descriptor.Descriptor;
+import com.george.medicmetrics.behavior.service.GattService;
 import com.george.medicmetrics.ui.base.BasePresenter;
 
 import java.util.List;

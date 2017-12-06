@@ -1,8 +1,8 @@
-package com.george.medicmetrics.behavior.gatt.service;
+package com.george.medicmetrics.behavior.service;
 
 import android.support.annotation.NonNull;
 
-import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
+import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
 
 import java.util.List;
 import java.util.UUID;

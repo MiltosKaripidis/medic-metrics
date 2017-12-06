@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.george.medicmetrics.R;
-import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
+import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
 import com.george.medicmetrics.ui.base.BaseFragment;
 import com.george.medicmetrics.ui.connect.ConnectDeviceService;
 import com.george.medicmetrics.ui.connect.DeviceConnection;

@@ -2,9 +2,9 @@ package com.george.medicmetrics.behavior.gatt;
 
 import android.support.annotation.NonNull;
 
-import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
-import com.george.medicmetrics.behavior.gatt.descriptor.Descriptor;
-import com.george.medicmetrics.behavior.gatt.service.GattService;
+import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
+import com.george.medicmetrics.behavior.descriptor.Descriptor;
+import com.george.medicmetrics.behavior.service.GattService;
 
 import java.util.List;
 

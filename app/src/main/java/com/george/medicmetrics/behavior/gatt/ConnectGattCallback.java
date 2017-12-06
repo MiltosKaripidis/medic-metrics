@@ -2,7 +2,7 @@ package com.george.medicmetrics.behavior.gatt;
 
 import android.support.annotation.NonNull;
 
-import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
+import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
 
 public interface ConnectGattCallback {
 

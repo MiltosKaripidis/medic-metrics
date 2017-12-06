@@ -4,10 +4,10 @@ import com.george.medicmetrics.behavior.device.Device;
 import com.george.medicmetrics.behavior.device.FakeBluetoothDevice;
 import com.george.medicmetrics.behavior.gatt.FakeBluetoothGatt;
 import com.george.medicmetrics.behavior.gatt.Gatt;
-import com.george.medicmetrics.behavior.gatt.characteristic.FakeGattCharacteristic;
-import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
-import com.george.medicmetrics.behavior.gatt.service.FakeGattService;
-import com.george.medicmetrics.behavior.gatt.service.GattService;
+import com.george.medicmetrics.behavior.characteristic.FakeGattCharacteristic;
+import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
+import com.george.medicmetrics.behavior.service.FakeGattService;
+import com.george.medicmetrics.behavior.service.GattService;
 import com.george.medicmetrics.ui.connect.ConnectDeviceService;
 
 import org.junit.Before;

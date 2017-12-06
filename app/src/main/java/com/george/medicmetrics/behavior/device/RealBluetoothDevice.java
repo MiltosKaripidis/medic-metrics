@@ -11,8 +11,8 @@ import android.support.annotation.Nullable;
 import com.george.medicmetrics.behavior.gatt.ConnectGattCallback;
 import com.george.medicmetrics.behavior.gatt.Gatt;
 import com.george.medicmetrics.behavior.gatt.RealBluetoothGatt;
-import com.george.medicmetrics.behavior.gatt.characteristic.GattCharacteristic;
-import com.george.medicmetrics.behavior.gatt.characteristic.RealGattCharacteristic;
+import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
+import com.george.medicmetrics.behavior.characteristic.RealGattCharacteristic;
 
 public class RealBluetoothDevice implements Device {
 
