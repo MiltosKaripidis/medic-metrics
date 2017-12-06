@@ -10,11 +10,11 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.george.medicmetrics.R;
 import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
@@ -55,10 +55,10 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
             if (action == null) return;
             switch (action) {
                 case ConnectDeviceService.ACTION_GATT_CONNECTED:
-                    showDeviceConnected();
+                    mPresenter.handleDeviceConnected();
                     break;
                 case ConnectDeviceService.ACTION_GATT_DISCONNECTED:
-                    // TODO: Implement
+                    mPresenter.handleDeviceDisconnected();
                     break;
                 case ConnectDeviceService.ACTION_GATT_SERVICES_DISCOVERED:
                     mPresenter.handleGattServices(mDeviceConnection.getGattServices());
@@ -149,7 +149,21 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
 
     @Override
     public void showDeviceConnected() {
-        Toast.makeText(getContext(), "Connected!", Toast.LENGTH_SHORT).show();
+        String message = getString(R.string.connected, mDeviceName);
+        showSnackbar(message, Snackbar.LENGTH_LONG);
+    }
+
+    @Override
+    public void showDeviceDisconnected() {
+        String message = getString(R.string.disconnected);
+        showSnackbar(message, Snackbar.LENGTH_LONG);
+    }
+
+    private void showSnackbar(@NonNull String message, int duration) {
+        View view = getView();
+        if (view == null) return;
+        Snackbar.make(view, message, duration)
+                .show();
     }
 
     @Override

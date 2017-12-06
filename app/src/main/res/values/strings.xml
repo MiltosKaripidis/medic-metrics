@@ -9,4 +9,6 @@
     <string name="location_dialog">Bluetooth needs the GPS enabled in order to scan devices properly.</string>
     <string name="enable">Enable</string>
     <string name="cancel">Cancel</string>
+    <string name="connected">Connected to %1$s</string>
+    <string name="disconnected">Disconnected</string>
 </resources>

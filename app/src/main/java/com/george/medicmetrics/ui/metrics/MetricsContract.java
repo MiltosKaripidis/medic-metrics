@@ -15,6 +15,8 @@ interface MetricsContract {
 
         void showDeviceConnected();
 
+        void showDeviceDisconnected();
+
         void readGattCharacteristic(@NonNull GattCharacteristic characteristic);
 
         void notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled);
@@ -25,6 +27,10 @@ interface MetricsContract {
     }
 
     interface Presenter extends BaseContract.Presenter<View> {
+
+        void handleDeviceConnected();
+
+        void handleDeviceDisconnected();
 
         void handleGattServices(@Nullable List<GattService> gattServiceList);
 

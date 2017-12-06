@@ -13,6 +13,16 @@ import java.util.List;
 class MetricsPresenter extends BasePresenter<MetricsContract.View> implements MetricsContract.Presenter {
 
     @Override
+    public void handleDeviceConnected() {
+        mView.showDeviceConnected();
+    }
+
+    @Override
+    public void handleDeviceDisconnected() {
+        mView.showDeviceDisconnected();
+    }
+
+    @Override
     public void handleGattServices(@Nullable List<GattService> gattServiceList) {
         GattCharacteristic heartRateCharacteristic = getCharacteristic(gattServiceList, GattCharacteristic.UUID_HEART_RATE);
         GattCharacteristic bodyTemperatureCharacteristic = getCharacteristic(gattServiceList, GattCharacteristic.UUID_BODY_TEMPERATURE);
