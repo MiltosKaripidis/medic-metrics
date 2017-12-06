@@ -8,11 +8,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.george.medicmetrics.behavior.adapter.Adapter;
+import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
+import com.george.medicmetrics.behavior.descriptor.Descriptor;
 import com.george.medicmetrics.behavior.device.Device;
 import com.george.medicmetrics.behavior.gatt.ConnectGattCallback;
 import com.george.medicmetrics.behavior.gatt.Gatt;
-import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
-import com.george.medicmetrics.behavior.descriptor.Descriptor;
 import com.george.medicmetrics.behavior.service.GattService;
 import com.george.medicmetrics.ui.base.BasePresenter;
 
@@ -105,6 +105,7 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
             case GattCharacteristic.UUID_HEART_RATE:
             case GattCharacteristic.UUID_BODY_TEMPERATURE:
                 Descriptor descriptor = characteristic.getDescriptor(UUID.fromString(GattCharacteristic.UUID_CONFIG_CHARACTERISTIC));
+                if (descriptor == null) return;
                 descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
                 mGatt.writeDescriptor(descriptor);
         }

@@ -24,6 +24,6 @@ public interface GattCharacteristic {
     @Nullable
     byte[] getValue();
 
-    @NonNull
+    @Nullable
     Descriptor getDescriptor(@NonNull UUID uuid);
 }

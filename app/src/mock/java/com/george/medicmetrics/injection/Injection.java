@@ -5,17 +5,20 @@ import android.support.annotation.NonNull;
 
 import com.george.medicmetrics.behavior.adapter.Adapter;
 import com.george.medicmetrics.behavior.adapter.FakeBluetoothAdapter;
-import com.george.medicmetrics.behavior.characteristic.FakeGattCharacteristic;
+import com.george.medicmetrics.behavior.characteristic.FakeBluetoothGattCharacteristic;
 import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
+import com.george.medicmetrics.behavior.descriptor.Descriptor;
+import com.george.medicmetrics.behavior.descriptor.FakeBluetoothDescriptor;
 import com.george.medicmetrics.behavior.device.Device;
 import com.george.medicmetrics.behavior.device.FakeBluetoothDevice;
 import com.george.medicmetrics.behavior.gatt.FakeBluetoothGatt;
 import com.george.medicmetrics.behavior.gatt.Gatt;
-import com.george.medicmetrics.behavior.service.FakeGattService;
+import com.george.medicmetrics.behavior.service.FakeBluetoothGattService;
 import com.george.medicmetrics.behavior.service.GattService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Injection {
 
@@ -39,18 +42,25 @@ public class Injection {
 
     private static List<GattService> getServices() {
         List<GattService> gattServiceList = new ArrayList<>();
-        GattService gattService = new FakeGattService("00002a37-0000-1000-8000-00805f9b34fb", getCharacteristics());
+        GattService gattService = new FakeBluetoothGattService("00002a37-0000-1000-8000-00805f9b34fb", getCharacteristics());
         gattServiceList.add(gattService);
         return gattServiceList;
     }
 
     private static List<GattCharacteristic> getCharacteristics() {
         List<GattCharacteristic> gattCharacteristicList = new ArrayList<>();
-        GattCharacteristic heartRateCharacteristic = new FakeGattCharacteristic(GattCharacteristic.UUID_HEART_RATE, getHeartRates());
-        GattCharacteristic bodyTemperatureCharacteristic = new FakeGattCharacteristic(GattCharacteristic.UUID_BODY_TEMPERATURE, getBodyTemperatures());
+        GattCharacteristic heartRateCharacteristic = new FakeBluetoothGattCharacteristic(GattCharacteristic.UUID_HEART_RATE, getHeartRates(), getDescriptors());
+        GattCharacteristic bodyTemperatureCharacteristic = new FakeBluetoothGattCharacteristic(GattCharacteristic.UUID_BODY_TEMPERATURE, getBodyTemperatures(), getDescriptors());
         gattCharacteristicList.add(heartRateCharacteristic);
         gattCharacteristicList.add(bodyTemperatureCharacteristic);
         return gattCharacteristicList;
+    }
+
+    private static List<Descriptor> getDescriptors() {
+        List<Descriptor> descriptorList = new ArrayList<>();
+        Descriptor descriptor = new FakeBluetoothDescriptor(UUID.fromString(GattCharacteristic.UUID_CONFIG_CHARACTERISTIC));
+        descriptorList.add(descriptor);
+        return descriptorList;
     }
 
     private static List<Integer> getHeartRates() {

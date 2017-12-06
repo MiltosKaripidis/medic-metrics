@@ -41,7 +41,7 @@ public class RealBluetoothGattCharacteristic implements GattCharacteristic {
         return mBluetoothGattCharacteristic.getValue();
     }
 
-    @NonNull
+    @Nullable
     @Override
     public Descriptor getDescriptor(@NonNull UUID uuid) {
         BluetoothGattDescriptor bluetoothGattDescriptor = mBluetoothGattCharacteristic.getDescriptor(uuid);

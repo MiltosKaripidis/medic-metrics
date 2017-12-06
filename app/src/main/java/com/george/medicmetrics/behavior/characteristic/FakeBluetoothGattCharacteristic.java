@@ -14,10 +14,12 @@ public class FakeBluetoothGattCharacteristic implements GattCharacteristic {
     private String mUuid;
     private List<Integer> mIntegerList;
     private int mCurrent;
+    private List<Descriptor> mDescriptorList;
 
-    public FakeBluetoothGattCharacteristic(String uuid, List<Integer> integerList) {
+    public FakeBluetoothGattCharacteristic(String uuid, List<Integer> integerList, List<Descriptor> descriptorList) {
         mUuid = uuid;
         mIntegerList = integerList;
+        mDescriptorList = descriptorList;
     }
 
     @NonNull
@@ -47,10 +49,14 @@ public class FakeBluetoothGattCharacteristic implements GattCharacteristic {
         return new byte[0];
     }
 
-    @NonNull
+    @Nullable
     @Override
     public Descriptor getDescriptor(@NonNull UUID uuid) {
-        // TODO: Implement
+        for (Descriptor descriptor : mDescriptorList) {
+            if (descriptor.getUuid().equals(uuid)) {
+                return descriptor;
+            }
+        }
         return null;
     }
 }

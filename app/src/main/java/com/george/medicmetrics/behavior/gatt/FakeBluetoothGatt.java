@@ -67,7 +67,7 @@ public class FakeBluetoothGatt implements Gatt {
             public void run() {
                 mCallback.onCharacteristicChanged(FakeBluetoothGatt.this, gattCharacteristic);
             }
-        }, 0, 1, TimeUnit.SECONDS);
+        }, 0, 2, TimeUnit.SECONDS);
     }
 
     @Override
