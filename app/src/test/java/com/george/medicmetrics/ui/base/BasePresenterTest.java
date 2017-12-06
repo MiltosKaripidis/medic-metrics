@@ -4,9 +4,9 @@ import com.george.medicmetrics.behavior.device.Device;
 import com.george.medicmetrics.behavior.device.FakeBluetoothDevice;
 import com.george.medicmetrics.behavior.gatt.FakeBluetoothGatt;
 import com.george.medicmetrics.behavior.gatt.Gatt;
-import com.george.medicmetrics.behavior.characteristic.FakeGattCharacteristic;
+import com.george.medicmetrics.behavior.characteristic.FakeBluetoothGattCharacteristic;
 import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
-import com.george.medicmetrics.behavior.service.FakeGattService;
+import com.george.medicmetrics.behavior.service.FakeBluetoothGattService;
 import com.george.medicmetrics.behavior.service.GattService;
 import com.george.medicmetrics.ui.connect.ConnectDeviceService;
 
@@ -38,15 +38,15 @@ public abstract class BasePresenterTest {
 
     protected static List<GattService> getServices() {
         List<GattService> gattServiceList = new ArrayList<>();
-        GattService gattService = new FakeGattService("00002a37-0000-1000-8000-00805f9b34fb", getCharacteristics());
+        GattService gattService = new FakeBluetoothGattService("00002a37-0000-1000-8000-00805f9b34fb", getCharacteristics());
         gattServiceList.add(gattService);
         return gattServiceList;
     }
 
     protected static List<GattCharacteristic> getCharacteristics() {
         List<GattCharacteristic> gattCharacteristicList = new ArrayList<>();
-        GattCharacteristic heartRateCharacteristic = new FakeGattCharacteristic(ConnectDeviceService.UUID_HEART_RATE, getHeartRates());
-        GattCharacteristic bodyTemperatureCharacteristic = new FakeGattCharacteristic(ConnectDeviceService.UUID_BODY_TEMPERATURE, getBodyTemperatures());
+        GattCharacteristic heartRateCharacteristic = new FakeBluetoothGattCharacteristic(ConnectDeviceService.UUID_HEART_RATE, getHeartRates());
+        GattCharacteristic bodyTemperatureCharacteristic = new FakeBluetoothGattCharacteristic(ConnectDeviceService.UUID_BODY_TEMPERATURE, getBodyTemperatures());
         gattCharacteristicList.add(heartRateCharacteristic);
         gattCharacteristicList.add(bodyTemperatureCharacteristic);
         return gattCharacteristicList;

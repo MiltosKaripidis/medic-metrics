@@ -9,13 +9,13 @@ import com.george.medicmetrics.behavior.descriptor.Descriptor;
 import java.util.List;
 import java.util.UUID;
 
-public class FakeGattCharacteristic implements GattCharacteristic {
+public class FakeBluetoothGattCharacteristic implements GattCharacteristic {
 
     private String mUuid;
     private List<Integer> mIntegerList;
     private int mCurrent;
 
-    public FakeGattCharacteristic(String uuid, List<Integer> integerList) {
+    public FakeBluetoothGattCharacteristic(String uuid, List<Integer> integerList) {
         mUuid = uuid;
         mIntegerList = integerList;
     }

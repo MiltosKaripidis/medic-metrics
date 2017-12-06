@@ -7,11 +7,11 @@ import android.bluetooth.BluetoothGattService;
 import android.support.annotation.NonNull;
 
 import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
-import com.george.medicmetrics.behavior.characteristic.RealGattCharacteristic;
+import com.george.medicmetrics.behavior.characteristic.RealBluetoothGattCharacteristic;
 import com.george.medicmetrics.behavior.descriptor.Descriptor;
-import com.george.medicmetrics.behavior.descriptor.RealDescriptor;
+import com.george.medicmetrics.behavior.descriptor.RealBluetoothDescriptor;
 import com.george.medicmetrics.behavior.service.GattService;
-import com.george.medicmetrics.behavior.service.RealGattService;
+import com.george.medicmetrics.behavior.service.RealBluetoothGattService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class RealBluetoothGatt implements Gatt {
         List<BluetoothGattService> bluetoothGattServiceList = mBluetoothGatt.getServices();
         List<GattService> gattServiceList = new ArrayList<>();
         for (BluetoothGattService bluetoothGattService : bluetoothGattServiceList) {
-            GattService gattService = new RealGattService(bluetoothGattService);
+            GattService gattService = new RealBluetoothGattService(bluetoothGattService);
             gattServiceList.add(gattService);
         }
         return gattServiceList;
@@ -43,19 +43,19 @@ public class RealBluetoothGatt implements Gatt {
 
     @Override
     public void readCharacteristic(@NonNull GattCharacteristic gattCharacteristic) {
-        BluetoothGattCharacteristic bluetoothGattCharacteristic = ((RealGattCharacteristic) gattCharacteristic).getBluetoothGattCharacteristic();
+        BluetoothGattCharacteristic bluetoothGattCharacteristic = ((RealBluetoothGattCharacteristic) gattCharacteristic).getBluetoothGattCharacteristic();
         mBluetoothGatt.readCharacteristic(bluetoothGattCharacteristic);
     }
 
     @Override
     public void notifyCharacteristic(@NonNull GattCharacteristic gattCharacteristic, boolean enabled) {
-        BluetoothGattCharacteristic bluetoothGattCharacteristic = ((RealGattCharacteristic) gattCharacteristic).getBluetoothGattCharacteristic();
+        BluetoothGattCharacteristic bluetoothGattCharacteristic = ((RealBluetoothGattCharacteristic) gattCharacteristic).getBluetoothGattCharacteristic();
         mBluetoothGatt.setCharacteristicNotification(bluetoothGattCharacteristic, enabled);
     }
 
     @Override
     public void writeDescriptor(@NonNull Descriptor descriptor) {
-        BluetoothGattDescriptor bluetoothGattDescriptor = ((RealDescriptor) descriptor).getBluetoothGattDescriptor();
+        BluetoothGattDescriptor bluetoothGattDescriptor = ((RealBluetoothDescriptor) descriptor).getBluetoothGattDescriptor();
         mBluetoothGatt.writeDescriptor(bluetoothGattDescriptor);
     }
 

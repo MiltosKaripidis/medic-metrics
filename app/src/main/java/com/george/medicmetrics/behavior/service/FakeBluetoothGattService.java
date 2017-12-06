@@ -7,12 +7,12 @@ import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
 import java.util.List;
 import java.util.UUID;
 
-public class FakeGattService implements GattService {
+public class FakeBluetoothGattService implements GattService {
 
     private String mUuid;
     private List<GattCharacteristic> mGattCharacteristicList;
 
-    public FakeGattService(String uuid, List<GattCharacteristic> gattCharacteristicList) {
+    public FakeBluetoothGattService(String uuid, List<GattCharacteristic> gattCharacteristicList) {
         mUuid = uuid;
         mGattCharacteristicList = gattCharacteristicList;
     }

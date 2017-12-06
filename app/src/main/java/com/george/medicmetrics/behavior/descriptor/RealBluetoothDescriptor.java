@@ -3,11 +3,11 @@ package com.george.medicmetrics.behavior.descriptor;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.support.annotation.NonNull;
 
-public class RealDescriptor implements Descriptor {
+public class RealBluetoothDescriptor implements Descriptor {
 
     private BluetoothGattDescriptor mBluetoothGattDescriptor;
 
-    public RealDescriptor(BluetoothGattDescriptor bluetoothGattDescriptor) {
+    public RealBluetoothDescriptor(BluetoothGattDescriptor bluetoothGattDescriptor) {
         mBluetoothGattDescriptor = bluetoothGattDescriptor;
     }
 

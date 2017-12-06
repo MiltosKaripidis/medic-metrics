@@ -12,7 +12,7 @@ import com.george.medicmetrics.behavior.gatt.ConnectGattCallback;
 import com.george.medicmetrics.behavior.gatt.Gatt;
 import com.george.medicmetrics.behavior.gatt.RealBluetoothGatt;
 import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
-import com.george.medicmetrics.behavior.characteristic.RealGattCharacteristic;
+import com.george.medicmetrics.behavior.characteristic.RealBluetoothGattCharacteristic;
 
 public class RealBluetoothDevice implements Device {
 
@@ -48,13 +48,13 @@ public class RealBluetoothDevice implements Device {
 
             @Override
             public void onCharacteristicRead(BluetoothGatt bluetoothGatt, BluetoothGattCharacteristic characteristic, int status) {
-                GattCharacteristic gattCharacteristic = new RealGattCharacteristic(characteristic);
+                GattCharacteristic gattCharacteristic = new RealBluetoothGattCharacteristic(characteristic);
                 callback.onCharacteristicRead(new RealBluetoothGatt(bluetoothGatt), gattCharacteristic, status);
             }
 
             @Override
             public void onCharacteristicChanged(BluetoothGatt bluetoothGatt, BluetoothGattCharacteristic characteristic) {
-                GattCharacteristic gattCharacteristic = new RealGattCharacteristic(characteristic);
+                GattCharacteristic gattCharacteristic = new RealBluetoothGattCharacteristic(characteristic);
                 callback.onCharacteristicChanged(new RealBluetoothGatt(bluetoothGatt), gattCharacteristic);
             }
         });

@@ -5,17 +5,17 @@ import android.bluetooth.BluetoothGattService;
 import android.support.annotation.NonNull;
 
 import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
-import com.george.medicmetrics.behavior.characteristic.RealGattCharacteristic;
+import com.george.medicmetrics.behavior.characteristic.RealBluetoothGattCharacteristic;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class RealGattService implements GattService {
+public class RealBluetoothGattService implements GattService {
 
     private BluetoothGattService mBluetoothGattService;
 
-    public RealGattService(BluetoothGattService bluetoothGattService) {
+    public RealBluetoothGattService(BluetoothGattService bluetoothGattService) {
         mBluetoothGattService = bluetoothGattService;
     }
 
@@ -31,7 +31,7 @@ public class RealGattService implements GattService {
         List<BluetoothGattCharacteristic> bluetoothGattCharacteristicList = mBluetoothGattService.getCharacteristics();
         List<GattCharacteristic> gattCharacteristicList = new ArrayList<>();
         for (BluetoothGattCharacteristic bluetoothGattCharacteristic : bluetoothGattCharacteristicList) {
-            GattCharacteristic gattCharacteristic = new RealGattCharacteristic(bluetoothGattCharacteristic);
+            GattCharacteristic gattCharacteristic = new RealBluetoothGattCharacteristic(bluetoothGattCharacteristic);
             gattCharacteristicList.add(gattCharacteristic);
         }
         return gattCharacteristicList;
