@@ -35,7 +35,7 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
 
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
+        public void onServiceConnected(@NonNull ComponentName name, @NonNull IBinder service) {
             ConnectDeviceService.LocalBinder localBinder = (ConnectDeviceService.LocalBinder) service;
             mDeviceConnection = localBinder.getService();
             mDeviceConnection.connect(mDeviceAddress);
@@ -43,14 +43,14 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
         }
 
         @Override
-        public void onServiceDisconnected(ComponentName name) {
+        public void onServiceDisconnected(@NonNull ComponentName name) {
             mBound = false;
         }
     };
 
     private BroadcastReceiver mGattReceiver = new BroadcastReceiver() {
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(@NonNull Context context, @NonNull Intent intent) {
             String action = intent.getAction();
             if (action == null) return;
             switch (action) {
