@@ -5,8 +5,8 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.george.medicmetrics.behavior.adapter.Adapter;
-import com.george.medicmetrics.behavior.adapter.RealBluetoothAdapter;
+import com.george.medicmetrics.bluetooth.adapter.Adapter;
+import com.george.medicmetrics.bluetooth.adapter.RealBluetoothAdapter;
 
 public class Injection {
 

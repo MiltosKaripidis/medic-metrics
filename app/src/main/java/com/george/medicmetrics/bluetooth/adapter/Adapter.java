@@ -1,9 +1,9 @@
-package com.george.medicmetrics.behavior.adapter;
+package com.george.medicmetrics.bluetooth.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.george.medicmetrics.behavior.device.Device;
+import com.george.medicmetrics.bluetooth.device.Device;
 
 public interface Adapter {
 

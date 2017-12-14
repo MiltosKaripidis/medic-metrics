@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.george.medicmetrics.R;
-import com.george.medicmetrics.behavior.device.Device;
+import com.george.medicmetrics.bluetooth.device.Device;
 
 import java.util.List;
 

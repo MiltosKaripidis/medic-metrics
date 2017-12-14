@@ -1,4 +1,4 @@
-package com.george.medicmetrics.behavior.gatt;
+package com.george.medicmetrics.bluetooth.gatt;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -6,12 +6,12 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.support.annotation.NonNull;
 
-import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
-import com.george.medicmetrics.behavior.characteristic.RealBluetoothGattCharacteristic;
-import com.george.medicmetrics.behavior.descriptor.Descriptor;
-import com.george.medicmetrics.behavior.descriptor.RealBluetoothDescriptor;
-import com.george.medicmetrics.behavior.service.GattService;
-import com.george.medicmetrics.behavior.service.RealBluetoothGattService;
+import com.george.medicmetrics.bluetooth.characteristic.GattCharacteristic;
+import com.george.medicmetrics.bluetooth.characteristic.RealBluetoothGattCharacteristic;
+import com.george.medicmetrics.bluetooth.descriptor.Descriptor;
+import com.george.medicmetrics.bluetooth.descriptor.RealBluetoothDescriptor;
+import com.george.medicmetrics.bluetooth.service.GattService;
+import com.george.medicmetrics.bluetooth.service.RealBluetoothGattService;
 
 import java.util.ArrayList;
 import java.util.List;

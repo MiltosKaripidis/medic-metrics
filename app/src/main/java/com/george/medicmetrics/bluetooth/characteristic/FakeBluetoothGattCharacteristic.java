@@ -1,10 +1,10 @@
-package com.george.medicmetrics.behavior.characteristic;
+package com.george.medicmetrics.bluetooth.characteristic;
 
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.george.medicmetrics.behavior.descriptor.Descriptor;
+import com.george.medicmetrics.bluetooth.descriptor.Descriptor;
 
 import java.util.List;
 import java.util.UUID;

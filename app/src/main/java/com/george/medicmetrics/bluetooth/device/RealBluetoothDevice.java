@@ -1,4 +1,4 @@
-package com.george.medicmetrics.behavior.device;
+package com.george.medicmetrics.bluetooth.device;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -8,11 +8,11 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.george.medicmetrics.behavior.gatt.ConnectGattCallback;
-import com.george.medicmetrics.behavior.gatt.Gatt;
-import com.george.medicmetrics.behavior.gatt.RealBluetoothGatt;
-import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
-import com.george.medicmetrics.behavior.characteristic.RealBluetoothGattCharacteristic;
+import com.george.medicmetrics.bluetooth.gatt.ConnectGattCallback;
+import com.george.medicmetrics.bluetooth.gatt.Gatt;
+import com.george.medicmetrics.bluetooth.gatt.RealBluetoothGatt;
+import com.george.medicmetrics.bluetooth.characteristic.GattCharacteristic;
+import com.george.medicmetrics.bluetooth.characteristic.RealBluetoothGattCharacteristic;
 
 public class RealBluetoothDevice implements Device {
 

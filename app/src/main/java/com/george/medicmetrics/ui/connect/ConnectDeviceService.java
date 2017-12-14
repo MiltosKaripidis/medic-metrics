@@ -7,12 +7,12 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.george.medicmetrics.behavior.adapter.Adapter;
-import com.george.medicmetrics.behavior.device.Device;
-import com.george.medicmetrics.behavior.gatt.ConnectGattCallback;
-import com.george.medicmetrics.behavior.gatt.Gatt;
-import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
-import com.george.medicmetrics.behavior.service.GattService;
+import com.george.medicmetrics.bluetooth.adapter.Adapter;
+import com.george.medicmetrics.bluetooth.device.Device;
+import com.george.medicmetrics.bluetooth.gatt.ConnectGattCallback;
+import com.george.medicmetrics.bluetooth.gatt.Gatt;
+import com.george.medicmetrics.bluetooth.characteristic.GattCharacteristic;
+import com.george.medicmetrics.bluetooth.service.GattService;
 import com.george.medicmetrics.injection.Injection;
 import com.george.medicmetrics.ui.base.BaseService;
 

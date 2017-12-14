@@ -1,12 +1,12 @@
-package com.george.medicmetrics.behavior.gatt;
+package com.george.medicmetrics.bluetooth.gatt;
 
 import android.bluetooth.BluetoothGatt;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 
-import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
-import com.george.medicmetrics.behavior.descriptor.Descriptor;
-import com.george.medicmetrics.behavior.service.GattService;
+import com.george.medicmetrics.bluetooth.characteristic.GattCharacteristic;
+import com.george.medicmetrics.bluetooth.descriptor.Descriptor;
+import com.george.medicmetrics.bluetooth.service.GattService;
 
 import java.util.List;
 import java.util.concurrent.Executors;

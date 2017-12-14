@@ -1,13 +1,13 @@
 package com.george.medicmetrics.ui.base;
 
-import com.george.medicmetrics.behavior.device.Device;
-import com.george.medicmetrics.behavior.device.FakeBluetoothDevice;
-import com.george.medicmetrics.behavior.gatt.FakeBluetoothGatt;
-import com.george.medicmetrics.behavior.gatt.Gatt;
-import com.george.medicmetrics.behavior.characteristic.FakeBluetoothGattCharacteristic;
-import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
-import com.george.medicmetrics.behavior.service.FakeBluetoothGattService;
-import com.george.medicmetrics.behavior.service.GattService;
+import com.george.medicmetrics.bluetooth.device.Device;
+import com.george.medicmetrics.bluetooth.device.FakeBluetoothDevice;
+import com.george.medicmetrics.bluetooth.gatt.FakeBluetoothGatt;
+import com.george.medicmetrics.bluetooth.gatt.Gatt;
+import com.george.medicmetrics.bluetooth.characteristic.FakeBluetoothGattCharacteristic;
+import com.george.medicmetrics.bluetooth.characteristic.GattCharacteristic;
+import com.george.medicmetrics.bluetooth.service.FakeBluetoothGattService;
+import com.george.medicmetrics.bluetooth.service.GattService;
 import com.george.medicmetrics.ui.connect.ConnectDeviceService;
 
 import org.junit.Before;

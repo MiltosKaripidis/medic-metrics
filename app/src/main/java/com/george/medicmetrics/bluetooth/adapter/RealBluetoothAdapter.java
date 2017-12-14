@@ -1,12 +1,12 @@
-package com.george.medicmetrics.behavior.adapter;
+package com.george.medicmetrics.bluetooth.adapter;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.george.medicmetrics.behavior.device.Device;
-import com.george.medicmetrics.behavior.device.RealBluetoothDevice;
+import com.george.medicmetrics.bluetooth.device.Device;
+import com.george.medicmetrics.bluetooth.device.RealBluetoothDevice;
 
 public class RealBluetoothAdapter implements Adapter {
 

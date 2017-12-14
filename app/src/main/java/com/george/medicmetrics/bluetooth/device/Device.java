@@ -1,11 +1,11 @@
-package com.george.medicmetrics.behavior.device;
+package com.george.medicmetrics.bluetooth.device;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.george.medicmetrics.behavior.gatt.ConnectGattCallback;
-import com.george.medicmetrics.behavior.gatt.Gatt;
+import com.george.medicmetrics.bluetooth.gatt.ConnectGattCallback;
+import com.george.medicmetrics.bluetooth.gatt.Gatt;
 
 public interface Device {
 

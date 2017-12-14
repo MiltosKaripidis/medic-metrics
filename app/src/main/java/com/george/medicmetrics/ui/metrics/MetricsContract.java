@@ -3,8 +3,8 @@ package com.george.medicmetrics.ui.metrics;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
-import com.george.medicmetrics.behavior.service.GattService;
+import com.george.medicmetrics.bluetooth.characteristic.GattCharacteristic;
+import com.george.medicmetrics.bluetooth.service.GattService;
 import com.george.medicmetrics.ui.base.BaseContract;
 
 import java.util.List;

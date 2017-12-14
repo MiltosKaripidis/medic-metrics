@@ -1,4 +1,4 @@
-package com.george.medicmetrics.behavior.descriptor;
+package com.george.medicmetrics.bluetooth.descriptor;
 
 import android.support.annotation.NonNull;
 

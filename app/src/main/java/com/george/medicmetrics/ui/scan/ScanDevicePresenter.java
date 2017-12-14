@@ -5,8 +5,8 @@ import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 
-import com.george.medicmetrics.behavior.adapter.Adapter;
-import com.george.medicmetrics.behavior.device.Device;
+import com.george.medicmetrics.bluetooth.adapter.Adapter;
+import com.george.medicmetrics.bluetooth.device.Device;
 import com.george.medicmetrics.ui.base.BasePresenter;
 
 import java.util.ArrayList;

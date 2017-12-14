@@ -1,4 +1,4 @@
-package com.george.medicmetrics.behavior.device;
+package com.george.medicmetrics.bluetooth.device;
 
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
@@ -6,9 +6,9 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.george.medicmetrics.behavior.gatt.ConnectGattCallback;
-import com.george.medicmetrics.behavior.gatt.FakeBluetoothGatt;
-import com.george.medicmetrics.behavior.gatt.Gatt;
+import com.george.medicmetrics.bluetooth.gatt.ConnectGattCallback;
+import com.george.medicmetrics.bluetooth.gatt.FakeBluetoothGatt;
+import com.george.medicmetrics.bluetooth.gatt.Gatt;
 
 public class FakeBluetoothDevice implements Device {
 

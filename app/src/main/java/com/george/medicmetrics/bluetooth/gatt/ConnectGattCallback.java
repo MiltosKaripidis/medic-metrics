@@ -1,8 +1,8 @@
-package com.george.medicmetrics.behavior.gatt;
+package com.george.medicmetrics.bluetooth.gatt;
 
 import android.support.annotation.NonNull;
 
-import com.george.medicmetrics.behavior.characteristic.GattCharacteristic;
+import com.george.medicmetrics.bluetooth.characteristic.GattCharacteristic;
 
 public interface ConnectGattCallback {
 

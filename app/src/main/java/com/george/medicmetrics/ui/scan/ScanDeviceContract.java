@@ -2,7 +2,7 @@ package com.george.medicmetrics.ui.scan;
 
 import android.support.annotation.NonNull;
 
-import com.george.medicmetrics.behavior.device.Device;
+import com.george.medicmetrics.bluetooth.device.Device;
 import com.george.medicmetrics.ui.base.BaseContract;
 
 import java.util.List;
