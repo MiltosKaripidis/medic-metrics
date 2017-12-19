@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.george.medicmetrics.R;
 import com.george.medicmetrics.objects.Tile;
+import com.george.medicmetrics.ui.anamnesis.AnamnesisActivity;
 import com.george.medicmetrics.ui.base.BaseFragment;
 import com.george.medicmetrics.ui.scan.ScanDeviceActivity;
 
@@ -65,6 +66,12 @@ public class DashboardFragment extends BaseFragment<DashboardContract.Presenter>
     @Override
     public void openScan() {
         Intent intent = ScanDeviceActivity.newIntent(getContext());
+        startActivity(intent);
+    }
+
+    @Override
+    public void openAnamnesis() {
+        Intent intent = AnamnesisActivity.newIntent(getContext(), 1);
         startActivity(intent);
     }
 }

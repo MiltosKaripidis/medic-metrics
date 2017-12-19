@@ -1,14 +1,27 @@
 <resources>
     <string name="app_name">Medic Metrics</string>
-    <string name="heart_rate">Heart rate:</string>
-    <string name="format_heart_rate">%1$s bpm</string>
-    <string name="not_available">n/a</string>
-    <string name="body_temperature">Body temperature:</string>
-    <string name="format_body_temperature">%1$s C</string>
+
+    <!-- Scan-->
     <string name="no_available_devices">No available devices</string>
     <string name="location_dialog">Bluetooth needs the GPS enabled in order to scan devices properly.</string>
     <string name="enable">Enable</string>
     <string name="cancel">Cancel</string>
     <string name="connected">Connected to %1$s</string>
     <string name="disconnected">Disconnected</string>
+
+    <!-- Connect-->
+    <string name="heart_rate">Heart rate:</string>
+    <string name="body_temperature">Body temperature:</string>
+    <string name="format_body_temperature">%1$s \u2103</string>
+
+    <!-- Metrics-->
+    <string name="format_heart_rate">%1$s bpm</string>
+    <string name="not_available">n/a</string>
+
+    <!-- Report-->
+    <string name="blood_oxygen">Blood Oxygen:</string>
+    <string name="respiratory_rate">Respiratory rate:</string>
+    <string name="systolic_blood_pressure">Systolic Blood Pressure:</string>
+    <string name="score">Score:</string>
+    <string name="no_registered_records">No registered records</string>
 </resources>

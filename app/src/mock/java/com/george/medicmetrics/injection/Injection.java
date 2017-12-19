@@ -15,12 +15,18 @@ import com.george.medicmetrics.bluetooth.gatt.FakeBluetoothGatt;
 import com.george.medicmetrics.bluetooth.gatt.Gatt;
 import com.george.medicmetrics.bluetooth.service.FakeBluetoothGattService;
 import com.george.medicmetrics.bluetooth.service.GattService;
+import com.george.medicmetrics.data.DataSource;
+import com.george.medicmetrics.data.FakeRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class Injection {
+
+    public static DataSource provideDataSource(Context context) {
+        return FakeRepository.getInstance();
+    }
 
     @NonNull
     public static Adapter provideAdapter(@NonNull Context context) {

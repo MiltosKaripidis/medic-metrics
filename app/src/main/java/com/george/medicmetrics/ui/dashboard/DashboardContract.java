@@ -7,6 +7,8 @@ interface DashboardContract {
     interface View extends BaseContract.View {
 
         void openScan();
+
+        void openAnamnesis();
     }
 
     interface Presenter extends BaseContract.Presenter<View> {

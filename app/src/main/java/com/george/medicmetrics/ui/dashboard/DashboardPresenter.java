@@ -15,6 +15,7 @@ class DashboardPresenter extends BasePresenter<DashboardContract.View> implement
                 mView.openScan();
                 break;
             case ID_AMNESIS:
+                mView.openAnamnesis();
                 break;
             case ID_ABOUT:
                 break;
