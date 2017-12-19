@@ -35,6 +35,13 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
         }
     };
 
+    private Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            stopScanning();
+        }
+    };
+
     ScanDevicePresenter(@NonNull Handler handler,
                         @NonNull Adapter adapter,
                         @NonNull Executor executor) {
@@ -42,6 +49,12 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
         mAdapter = adapter;
         mExecutor = executor;
         mDeviceList = new ArrayList<>();
+    }
+
+    @Override
+    public void detachView() {
+        super.detachView();
+        mHandler.removeCallbacks(mRunnable);
     }
 
     @Override
@@ -100,12 +113,7 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
         mScanning = true;
 
         // Stops scanning after the given period.
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                stopScanning();
-            }
-        }, SCAN_PERIOD);
+        mHandler.postDelayed(mRunnable, SCAN_PERIOD);
 
         // Executes on a background thread.
         mExecutor.execute(new Runnable() {
@@ -118,13 +126,11 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
 
     @Override
     public void stopScanning() {
-        if (mView != null) {
-            mView.hideProgressIndicator();
-            if (mDeviceList.isEmpty()) {
-                mView.showEmptyDevices();
-            } else {
-                mView.hideEmptyDevices();
-            }
+        mView.hideProgressIndicator();
+        if (mDeviceList.isEmpty()) {
+            mView.showEmptyDevices();
+        } else {
+            mView.hideEmptyDevices();
         }
         mScanning = false;
         mAdapter.stopScanning(mScanDeviceCallback);

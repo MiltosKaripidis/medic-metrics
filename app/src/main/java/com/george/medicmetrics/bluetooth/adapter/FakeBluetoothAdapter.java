@@ -13,6 +13,19 @@ public class FakeBluetoothAdapter implements Adapter {
     private static final long EIMO_SCAN_DELAY = 4000;
     private Handler mHandler = new Handler();
     private List<Device> mDeviceList;
+    private ScanDeviceCallback mCallback;
+    private Runnable mSamsungRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mCallback.onDeviceScanned(mDeviceList.get(0));
+        }
+    };
+    private Runnable mEimoRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mCallback.onDeviceScanned(mDeviceList.get(1));
+        }
+    };
 
     public FakeBluetoothAdapter(List<Device> deviceList) {
         mDeviceList = deviceList;
@@ -29,19 +42,9 @@ public class FakeBluetoothAdapter implements Adapter {
             throw new IllegalArgumentException("ScanDeviceCallback == null");
         }
 
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                callback.onDeviceScanned(mDeviceList.get(0));
-            }
-        }, SAMSUNG_SCAN_DELAY);
-
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                callback.onDeviceScanned(mDeviceList.get(1));
-            }
-        }, EIMO_SCAN_DELAY);
+        mCallback = callback;
+        mHandler.postDelayed(mSamsungRunnable, SAMSUNG_SCAN_DELAY);
+        mHandler.postDelayed(mEimoRunnable, EIMO_SCAN_DELAY);
     }
 
     @Override
@@ -49,6 +52,9 @@ public class FakeBluetoothAdapter implements Adapter {
         if (callback == null) {
             throw new IllegalArgumentException("ScanDeviceCallback == null");
         }
+
+        mHandler.removeCallbacks(mSamsungRunnable);
+        mHandler.removeCallbacks(mEimoRunnable);
     }
 
     @Nullable
