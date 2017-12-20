@@ -12,10 +12,9 @@
     <!-- Connect-->
     <string name="heart_rate">Heart rate:</string>
     <string name="body_temperature">Body temperature:</string>
-    <string name="format_body_temperature">%1$s \u2103</string>
 
     <!-- Metrics-->
-    <string name="format_heart_rate">%1$s bpm</string>
+    <string name="format_bpm">%1$s bpm</string>
     <string name="not_available">n/a</string>
 
     <!-- Report-->
@@ -24,4 +23,6 @@
     <string name="systolic_blood_pressure">Systolic Blood Pressure:</string>
     <string name="score">Score:</string>
     <string name="no_registered_records">No registered records</string>
+    <string name="format_percent">%1$s%%</string>
+    <string name="format_celsius">%1$s  \u2103</string>
 </resources>

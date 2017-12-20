@@ -5,4 +5,9 @@
     <color name="colorAccent">#FF4081</color>
     <color name="primary_text">#DD000000</color>
     <color name="secondary_text">#89000000</color>
+    <color name="primary_light_text">#FFFFFF</color>
+    <color name="secondary_light_text">#B3FFFFFF</color>
+    <color name="red">#F44336</color>
+    <color name="orange">#FF9800</color>
+    <color name="green">#4CAF50</color>
 </resources>

@@ -178,13 +178,13 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
 
     @Override
     public void showHeartRate(@NonNull String bpm) {
-        String heartRate = getString(R.string.format_heart_rate, bpm);
+        String heartRate = getString(R.string.format_bpm, bpm);
         mHeartRateTextView.setText(heartRate);
     }
 
     @Override
     public void showBodyTemperature(@NonNull String temperature) {
-        String bodyTemperature = getString(R.string.format_body_temperature, temperature);
+        String bodyTemperature = getString(R.string.format_celsius, temperature);
         mBodyTemperatureTextView.setText(bodyTemperature);
     }
 }

@@ -29,6 +29,9 @@
         <activity
             android:name=".ui.anamnesis.AnamnesisActivity"
             android:parentActivityName=".ui.dashboard.DashboardActivity" />
+        <activity
+            android:name=".ui.report.ReportActivity"
+            android:parentActivityName=".ui.anamnesis.AnamnesisActivity" />
 
         <service android:name=".ui.connect.ConnectDeviceService" />
     </application>

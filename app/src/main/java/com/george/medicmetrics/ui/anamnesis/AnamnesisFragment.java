@@ -1,5 +1,6 @@
 package com.george.medicmetrics.ui.anamnesis;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.george.medicmetrics.data.DataSource;
 import com.george.medicmetrics.injection.Injection;
 import com.george.medicmetrics.objects.Record;
 import com.george.medicmetrics.ui.base.BaseFragment;
+import com.george.medicmetrics.ui.report.ReportActivity;
 
 import java.util.List;
 
@@ -66,7 +68,9 @@ public class AnamnesisFragment extends BaseFragment<AnamnesisContract.Presenter>
         mAnamnesisAdapter = new AnamnesisAdapter(null, new AnamnesisAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(int recordId) {
-                // TODO: Open record
+                int patientId = getArguments().getInt(ARG_PATIENT_ID);
+                Intent intent = ReportActivity.newIntent(getContext(), patientId, recordId);
+                startActivity(intent);
             }
         });
 
