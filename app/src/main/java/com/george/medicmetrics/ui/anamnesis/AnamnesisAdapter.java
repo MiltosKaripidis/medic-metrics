@@ -1,6 +1,7 @@
 package com.george.medicmetrics.ui.anamnesis;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,9 @@ class AnamnesisAdapter extends RecyclerView.Adapter<AnamnesisAdapter.RecordHolde
     public void onBindViewHolder(RecordHolder holder, int position) {
         final Record record = mRecordList.get(position);
         String score = String.valueOf(record.getScore());
+        Context context = holder.itemView.getContext();
+        int color = context.getResources().getColor(changeCardColor(record.getScore()));
+        holder.cardView.setCardBackgroundColor(color);
         holder.scoreTextView.setText(score);
         holder.timestampTextView.setText(record.getTimestamp());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +49,18 @@ class AnamnesisAdapter extends RecyclerView.Adapter<AnamnesisAdapter.RecordHolde
                 mOnItemClickListener.onItemClicked(record.getId());
             }
         });
+    }
+
+    private int changeCardColor(int score) {
+        if (score == 3 || score == 4) {
+            return R.color.green;
+        } else if (score == 5 || score == 6) {
+            return R.color.orange;
+        } else if (score >= 7) {
+            return R.color.red;
+        } else {
+            return 0;
+        }
     }
 
     @Override
@@ -59,12 +75,14 @@ class AnamnesisAdapter extends RecyclerView.Adapter<AnamnesisAdapter.RecordHolde
 
     static class RecordHolder extends RecyclerView.ViewHolder {
 
+        private CardView cardView;
         private TextView scoreTextView;
         private TextView timestampTextView;
 
         RecordHolder(View itemView) {
             super(itemView);
 
+            cardView = itemView.findViewById(R.id.card_view);
             scoreTextView = itemView.findViewById(R.id.score_text_view);
             timestampTextView = itemView.findViewById(R.id.timestamp_text_view);
         }

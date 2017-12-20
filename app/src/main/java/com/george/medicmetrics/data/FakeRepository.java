@@ -44,9 +44,20 @@ public class FakeRepository implements DataSource {
         record2.setScore(8);
         record2.setTimestamp("17/11/17 09:57");
 
+        Record record3 = new Record();
+        record3.setId(3);
+        record3.setRespiratoryRate(11);
+        record3.setBloodOxygen(82);
+        record3.setBodyTemperature(37.1);
+        record3.setSystolicBloodPressure(110);
+        record3.setHearRate(83);
+        record3.setScore(5);
+        record3.setTimestamp("20/12/17 15:59");
+
         List<Record> recordList = new ArrayList<>();
         recordList.add(record);
         recordList.add(record2);
+        recordList.add(record3);
 
         Patient patient = new Patient();
         patient.setId(1);
