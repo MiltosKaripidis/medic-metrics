@@ -13,11 +13,13 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,13 +62,23 @@ public class ScanDeviceFragment extends BaseFragment<ScanDeviceContract.Presente
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_scan_device, container, false);
-
+        setupToolbar(view);
         setupRefreshLayout(view);
         mEmptyTextView = view.findViewById(R.id.empty_text_view);
         setupAdapter();
         setupRecyclerView(view);
 
         return view;
+    }
+
+    private void setupToolbar(View view) {
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavUtils.navigateUpFromSameTask(getActivity());
+            }
+        });
     }
 
     private void setupRefreshLayout(@NonNull View view) {

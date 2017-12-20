@@ -24,7 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.scan.ScanDeviceActivity" />
+        <activity
+            android:name=".ui.scan.ScanDeviceActivity"
+            android:parentActivityName=".ui.dashboard.DashboardActivity" />
         <activity android:name=".ui.metrics.MetricsActivity" />
         <activity
             android:name=".ui.anamnesis.AnamnesisActivity"
