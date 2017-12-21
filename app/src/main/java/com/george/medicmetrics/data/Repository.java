@@ -34,6 +34,17 @@ public class Repository implements DataSource {
     }
 
     @Override
+    public void login(@NonNull String username, @NonNull String password, @NonNull Callback<Integer> callback) {
+        int patientId = mLocalRepository.getPatient(username, password);
+        if (patientId == -1) {
+            callback.onFailure();
+            return;
+        }
+
+        callback.onSuccess(patientId);
+    }
+
+    @Override
     public void setPatient(@NonNull Patient patient) {
         mLocalRepository.savePatient(patient);
     }

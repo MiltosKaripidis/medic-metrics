@@ -9,10 +9,10 @@ public interface DatabaseSchema {
 
         String NAME = "patient";
         String CREATE = "create table if not exists " + NAME + " ( "
-                + Column.ID + " integer primary key"
-                + Column.NAME + " text "
-                + Column.LAST_NAME + " text "
-                + Column.USERNAME + " text "
+                + Column.ID + " integer primary key, "
+                + Column.NAME + " text, "
+                + Column.LAST_NAME + " text, "
+                + Column.USERNAME + " text, "
                 + Column.PASSWORD + " text"
                 + ")";
 

@@ -35,6 +35,11 @@ class AnamnesisPresenter extends BasePresenter<AnamnesisContract.View> implement
                 List<Record> recordList = new ArrayList<>();
                 mView.showAnamnesis(patient == null ? recordList : patient.getRecordList());
             }
+
+            @Override
+            public void onFailure() {
+                // Do nothing
+            }
         });
     }
 

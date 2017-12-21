@@ -35,6 +35,11 @@ public class FakeRepository implements DataSource {
     }
 
     @Override
+    public void login(@NonNull String username, @NonNull String password, @NonNull Callback<Integer> callback) {
+        // TODO: Implement
+    }
+
+    @Override
     public void setPatient(@NonNull Patient patient) {
         // Do nothing
     }

@@ -35,6 +35,11 @@ class ReportPresenter extends BasePresenter<ReportContract.View> implements Repo
                 showMetrics(record);
                 changeCardColor(record.getScore());
             }
+
+            @Override
+            public void onFailure() {
+                // Do nothing
+            }
         });
     }
 

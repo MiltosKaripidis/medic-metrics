@@ -44,6 +44,11 @@ class LoginPresenter extends BasePresenter<LoginContract.View> implements LoginC
                     mView.showInvalidUser();
                 }
             }
+
+            @Override
+            public void onFailure() {
+                // Do nothing
+            }
         });
     }
 

@@ -2,6 +2,7 @@ package com.george.medicmetrics.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
@@ -32,5 +33,20 @@ public class LocalRepository extends SQLiteOpenHelper {
         contentValues.put(DatabaseSchema.PatientTable.Column.PASSWORD, patient.getPassword());
 
         getWritableDatabase().insert(DatabaseSchema.PatientTable.NAME, null, contentValues);
+    }
+
+    int getPatient(@NonNull String username, @NonNull String password) {
+        int patientId = -1;
+        String query = "select * from " + DatabaseSchema.PatientTable.NAME
+                + " where " + DatabaseSchema.PatientTable.Column.USERNAME + " = " + username
+                + " and " + DatabaseSchema.PatientTable.Column.PASSWORD + " = " + password;
+
+        Cursor cursor = getReadableDatabase().rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            patientId = cursor.getInt(cursor.getColumnIndex(DatabaseSchema.PatientTable.Column.ID));
+        }
+        cursor.close();
+
+        return patientId;
     }
 }
