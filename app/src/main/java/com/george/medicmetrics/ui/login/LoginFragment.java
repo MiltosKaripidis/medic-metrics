@@ -1,5 +1,6 @@
 package com.george.medicmetrics.ui.login;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,9 +17,11 @@ import com.george.medicmetrics.data.DataSource;
 import com.george.medicmetrics.injection.Injection;
 import com.george.medicmetrics.ui.base.BaseFragment;
 import com.george.medicmetrics.ui.dashboard.DashboardActivity;
+import com.george.medicmetrics.ui.register.RegisterActivity;
 
 public class LoginFragment extends BaseFragment<LoginContract.Presenter> implements LoginContract.View {
 
+    private static final int REQUEST_REGISTER = 1;
     private TextInputEditText mUsernameEditText;
     private TextInputEditText mPasswordEditText;
 
@@ -33,6 +36,15 @@ public class LoginFragment extends BaseFragment<LoginContract.Presenter> impleme
         return new LoginFragment();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_REGISTER && resultCode == Activity.RESULT_OK) {
+            View view = getView();
+            if (view == null) return;
+            Snackbar.make(view, R.string.register_successful, Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,6 +52,7 @@ public class LoginFragment extends BaseFragment<LoginContract.Presenter> impleme
         mUsernameEditText = view.findViewById(R.id.username_edit_text);
         mPasswordEditText = view.findViewById(R.id.password_edit_text);
         setupLoginButton(view);
+        setupRegisterButton(view);
         return view;
     }
 
@@ -51,6 +64,16 @@ public class LoginFragment extends BaseFragment<LoginContract.Presenter> impleme
                 String username = mUsernameEditText.getText().toString();
                 String password = mPasswordEditText.getText().toString();
                 mPresenter.login(username, password);
+            }
+        });
+    }
+
+    private void setupRegisterButton(View view) {
+        AppCompatButton registerButton = view.findViewById(R.id.register_button);
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openRegister();
             }
         });
     }
@@ -82,7 +105,8 @@ public class LoginFragment extends BaseFragment<LoginContract.Presenter> impleme
 
     @Override
     public void openRegister() {
-        // TODO: Implement
+        Intent intent = RegisterActivity.newIntent(getContext());
+        startActivityForResult(intent, REQUEST_REGISTER);
     }
 
     @Override
