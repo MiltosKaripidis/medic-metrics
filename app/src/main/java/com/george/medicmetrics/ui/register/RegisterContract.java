@@ -8,6 +8,8 @@ interface RegisterContract {
 
     interface View extends BaseContract.View {
 
+        void closeKeyboard();
+
         void showInvalidName();
 
         void showInvalidLastName();

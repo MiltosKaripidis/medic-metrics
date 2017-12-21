@@ -18,21 +18,25 @@ class RegisterPresenter extends BasePresenter<RegisterContract.View> implements 
     @Override
     public void register(@NonNull String name, @NonNull String lastName, @NonNull String username, @NonNull String password) {
         if (name.isEmpty()) {
+            mView.closeKeyboard();
             mView.showInvalidName();
             return;
         }
 
         if (lastName.isEmpty()) {
+            mView.closeKeyboard();
             mView.showInvalidLastName();
             return;
         }
 
         if (username.isEmpty()) {
+            mView.closeKeyboard();
             mView.showInvalidUsername();
             return;
         }
 
         if (password.isEmpty()) {
+            mView.closeKeyboard();
             mView.showInvalidPassword();
             return;
         }

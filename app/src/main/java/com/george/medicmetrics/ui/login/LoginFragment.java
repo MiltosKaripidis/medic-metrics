@@ -1,6 +1,7 @@
 package com.george.medicmetrics.ui.login;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import com.george.medicmetrics.R;
 import com.george.medicmetrics.data.DataSource;
@@ -86,6 +88,15 @@ public class LoginFragment extends BaseFragment<LoginContract.Presenter> impleme
     @Override
     public void showInvalidPassword() {
         mPasswordEditText.setError(getString(R.string.invalid_password));
+    }
+
+    @Override
+    public void closeKeyboard() {
+        View view = getActivity().getCurrentFocus();
+        if (view == null) return;
+
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override
