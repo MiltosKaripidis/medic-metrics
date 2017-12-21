@@ -11,6 +11,17 @@ public class Patient {
     private String mPassword;
     private List<Record> mRecordList;
 
+    public Patient() {
+        // Default constructor.
+    }
+
+    public Patient(String name, String lastName, String username, String password) {
+        mName = name;
+        mLastName = lastName;
+        mUsername = username;
+        mPassword = password;
+    }
+
     public int getId() {
         return mId;
     }

@@ -14,6 +14,8 @@ interface LoginContract {
 
         void showInvalidUser();
 
+        void closeKeyboard();
+
         void openDashboard();
 
         void openRegister();

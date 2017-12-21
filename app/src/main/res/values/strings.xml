@@ -32,4 +32,10 @@
     <string name="invalid_username">Invalid username</string>
     <string name="invalid_password">Invalid password</string>
     <string name="invalid_user">Invalid user</string>
+    <string name="name">Name</string>
+    <string name="last_name">Last name</string>
+    <string name="register">Register</string>
+    <string name="invalid_name">Invalid name</string>
+    <string name="invalid_last_name">Invalid last name</string>
+    <string name="register_successful">Register was successful</string>
 </resources>

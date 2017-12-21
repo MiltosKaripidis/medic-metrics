@@ -20,11 +20,13 @@ class LoginPresenter extends BasePresenter<LoginContract.View> implements LoginC
     @Override
     public void login(@NonNull final String username, @NonNull final String password) {
         if (username.isEmpty()) {
+            mView.closeKeyboard();
             mView.showInvalidUsername();
             return;
         }
 
         if (password.isEmpty()) {
+            mView.closeKeyboard();
             mView.showInvalidPassword();
             return;
         }
@@ -38,6 +40,7 @@ class LoginPresenter extends BasePresenter<LoginContract.View> implements LoginC
                     mDataSource.setUserLoggedIn();
                     mView.finish();
                 } else {
+                    mView.closeKeyboard();
                     mView.showInvalidUser();
                 }
             }
