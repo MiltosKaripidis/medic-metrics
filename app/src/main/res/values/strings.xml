@@ -25,4 +25,11 @@
     <string name="no_registered_records">No registered records</string>
     <string name="format_percent">%1$s%%</string>
     <string name="format_celsius">%1$s  \u2103</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="no_account_yet_create_one">No account yet? Create one</string>
+    <string name="invalid_username">Invalid username</string>
+    <string name="invalid_password">Invalid password</string>
+    <string name="invalid_user">Invalid user</string>
 </resources>

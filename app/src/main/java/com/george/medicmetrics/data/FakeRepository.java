@@ -1,5 +1,7 @@
 package com.george.medicmetrics.data;
 
+import android.support.annotation.NonNull;
+
 import com.george.medicmetrics.objects.Patient;
 import com.george.medicmetrics.objects.Record;
 
@@ -23,7 +25,22 @@ public class FakeRepository implements DataSource {
     }
 
     @Override
-    public void getPatientList(Callback<List<Patient>> callback) {
+    public void setUserLoggedIn() {
+        // Do nothing.
+    }
+
+    @Override
+    public boolean isUserLoggedIn() {
+        return false;
+    }
+
+    @Override
+    public void setPatient(@NonNull Patient patient) {
+        // Do nothing
+    }
+
+    @Override
+    public void getPatientList(@NonNull Callback<List<Patient>> callback) {
         Record record = new Record();
         record.setId(1);
         record.setRespiratoryRate(15);
@@ -61,6 +78,10 @@ public class FakeRepository implements DataSource {
 
         Patient patient = new Patient();
         patient.setId(1);
+        patient.setUsername("asdf");
+        patient.setPassword("fasd");
+        patient.setName("Takis");
+        patient.setLastName("Papadopoulos");
         patient.setRecordList(recordList);
 
         List<Patient> patientList = new ArrayList<>();

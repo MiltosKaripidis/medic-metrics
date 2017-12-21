@@ -6,6 +6,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/secondary_light_text</item>
     </style>
 
+    <style name="AppTheme.StatusBar.TextInputEditText" parent="@android:style/TextAppearance">
+        <!-- Label color-->
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
 </resources>
