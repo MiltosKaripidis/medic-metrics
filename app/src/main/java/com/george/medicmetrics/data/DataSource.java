@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface DataSource {
 
-    void setUserLoggedIn();
+    void setPatientId(int patientId);
 
     boolean isUserLoggedIn();
 
-    void login(@NonNull String username, @NonNull String password, @NonNull Callback<Integer> callback);
+    void validateUser(@NonNull String username, @NonNull String password, @NonNull Callback<Integer> callback);
 
     void setPatient(@NonNull Patient patient);
 

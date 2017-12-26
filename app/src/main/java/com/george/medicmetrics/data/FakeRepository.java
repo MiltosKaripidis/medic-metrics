@@ -25,8 +25,8 @@ public class FakeRepository implements DataSource {
     }
 
     @Override
-    public void setUserLoggedIn() {
-        // Do nothing.
+    public void setPatientId(int patientId) {
+        // TODO: Implement
     }
 
     @Override
@@ -35,7 +35,7 @@ public class FakeRepository implements DataSource {
     }
 
     @Override
-    public void login(@NonNull String username, @NonNull String password, @NonNull Callback<Integer> callback) {
+    public void validateUser(@NonNull String username, @NonNull String password, @NonNull Callback<Integer> callback) {
         // TODO: Implement
     }
 

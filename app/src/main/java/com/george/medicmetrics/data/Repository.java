@@ -9,32 +9,33 @@ import java.util.List;
 public class Repository implements DataSource {
 
     private LocalRepository mLocalRepository;
+    private PreferencesRepository mPreferencesRepository;
     private static Repository sInstance;
-    private boolean mUserLoggedIn;
 
-    private Repository(LocalRepository localRepository) {
+    private Repository(LocalRepository localRepository, PreferencesRepository preferencesRepository) {
         mLocalRepository = localRepository;
+        mPreferencesRepository = preferencesRepository;
     }
 
-    public static Repository getInstance(LocalRepository localRepository) {
+    public static Repository getInstance(LocalRepository localRepository, PreferencesRepository preferencesRepository) {
         if (sInstance == null) {
-            sInstance = new Repository(localRepository);
+            sInstance = new Repository(localRepository, preferencesRepository);
         }
         return sInstance;
     }
 
     @Override
-    public void setUserLoggedIn() {
-        mUserLoggedIn = true;
+    public void setPatientId(int patientId) {
+        mPreferencesRepository.setPatientId(patientId);
     }
 
     @Override
     public boolean isUserLoggedIn() {
-        return mUserLoggedIn;
+        return mPreferencesRepository.getPatientId() != -1;
     }
 
     @Override
-    public void login(@NonNull String username, @NonNull String password, @NonNull Callback<Integer> callback) {
+    public void validateUser(@NonNull String username, @NonNull String password, @NonNull Callback<Integer> callback) {
         int patientId = mLocalRepository.getPatient(username, password);
         if (patientId == -1) {
             callback.onFailure();

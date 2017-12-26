@@ -9,13 +9,14 @@ import com.george.medicmetrics.bluetooth.adapter.Adapter;
 import com.george.medicmetrics.bluetooth.adapter.RealBluetoothAdapter;
 import com.george.medicmetrics.data.DataSource;
 import com.george.medicmetrics.data.LocalRepository;
+import com.george.medicmetrics.data.PreferencesRepository;
 import com.george.medicmetrics.data.Repository;
 
 public class Injection {
 
     @NonNull
     public static DataSource provideDataSource(Context context) {
-        return Repository.getInstance(new LocalRepository(context));
+        return Repository.getInstance(new LocalRepository(context), new PreferencesRepository(context));
     }
 
     @NonNull
