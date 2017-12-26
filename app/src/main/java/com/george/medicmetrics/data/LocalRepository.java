@@ -38,8 +38,8 @@ public class LocalRepository extends SQLiteOpenHelper {
     int getPatient(@NonNull String username, @NonNull String password) {
         int patientId = -1;
         String query = "select * from " + DatabaseSchema.PatientTable.NAME
-                + " where " + DatabaseSchema.PatientTable.Column.USERNAME + " = " + username
-                + " and " + DatabaseSchema.PatientTable.Column.PASSWORD + " = " + password;
+                + " where " + DatabaseSchema.PatientTable.Column.USERNAME + " = '" + username + "'"
+                + " and " + DatabaseSchema.PatientTable.Column.PASSWORD + " = '" + password + "'";
 
         Cursor cursor = getReadableDatabase().rawQuery(query, null);
         if (cursor.moveToFirst()) {
