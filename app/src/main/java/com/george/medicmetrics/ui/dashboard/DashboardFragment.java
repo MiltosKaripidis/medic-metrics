@@ -11,9 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.george.medicmetrics.R;
+import com.george.medicmetrics.data.DataSource;
+import com.george.medicmetrics.injection.Injection;
 import com.george.medicmetrics.objects.Tile;
 import com.george.medicmetrics.ui.anamnesis.AnamnesisActivity;
 import com.george.medicmetrics.ui.base.BaseFragment;
+import com.george.medicmetrics.ui.login.LoginActivity;
 import com.george.medicmetrics.ui.scan.ScanDeviceActivity;
 
 import java.util.ArrayList;
@@ -28,7 +31,8 @@ public class DashboardFragment extends BaseFragment<DashboardContract.Presenter>
     @NonNull
     @Override
     protected DashboardContract.Presenter createPresenter() {
-        return new DashboardPresenter();
+        DataSource dataSource = Injection.provideDataSource(getContext());
+        return new DashboardPresenter(dataSource);
     }
 
     @Nullable
@@ -56,10 +60,12 @@ public class DashboardFragment extends BaseFragment<DashboardContract.Presenter>
         Tile measurementTile = new Tile(1, R.drawable.examine, "New Measurement");
         Tile anamnesisTile = new Tile(2, R.drawable.anamnesis, "Anamnesis");
         Tile aboutTile = new Tile(3, R.drawable.about, "About");
+        Tile logoutTile = new Tile(4, R.drawable.logout, "Logout");
         List<Tile> tileList = new ArrayList<>();
         tileList.add(measurementTile);
         tileList.add(anamnesisTile);
         tileList.add(aboutTile);
+        tileList.add(logoutTile);
         return tileList;
     }
 
@@ -73,5 +79,16 @@ public class DashboardFragment extends BaseFragment<DashboardContract.Presenter>
     public void openAnamnesis() {
         Intent intent = AnamnesisActivity.newIntent(getContext(), 1);
         startActivity(intent);
+    }
+
+    @Override
+    public void openLogin() {
+        Intent intent = LoginActivity.newIntent(getContext());
+        startActivity(intent);
+    }
+
+    @Override
+    public void finish() {
+        getActivity().finish();
     }
 }

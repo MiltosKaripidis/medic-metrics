@@ -9,6 +9,10 @@ interface DashboardContract {
         void openScan();
 
         void openAnamnesis();
+
+        void openLogin();
+
+        void finish();
     }
 
     interface Presenter extends BaseContract.Presenter<View> {
