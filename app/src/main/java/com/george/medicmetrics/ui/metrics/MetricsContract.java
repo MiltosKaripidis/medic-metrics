@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.george.medicmetrics.bluetooth.characteristic.GattCharacteristic;
 import com.george.medicmetrics.bluetooth.service.GattService;
+import com.george.medicmetrics.objects.Record;
 import com.george.medicmetrics.ui.base.BaseContract;
 
 import java.util.List;
@@ -34,6 +35,6 @@ interface MetricsContract {
 
         void handleGattServices(@Nullable List<GattService> gattServiceList);
 
-        void handleData(@NonNull String uuid, @NonNull String data);
+        void handleData(@NonNull String uuid, @NonNull Record record);
     }
 }

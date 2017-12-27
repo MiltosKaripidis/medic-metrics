@@ -1,12 +1,10 @@
 package com.george.medicmetrics.ui.connect;
 
 import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothProfile;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.george.medicmetrics.bluetooth.adapter.Adapter;
 import com.george.medicmetrics.bluetooth.characteristic.GattCharacteristic;
@@ -15,10 +13,10 @@ import com.george.medicmetrics.bluetooth.device.Device;
 import com.george.medicmetrics.bluetooth.gatt.ConnectGattCallback;
 import com.george.medicmetrics.bluetooth.gatt.Gatt;
 import com.george.medicmetrics.bluetooth.service.GattService;
+import com.george.medicmetrics.objects.Record;
 import com.george.medicmetrics.ui.base.BasePresenter;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> implements ConnectDeviceContract.Presenter {
@@ -47,17 +45,17 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
         public void onCharacteristicRead(@NonNull Gatt gatt, @NonNull GattCharacteristic characteristic, int status) {
             if (status != BluetoothGatt.GATT_SUCCESS) return;
             String uuid = characteristic.getUuid().toString();
-            String data = getData(uuid, characteristic);
-            if (data == null) return;
-            mView.broadcastAction(ConnectDeviceService.ACTION_DATA_AVAILABLE, uuid, data);
+            Record record = getRecord(uuid, characteristic);
+            if (record == null) return;
+            mView.broadcastAction(ConnectDeviceService.ACTION_DATA_AVAILABLE, uuid, record);
         }
 
         @Override
         public void onCharacteristicChanged(@NonNull Gatt gatt, @NonNull GattCharacteristic characteristic) {
             String uuid = characteristic.getUuid().toString();
-            String data = getData(uuid, characteristic);
-            if (data == null) return;
-            mView.broadcastAction(ConnectDeviceService.ACTION_DATA_AVAILABLE, uuid, data);
+            Record record = getRecord(uuid, characteristic);
+            if (record == null) return;
+            mView.broadcastAction(ConnectDeviceService.ACTION_DATA_AVAILABLE, uuid, record);
         }
     };
 
@@ -113,39 +111,40 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
     }
 
     @Nullable
-    private String getData(@NonNull String uuid, @NonNull GattCharacteristic characteristic) {
-        switch (uuid) {
-            case GattCharacteristic.UUID_HEART_RATE:
-                return getHeartRate(characteristic);
-            case GattCharacteristic.UUID_BODY_TEMPERATURE:
-                Log.d("ConnectDevicePresenter", "---Metrics---");
-                String heartRate = getEimoHeartRate(characteristic);
-                getBloodOxygen(characteristic);
-                getBloodPressureDiastolic(characteristic, Double.valueOf(heartRate));
-                getBloodPressureSystolic(characteristic, Double.valueOf(heartRate));
-                return getBodyTemperature(characteristic);
-            default:
-                return null;
+    private Record getRecord(@NonNull String uuid, @NonNull GattCharacteristic characteristic) {
+        if (uuid.equals(GattCharacteristic.UUID_BODY_TEMPERATURE)) {
+            double heartRate = getHeartRate(characteristic);
+            double bloodOxygen = getBloodOxygen(characteristic);
+            double bloodPressureSystolic = getBloodPressureSystolic(characteristic, heartRate);
+            double bodyTemperature = getBodyTemperature(characteristic);
+
+            Record record = new Record();
+            record.setHearRate(heartRate);
+            record.setBloodOxygen(bloodOxygen);
+            record.setSystolicBloodPressure(bloodPressureSystolic);
+            record.setBodyTemperature(bodyTemperature);
+            return record;
         }
+
+        return null;
     }
 
-    @NonNull
-    private String getHeartRate(@NonNull GattCharacteristic characteristic) {
-        int flag = characteristic.getProperties();
-        int format;
-        if ((flag & 0x01) != 0) {
-            format = BluetoothGattCharacteristic.FORMAT_UINT16;
-        } else {
-            format = BluetoothGattCharacteristic.FORMAT_UINT8;
-        }
-        Integer heartRate = characteristic.getIntValue(format, 1);
-        return String.valueOf(heartRate);
-    }
+//    @NonNull
+//    private String getHeartRate(@NonNull GattCharacteristic characteristic) {
+//        int flag = characteristic.getProperties();
+//        int format;
+//        if ((flag & 0x01) != 0) {
+//            format = BluetoothGattCharacteristic.FORMAT_UINT16;
+//        } else {
+//            format = BluetoothGattCharacteristic.FORMAT_UINT8;
+//        }
+//        Integer heartRate = characteristic.getIntValue(format, 1);
+//        return String.valueOf(heartRate);
+//    }
 
-    @NonNull
-    private String getEimoHeartRate(@NonNull GattCharacteristic characteristic) {
+    private double getHeartRate(@NonNull GattCharacteristic characteristic) {
         byte[] data = characteristic.getValue();
-        if (data == null || data.length <= 0) return "null";
+        if (data == null || data.length <= 0) return 0;
 
         double heartRate = ((data[4] & 0xFF) << 8) + (data[5] & 0xFF);
         heartRate = heartRate / 100.0;
@@ -156,14 +155,12 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
             heartRate = 80;
         }
 
-        Log.d("ConnectDevicePresenter", "Heart rate: " + String.valueOf(heartRate));
-        return String.valueOf(heartRate);
+        return heartRate;
     }
 
-    @NonNull
-    private String getBloodOxygen(@NonNull GattCharacteristic characteristic) {
+    private double getBloodOxygen(@NonNull GattCharacteristic characteristic) {
         byte[] data = characteristic.getValue();
-        if (data == null || data.length <= 0) return "null";
+        if (data == null || data.length <= 0) return 0;
 
         double ratio = (((data[0] & 0xFF) << 8) + (data[1] & 0xFF) & 0xffff) << 5;
         double ratiof = ratio / 256.0 / 256.0;
@@ -197,14 +194,12 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
             r_spo2 = 70;
         }
 
-        Log.d("ConnectDevicePresenter", "Blood oxygen: " + String.valueOf(r_spo2));
-        return String.valueOf(r_spo2);
+        return r_spo2;
     }
 
-    @NonNull
-    private String getBloodPressure(@NonNull GattCharacteristic characteristic, int bloodPressureType, double heartRate) {
+    private double getBloodPressure(@NonNull GattCharacteristic characteristic, int bloodPressureType, double heartRate) {
         byte[] data = characteristic.getValue();
-        if (data == null || data.length <= 0) return "null";
+        if (data == null || data.length <= 0) return 0;
 
         double pttValue = ((data[2] & 0xFF) << 8) + (data[3] & 0xFF);
         pttValue = pttValue * 16.0 / 1000.0;
@@ -247,31 +242,26 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
 
         switch (bloodPressureType) {
             case 0:
-                Log.d("ConnectDevicePresenter", "Blood pressure systolic: " + String.valueOf(bloodPressureSystolic));
-                return String.valueOf(bloodPressureSystolic);
+                return bloodPressureSystolic;
             case 1:
-                Log.d("ConnectDevicePresenter", "Blood pressure diastolic: " + String.valueOf(bloodPressureDiastolic));
-                return String.valueOf(bloodPressureDiastolic);
+                return bloodPressureDiastolic;
         }
 
-        return "null";
+        return 0;
     }
 
-    @NonNull
-    private String getBloodPressureSystolic(@NonNull GattCharacteristic characteristic, double heartRate) {
+    private double getBloodPressureSystolic(@NonNull GattCharacteristic characteristic, double heartRate) {
         return getBloodPressure(characteristic, 0, heartRate);
     }
 
-    @NonNull
-    private String getBloodPressureDiastolic(@NonNull GattCharacteristic characteristic, double heartRate) {
+    private double getBloodPressureDiastolic(@NonNull GattCharacteristic characteristic, double heartRate) {
         return getBloodPressure(characteristic, 1, heartRate);
     }
 
-    @NonNull
-    private String getBodyTemperature(@NonNull GattCharacteristic characteristic) {
+    private double getBodyTemperature(@NonNull GattCharacteristic characteristic) {
         byte[] data = characteristic.getValue();
-        if (data == null || data.length <= 0) return "null";
-        if (data.length != 20) return "null";
+        if (data == null || data.length <= 0) return 0;
+        if (data.length != 20) return 0;
 
         double temp_case_v = ((data[9] & 0xFF) << 8) + (data[10] & 0xFF);
         temp_case_v = (temp_case_v - 7800.0) / 90.0 + 25.0;
@@ -284,12 +274,11 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
         double tc = 64500 - temp_case_v * calib - temp_ir_v;
 
         double td = tb * tb - 4 * calia * tc;
-        if (td < 0) return "null";
+        if (td < 0) return 0;
 
         double bodyTemperature = (-tb + Math.sqrt(td)) / 2 / calia;
         bodyTemperature = bodyTemperature - 0.5;
 
-        Log.d("ConnectDevicePresenter", "Body temperature: " + String.format(Locale.getDefault(), "%.1f", bodyTemperature));
-        return String.format(Locale.getDefault(), "%.1f", bodyTemperature);
+        return bodyTemperature;
     }
 }

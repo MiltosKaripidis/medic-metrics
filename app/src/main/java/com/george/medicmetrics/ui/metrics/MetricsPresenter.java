@@ -6,9 +6,11 @@ import android.support.annotation.Nullable;
 
 import com.george.medicmetrics.bluetooth.characteristic.GattCharacteristic;
 import com.george.medicmetrics.bluetooth.service.GattService;
+import com.george.medicmetrics.objects.Record;
 import com.george.medicmetrics.ui.base.BasePresenter;
 
 import java.util.List;
+import java.util.Locale;
 
 class MetricsPresenter extends BasePresenter<MetricsContract.View> implements MetricsContract.Presenter {
 
@@ -32,14 +34,16 @@ class MetricsPresenter extends BasePresenter<MetricsContract.View> implements Me
     }
 
     @Override
-    public void handleData(@NonNull String uuid, @NonNull String data) {
-        switch (uuid) {
-            case GattCharacteristic.UUID_HEART_RATE:
-                mView.showHeartRate(data);
-                break;
-            case GattCharacteristic.UUID_BODY_TEMPERATURE:
-                mView.showBodyTemperature(data);
-                break;
+    public void handleData(@NonNull String uuid, @NonNull Record record) {
+        if (uuid.equals(GattCharacteristic.UUID_BODY_TEMPERATURE)) {
+//            String bloodOxygen = String.format(Locale.getDefault(), "%.0f", record.getBloodOxygen());
+//            mView.showBloodOxygen(bloodOxygen);
+//            String systolicBloodPressure = String.format(Locale.getDefault(), "%.0f", record.getSystolicBloodPressure());
+//            mView.showSystolicBloodPressure(systolicBloodPressure);
+            String heartRate = String.format(Locale.getDefault(), "%.0f", record.getHearRate());
+            mView.showHeartRate(heartRate);
+            String bodyTemperature = String.format(Locale.getDefault(), "%.1f", record.getBodyTemperature());
+            mView.showBodyTemperature(bodyTemperature);
         }
     }
 

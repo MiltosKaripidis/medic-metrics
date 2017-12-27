@@ -8,6 +8,7 @@ import com.george.medicmetrics.bluetooth.gatt.ConnectGattCallback;
 import com.george.medicmetrics.bluetooth.gatt.Gatt;
 import com.george.medicmetrics.bluetooth.characteristic.GattCharacteristic;
 import com.george.medicmetrics.bluetooth.service.GattService;
+import com.george.medicmetrics.objects.Record;
 import com.george.medicmetrics.ui.base.BaseContract;
 
 import java.util.List;
@@ -21,7 +22,7 @@ interface ConnectDeviceContract {
 
         void broadcastAction(@NonNull String action);
 
-        void broadcastAction(@NonNull String action, @NonNull String uuid, @NonNull String data);
+        void broadcastAction(@NonNull String action, @NonNull String uuid, @NonNull Record record);
     }
 
     interface Presenter extends BaseContract.Presenter<View> {

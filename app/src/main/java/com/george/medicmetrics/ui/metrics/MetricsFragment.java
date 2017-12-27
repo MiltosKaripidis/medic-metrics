@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.george.medicmetrics.R;
 import com.george.medicmetrics.bluetooth.characteristic.GattCharacteristic;
+import com.george.medicmetrics.objects.Record;
 import com.george.medicmetrics.ui.base.BaseFragment;
 import com.george.medicmetrics.ui.connect.ConnectDeviceService;
 import com.george.medicmetrics.ui.connect.DeviceConnection;
@@ -27,7 +28,6 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
     private static final String ARG_DEVICE_NAME = "device_name";
     private static final String ARG_DEVICE_ADDRESS = "device_address";
     private DeviceConnection mDeviceConnection;
-    private boolean mBound;
     private String mDeviceName;
     private String mDeviceAddress;
     private TextView mHeartRateTextView;
@@ -39,12 +39,11 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
             ConnectDeviceService.LocalBinder localBinder = (ConnectDeviceService.LocalBinder) service;
             mDeviceConnection = localBinder.getService();
             mDeviceConnection.connect(mDeviceAddress);
-            mBound = true;
         }
 
         @Override
         public void onServiceDisconnected(@NonNull ComponentName name) {
-            mBound = false;
+            // Do nothing
         }
     };
 
@@ -65,8 +64,8 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
                     break;
                 case ConnectDeviceService.ACTION_DATA_AVAILABLE:
                     String uuid = intent.getStringExtra(ConnectDeviceService.EXTRA_UUID);
-                    String data = intent.getStringExtra(ConnectDeviceService.EXTRA_DATA);
-                    mPresenter.handleData(uuid, data);
+                    Record record = (Record) intent.getSerializableExtra(ConnectDeviceService.EXTRA_DATA);
+                    mPresenter.handleData(uuid, record);
                     break;
                 default:
                     break;

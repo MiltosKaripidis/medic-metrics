@@ -14,6 +14,7 @@ import com.george.medicmetrics.bluetooth.gatt.Gatt;
 import com.george.medicmetrics.bluetooth.characteristic.GattCharacteristic;
 import com.george.medicmetrics.bluetooth.service.GattService;
 import com.george.medicmetrics.injection.Injection;
+import com.george.medicmetrics.objects.Record;
 import com.george.medicmetrics.ui.base.BaseService;
 
 import java.util.List;
@@ -97,10 +98,10 @@ public class ConnectDeviceService extends BaseService<ConnectDeviceContract.Pres
     }
 
     @Override
-    public void broadcastAction(@NonNull String action, @NonNull String uuid, @NonNull String data) {
+    public void broadcastAction(@NonNull String action, @NonNull String uuid, @NonNull Record record) {
         Intent intent = new Intent(action);
         intent.putExtra(EXTRA_UUID, uuid);
-        intent.putExtra(EXTRA_DATA, data);
+        intent.putExtra(EXTRA_DATA, record);
         sendBroadcast(intent);
     }
 }
