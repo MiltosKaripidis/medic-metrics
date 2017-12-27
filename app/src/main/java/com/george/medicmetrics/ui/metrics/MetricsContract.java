@@ -18,13 +18,19 @@ interface MetricsContract {
 
         void showDeviceDisconnected();
 
-        void readGattCharacteristic(@NonNull GattCharacteristic characteristic);
-
         void notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled);
 
         void showHeartRate(@NonNull String bpm);
 
         void showBodyTemperature(@NonNull String temperature);
+
+        void showBloodOxygen(@NonNull String percent);
+
+        void showSystolicBloodPressure(@NonNull String bloodPressure);
+
+        void updateProgressBar(int percent);
+
+        void openMoreMetrics(@NonNull Record record);
     }
 
     interface Presenter extends BaseContract.Presenter<View> {

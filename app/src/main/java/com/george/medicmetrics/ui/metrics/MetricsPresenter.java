@@ -1,6 +1,7 @@
 package com.george.medicmetrics.ui.metrics;
 
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -13,6 +14,15 @@ import java.util.List;
 import java.util.Locale;
 
 class MetricsPresenter extends BasePresenter<MetricsContract.View> implements MetricsContract.Presenter {
+
+    private static final int DELAY_IN_MILLIS = 10000;
+    private Handler mHandler;
+    private boolean mCounting;
+    private int mElapsedSeconds;
+
+    MetricsPresenter(Handler handler) {
+        mHandler = handler;
+    }
 
     @Override
     public void handleDeviceConnected() {
@@ -34,17 +44,36 @@ class MetricsPresenter extends BasePresenter<MetricsContract.View> implements Me
     }
 
     @Override
-    public void handleData(@NonNull String uuid, @NonNull Record record) {
+    public void handleData(@NonNull String uuid, @NonNull final Record record) {
+        if (!mCounting) {
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mView.openMoreMetrics(record);
+                }
+            }, DELAY_IN_MILLIS);
+        }
+
         if (uuid.equals(GattCharacteristic.UUID_BODY_TEMPERATURE)) {
-//            String bloodOxygen = String.format(Locale.getDefault(), "%.0f", record.getBloodOxygen());
-//            mView.showBloodOxygen(bloodOxygen);
-//            String systolicBloodPressure = String.format(Locale.getDefault(), "%.0f", record.getSystolicBloodPressure());
-//            mView.showSystolicBloodPressure(systolicBloodPressure);
+            String bloodOxygen = String.format(Locale.getDefault(), "%.0f", record.getBloodOxygen());
+            mView.showBloodOxygen(bloodOxygen);
+            String systolicBloodPressure = String.format(Locale.getDefault(), "%.0f", record.getSystolicBloodPressure());
+            mView.showSystolicBloodPressure(systolicBloodPressure);
             String heartRate = String.format(Locale.getDefault(), "%.0f", record.getHearRate());
             mView.showHeartRate(heartRate);
             String bodyTemperature = String.format(Locale.getDefault(), "%.1f", record.getBodyTemperature());
             mView.showBodyTemperature(bodyTemperature);
+
+            mCounting = true;
+            mView.updateProgressBar(calculatePercent());
         }
+    }
+
+    private int calculatePercent() {
+        mElapsedSeconds++;
+        int totalSeconds = DELAY_IN_MILLIS / 1000;
+        float percent = ((float) mElapsedSeconds / totalSeconds) * 100f;
+        return Math.round(percent);
     }
 
     @Nullable
@@ -60,14 +89,6 @@ class MetricsPresenter extends BasePresenter<MetricsContract.View> implements Me
             }
         }
         return null;
-    }
-
-    private void readCharacteristic(@Nullable GattCharacteristic characteristic) {
-        if (characteristic == null) return;
-
-        if ((characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
-            mView.readGattCharacteristic(characteristic);
-        }
     }
 
     private void notifyCharacteristic(@Nullable GattCharacteristic characteristic) {

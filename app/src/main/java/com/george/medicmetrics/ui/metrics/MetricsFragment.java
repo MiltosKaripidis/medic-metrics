@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.george.medicmetrics.R;
@@ -32,6 +34,9 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
     private String mDeviceAddress;
     private TextView mHeartRateTextView;
     private TextView mBodyTemperatureTextView;
+    private TextView mBloodOxygenTextView;
+    private TextView mSystolicBloodPressureTextView;
+    private ProgressBar mProgressBar;
 
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
@@ -76,7 +81,8 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
     @NonNull
     @Override
     protected MetricsContract.Presenter createPresenter() {
-        return new MetricsPresenter();
+        Handler handler = new Handler();
+        return new MetricsPresenter(handler);
     }
 
     public static MetricsFragment newInstance(@NonNull String deviceName,
@@ -104,10 +110,13 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_connect_device, container, false);
+        View view = inflater.inflate(R.layout.fragment_metrics, container, false);
 
         mHeartRateTextView = view.findViewById(R.id.heart_rate_text_view);
         mBodyTemperatureTextView = view.findViewById(R.id.body_temperature_text_view);
+        mBloodOxygenTextView = view.findViewById(R.id.blood_oxygen_text_view);
+        mSystolicBloodPressureTextView = view.findViewById(R.id.systolic_blood_pressure_text_view);
+        mProgressBar = view.findViewById(R.id.progress_bar);
 
         return view;
     }
@@ -166,11 +175,6 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
     }
 
     @Override
-    public void readGattCharacteristic(@NonNull GattCharacteristic characteristic) {
-        mDeviceConnection.readGattCharacteristic(characteristic);
-    }
-
-    @Override
     public void notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled) {
         mDeviceConnection.notifyGattCharacteristic(characteristic, enabled);
     }
@@ -185,5 +189,27 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
     public void showBodyTemperature(@NonNull String temperature) {
         String bodyTemperature = getString(R.string.format_celsius, temperature);
         mBodyTemperatureTextView.setText(bodyTemperature);
+    }
+
+    @Override
+    public void showBloodOxygen(@NonNull String percent) {
+        String bloodOxygen = getString(R.string.format_percent, percent);
+        mBloodOxygenTextView.setText(bloodOxygen);
+    }
+
+    @Override
+    public void showSystolicBloodPressure(@NonNull String bloodPressure) {
+        mSystolicBloodPressureTextView.setText(bloodPressure);
+    }
+
+    @Override
+    public void updateProgressBar(int percent) {
+        mProgressBar.setProgress(percent);
+    }
+
+    @Override
+    public void openMoreMetrics(@NonNull Record record) {
+//        Intent intent = MoreMetricsActivity.newIntent(getContext(), record);
+//        startActivity(intent);
     }
 }
