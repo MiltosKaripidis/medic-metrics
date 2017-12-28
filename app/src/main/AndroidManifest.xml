@@ -37,6 +37,7 @@
             android:name=".ui.report.ReportActivity"
             android:parentActivityName=".ui.anamnesis.AnamnesisActivity" />
         <activity android:name=".ui.register.RegisterActivity" />
+        <activity android:name=".ui.parameters.ParametersActivity" />
 
         <service android:name=".ui.connect.ConnectDeviceService" />
     </application>

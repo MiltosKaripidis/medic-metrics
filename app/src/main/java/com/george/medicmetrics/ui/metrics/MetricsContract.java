@@ -30,7 +30,7 @@ interface MetricsContract {
 
         void updateProgressBar(int percent);
 
-        void openMoreMetrics(@NonNull Record record);
+        void openParameters(@NonNull Record record);
     }
 
     interface Presenter extends BaseContract.Presenter<View> {

@@ -24,6 +24,7 @@ import com.george.medicmetrics.objects.Record;
 import com.george.medicmetrics.ui.base.BaseFragment;
 import com.george.medicmetrics.ui.connect.ConnectDeviceService;
 import com.george.medicmetrics.ui.connect.DeviceConnection;
+import com.george.medicmetrics.ui.parameters.ParametersActivity;
 
 public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> implements MetricsContract.View {
 
@@ -208,8 +209,8 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
     }
 
     @Override
-    public void openMoreMetrics(@NonNull Record record) {
-//        Intent intent = MoreMetricsActivity.newIntent(getContext(), record);
-//        startActivity(intent);
+    public void openParameters(@NonNull Record record) {
+        Intent intent = ParametersActivity.newIntent(getContext(), record);
+        startActivity(intent);
     }
 }

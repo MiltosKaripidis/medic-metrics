@@ -7,10 +7,15 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">@color/secondary_light_text</item>
+        <item name="android:spinnerItemStyle">@style/AppTheme.Spinner</item>
     </style>
 
     <style name="AppTheme.TextInputEditText" parent="@android:style/TextAppearance">
         <!-- Label color-->
         <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.Spinner" parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:textColor">@color/secondary_light_text</item>
     </style>
 </resources>

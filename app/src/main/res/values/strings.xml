@@ -38,4 +38,19 @@
     <string name="invalid_name">Invalid name</string>
     <string name="invalid_last_name">Invalid last name</string>
     <string name="register_successful">Register was successful</string>
+
+    <!-- Parameters-->
+    <string name="catheter_used">Catheter used:</string>
+    <string name="oxygen_supplemented">Oxygen supplemented:</string>
+    <string name="level_of_consciousness">Level of consciousness:</string>
+    <string name="calculate_score">Calculate score</string>
+    <string name="respiratory_rate_2">Respiratory Rate</string>
+    <string name="invalid_respiratory_rate">Invalid respiratory rate</string>
+    <string name="ml_h">ml/h</string>
+    <string-array name="consciousness_levels">
+        <item>Alert</item>
+        <item>Voice</item>
+        <item>Pain</item>
+        <item>Unresponsive</item>
+    </string-array>
 </resources>

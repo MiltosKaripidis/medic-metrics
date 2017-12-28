@@ -49,7 +49,7 @@ class MetricsPresenter extends BasePresenter<MetricsContract.View> implements Me
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mView.openMoreMetrics(record);
+                    mView.openParameters(record);
                 }
             }, DELAY_IN_MILLIS);
         }

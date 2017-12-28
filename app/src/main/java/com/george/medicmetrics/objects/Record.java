@@ -1,6 +1,22 @@
 package com.george.medicmetrics.objects;
 
-public class Record {
+import android.support.annotation.IntDef;
+
+import java.io.Serializable;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+public class Record implements Serializable {
+
+    @IntDef({CLINICAL_CONCERN_LOW, CLINICAL_CONCERN_MEDIUM, CLINICAL_CONCERN_HIGH})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ClinicalConcern {
+        // Empty
+    }
+
+    public static final int CLINICAL_CONCERN_LOW = 0;
+    public static final int CLINICAL_CONCERN_MEDIUM = 1;
+    public static final int CLINICAL_CONCERN_HIGH = 2;
 
     private int mId;
     private double mRespiratoryRate;
@@ -8,8 +24,13 @@ public class Record {
     private double mBodyTemperature;
     private double SystolicBloodPressure;
     private double mHearRate;
+    private boolean mCatheterUsed;
+    private int milliliterPerHour;
+    private String mConsciousnessLevel;
+    private boolean mOxygenSupplemented;
     private int mScore;
     private String mTimestamp;
+    private int mClinicalConcern;
 
     public int getId() {
         return mId;
@@ -59,6 +80,38 @@ public class Record {
         mHearRate = hearRate;
     }
 
+    public boolean isCatheterUsed() {
+        return mCatheterUsed;
+    }
+
+    public void setCatheterUsed(boolean catheterUsed) {
+        mCatheterUsed = catheterUsed;
+    }
+
+    public int getMilliliterPerHour() {
+        return milliliterPerHour;
+    }
+
+    public void setMilliliterPerHour(int milliliterPerHour) {
+        this.milliliterPerHour = milliliterPerHour;
+    }
+
+    public String getConsciousnessLevel() {
+        return mConsciousnessLevel;
+    }
+
+    public void setConsciousnessLevel(String consciousnessLevel) {
+        mConsciousnessLevel = consciousnessLevel;
+    }
+
+    public boolean isOxygenSupplemented() {
+        return mOxygenSupplemented;
+    }
+
+    public void setOxygenSupplemented(boolean oxygenSupplemented) {
+        mOxygenSupplemented = oxygenSupplemented;
+    }
+
     public int getScore() {
         return mScore;
     }
@@ -73,5 +126,14 @@ public class Record {
 
     public void setTimestamp(String timestamp) {
         mTimestamp = timestamp;
+    }
+
+    @ClinicalConcern
+    public int getClinicalConcern() {
+        return mClinicalConcern;
+    }
+
+    public void setClinicalConcern(@ClinicalConcern int clinicalConcern) {
+        mClinicalConcern = clinicalConcern;
     }
 }
