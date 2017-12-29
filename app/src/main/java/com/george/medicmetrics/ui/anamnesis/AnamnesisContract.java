@@ -18,6 +18,6 @@ interface AnamnesisContract {
 
     interface Presenter extends BaseContract.Presenter<View> {
 
-        void loadAnamnesis(int patientId);
+        void loadAnamnesis();
     }
 }

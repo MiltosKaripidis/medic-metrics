@@ -17,7 +17,6 @@ import com.george.medicmetrics.ui.base.BaseFragment;
 
 public class ReportFragment extends BaseFragment<ReportContract.Presenter> implements ReportContract.View {
 
-    private static final String ARG_PATIENT_ID = "patient_id";
     private static final String ARG_RECORD_ID = "record_id";
     private CardView mCardView;
     private TextView mRespiratoryTextView;
@@ -28,9 +27,8 @@ public class ReportFragment extends BaseFragment<ReportContract.Presenter> imple
     private TextView mScoreTextView;
     private TextView mTimestampTextView;
 
-    public static ReportFragment newInstance(int patientId, int recordId) {
+    public static ReportFragment newInstance(int recordId) {
         Bundle bundle = new Bundle();
-        bundle.putInt(ARG_PATIENT_ID, patientId);
         bundle.putInt(ARG_RECORD_ID, recordId);
 
         ReportFragment fragment = new ReportFragment();
@@ -74,9 +72,8 @@ public class ReportFragment extends BaseFragment<ReportContract.Presenter> imple
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        int patientId = getArguments().getInt(ARG_PATIENT_ID);
         int recordId = getArguments().getInt(ARG_RECORD_ID);
-        mPresenter.loadRecord(patientId, recordId);
+        mPresenter.loadRecord(recordId);
     }
 
     @Override

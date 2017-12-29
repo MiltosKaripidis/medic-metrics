@@ -23,7 +23,8 @@ class ReportPresenter extends BasePresenter<ReportContract.View> implements Repo
 
 
     @Override
-    public void loadRecord(final int patientId, final int recordId) {
+    public void loadRecord(final int recordId) {
+        final int patientId = mDataSource.getPatientId();
         mDataSource.getPatientList(new Callback<List<Patient>>() {
             @Override
             public void onSuccess(@NonNull List<Patient> patientList) {

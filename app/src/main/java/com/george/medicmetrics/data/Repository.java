@@ -42,7 +42,7 @@ public class Repository implements DataSource {
 
     @Override
     public void validateUser(@NonNull String username, @NonNull String password, @NonNull Callback<Integer> callback) {
-        int patientId = mLocalRepository.getPatient(username, password);
+        int patientId = mLocalRepository.getPatientId(username, password);
         if (patientId == -1) {
             callback.onFailure();
             return;
@@ -64,5 +64,11 @@ public class Repository implements DataSource {
     @Override
     public void setRecord(int patientId, @NonNull Record record) {
         mLocalRepository.saveRecord(patientId, record);
+    }
+
+    @Override
+    public void getRecordList(int patientId, @NonNull Callback<List<Record>> callback) {
+        List<Record> recordList = mLocalRepository.getRecordList(patientId);
+        callback.onSuccess(recordList);
     }
 }

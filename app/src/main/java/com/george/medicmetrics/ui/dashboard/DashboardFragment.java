@@ -77,7 +77,7 @@ public class DashboardFragment extends BaseFragment<DashboardContract.Presenter>
 
     @Override
     public void openAnamnesis() {
-        Intent intent = AnamnesisActivity.newIntent(getContext(), 1);
+        Intent intent = AnamnesisActivity.newIntent(getContext());
         startActivity(intent);
     }
 

@@ -9,12 +9,10 @@ import com.george.medicmetrics.ui.base.BaseActivity;
 
 public class ReportActivity extends BaseActivity {
 
-    private static final String EXTRA_PATIENT_ID = "com.george.medicmetrics.ui.report.extra.PATIENT_ID";
     private static final String EXTRA_RECORD_ID = "com.george.medicmetrics.ui.report.extra.RECORD_ID";
 
-    public static Intent newIntent(Context context, int patientId, int recordId) {
+    public static Intent newIntent(Context context, int recordId) {
         Intent intent = new Intent(context, ReportActivity.class);
-        intent.putExtra(EXTRA_PATIENT_ID, patientId);
         intent.putExtra(EXTRA_RECORD_ID, recordId);
         return intent;
     }
@@ -22,8 +20,7 @@ public class ReportActivity extends BaseActivity {
     @NonNull
     @Override
     protected Fragment createFragment() {
-        int patientId = getIntent().getIntExtra(EXTRA_PATIENT_ID, -1);
         int recordId = getIntent().getIntExtra(EXTRA_RECORD_ID, -1);
-        return ReportFragment.newInstance(patientId, recordId);
+        return ReportFragment.newInstance(recordId);
     }
 }

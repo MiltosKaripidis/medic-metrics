@@ -24,17 +24,11 @@ import java.util.List;
 
 public class AnamnesisFragment extends BaseFragment<AnamnesisContract.Presenter> implements AnamnesisContract.View {
 
-    private static final String ARG_PATIENT_ID = "patient_id";
     private AnamnesisAdapter mAnamnesisAdapter;
     private TextView mEmptyTextView;
 
-    public static AnamnesisFragment newInstance(int patientId) {
-        Bundle bundle = new Bundle();
-        bundle.putInt(ARG_PATIENT_ID, patientId);
-
-        AnamnesisFragment fragment = new AnamnesisFragment();
-        fragment.setArguments(bundle);
-        return fragment;
+    public static AnamnesisFragment newInstance() {
+        return new AnamnesisFragment();
     }
 
     @NonNull
@@ -68,8 +62,7 @@ public class AnamnesisFragment extends BaseFragment<AnamnesisContract.Presenter>
         mAnamnesisAdapter = new AnamnesisAdapter(null, new AnamnesisAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(int recordId) {
-                int patientId = getArguments().getInt(ARG_PATIENT_ID);
-                Intent intent = ReportActivity.newIntent(getContext(), patientId, recordId);
+                Intent intent = ReportActivity.newIntent(getContext(), recordId);
                 startActivity(intent);
             }
         });
@@ -82,8 +75,7 @@ public class AnamnesisFragment extends BaseFragment<AnamnesisContract.Presenter>
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        int patientId = getArguments().getInt(ARG_PATIENT_ID);
-        mPresenter.loadAnamnesis(patientId);
+        mPresenter.loadAnamnesis();
     }
 
     @Override

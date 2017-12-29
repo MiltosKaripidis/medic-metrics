@@ -10,6 +10,9 @@ import android.support.annotation.NonNull;
 import com.george.medicmetrics.objects.Patient;
 import com.george.medicmetrics.objects.Record;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LocalRepository extends SQLiteOpenHelper {
 
     public LocalRepository(Context context) {
@@ -37,7 +40,7 @@ public class LocalRepository extends SQLiteOpenHelper {
         getWritableDatabase().insert(DatabaseSchema.PatientTable.NAME, null, contentValues);
     }
 
-    int getPatient(@NonNull String username, @NonNull String password) {
+    int getPatientId(@NonNull String username, @NonNull String password) {
         int patientId = -1;
         String query = "select * from " + DatabaseSchema.PatientTable.NAME
                 + " where " + DatabaseSchema.PatientTable.Column.USERNAME + " = '" + username + "'"
@@ -71,5 +74,54 @@ public class LocalRepository extends SQLiteOpenHelper {
         contentValues.put(DatabaseSchema.RecordTable.Column.TIMESTAMP, record.getTimestamp());
 
         getWritableDatabase().insert(DatabaseSchema.RecordTable.NAME, null, contentValues);
+    }
+
+    List<Record> getRecordList(int patientId) {
+        List<Record> recordList = new ArrayList<>();
+
+        String query = "select * from " + DatabaseSchema.RecordTable.NAME
+                + " where " + DatabaseSchema.RecordTable.Column.PATIENT_ID + " = " + patientId;
+
+        Cursor cursor = getReadableDatabase().rawQuery(query, null);
+        if (!cursor.moveToFirst()) {
+            cursor.close();
+            return recordList;
+        }
+
+        do {
+            double respiratoryRate = cursor.getDouble(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.RESPIRATORY_RATE));
+            double bloodOxygen = cursor.getDouble(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.BLOOD_OXYGEN));
+            double bodyTemperature = cursor.getDouble(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.BODY_TEMPERATURE));
+            double systolicBloodPressure = cursor.getDouble(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.SYSTOLIC_BLOOD_PRESSURE));
+            double heartRate = cursor.getDouble(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.HEART_RATE));
+            int catheterUsed = cursor.getInt(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.CATHETER_USED));
+            int milliliterPerHour = cursor.getInt(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.MILLILITER_PER_HOUR));
+            String consciousnessLevel = cursor.getString(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.CONSCIOUSNESS_LEVEL));
+            int oxygenSupplemented = cursor.getInt(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.OXYGEN_SUPPLEMENTED));
+            int score = cursor.getInt(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.SCORE));
+            int clinicalConcern = cursor.getInt(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.CLINICAL_CONCERN));
+            String timestamp = cursor.getString(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.TIMESTAMP));
+
+            Record record = new Record();
+            record.setRespiratoryRate(respiratoryRate);
+            record.setBloodOxygen(bloodOxygen);
+            record.setBodyTemperature(bodyTemperature);
+            record.setSystolicBloodPressure(systolicBloodPressure);
+            record.setHearRate(heartRate);
+            record.setCatheterUsed(catheterUsed == 1);
+            if (catheterUsed == 1) {
+                record.setMilliliterPerHour(milliliterPerHour);
+            }
+            record.setConsciousnessLevel(consciousnessLevel);
+            record.setOxygenSupplemented(oxygenSupplemented == 1);
+            record.setScore(score);
+            record.setClinicalConcern(clinicalConcern);
+            record.setTimestamp(timestamp);
+
+            recordList.add(record);
+        } while (cursor.moveToNext());
+        cursor.close();
+
+        return recordList;
     }
 }

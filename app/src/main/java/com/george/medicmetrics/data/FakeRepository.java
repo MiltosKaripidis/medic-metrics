@@ -104,4 +104,9 @@ public class FakeRepository implements DataSource {
     public void setRecord(int patientId, @NonNull Record record) {
         // TODO: Implement
     }
+
+    @Override
+    public void getRecordList(int patientId, @NonNull Callback<List<Record>> callback) {
+        // TODO: Implement
+    }
 }

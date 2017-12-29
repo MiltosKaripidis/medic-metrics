@@ -25,6 +25,6 @@ interface ReportContract {
 
     interface Presenter extends BaseContract.Presenter<View> {
 
-        void loadRecord(int patientId, int recordId);
+        void loadRecord(int recordId);
     }
 }

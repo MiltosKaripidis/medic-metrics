@@ -39,7 +39,7 @@ class AnamnesisAdapter extends RecyclerView.Adapter<AnamnesisAdapter.RecordHolde
         final Record record = mRecordList.get(position);
         String score = String.valueOf(record.getScore());
         Context context = holder.itemView.getContext();
-        int color = context.getResources().getColor(changeCardColor(record.getScore()));
+        int color = context.getResources().getColor(changeCardColor(record.getClinicalConcern()));
         holder.cardView.setCardBackgroundColor(color);
         holder.scoreTextView.setText(score);
         holder.timestampTextView.setText(record.getTimestamp());
@@ -51,15 +51,16 @@ class AnamnesisAdapter extends RecyclerView.Adapter<AnamnesisAdapter.RecordHolde
         });
     }
 
-    private int changeCardColor(int score) {
-        if (score == 3 || score == 4) {
-            return R.color.green;
-        } else if (score == 5 || score == 6) {
-            return R.color.orange;
-        } else if (score >= 7) {
-            return R.color.red;
-        } else {
-            return 0;
+    private int changeCardColor(int clinicalConcern) {
+        switch (clinicalConcern) {
+            case Record.CLINICAL_CONCERN_LOW:
+                return R.color.green;
+            case Record.CLINICAL_CONCERN_MEDIUM:
+                return R.color.orange;
+            case Record.CLINICAL_CONCERN_HIGH:
+                return R.color.red;
+            default:
+                return R.color.green;
         }
     }
 
