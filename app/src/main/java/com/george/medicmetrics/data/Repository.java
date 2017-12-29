@@ -3,6 +3,7 @@ package com.george.medicmetrics.data;
 import android.support.annotation.NonNull;
 
 import com.george.medicmetrics.objects.Patient;
+import com.george.medicmetrics.objects.Record;
 
 import java.util.List;
 
@@ -30,6 +31,11 @@ public class Repository implements DataSource {
     }
 
     @Override
+    public int getPatientId() {
+        return mPreferencesRepository.getPatientId();
+    }
+
+    @Override
     public boolean isUserLoggedIn() {
         return mPreferencesRepository.getPatientId() != -1;
     }
@@ -53,5 +59,10 @@ public class Repository implements DataSource {
     @Override
     public void getPatientList(@NonNull Callback<List<Patient>> callback) {
         // TODO: Implement
+    }
+
+    @Override
+    public void setRecord(int patientId, @NonNull Record record) {
+        mLocalRepository.saveRecord(patientId, record);
     }
 }

@@ -18,9 +18,9 @@
     <string name="not_available">n/a</string>
 
     <!-- Report-->
-    <string name="blood_oxygen">Blood Oxygen:</string>
+    <string name="blood_oxygen">Blood oxygen:</string>
     <string name="respiratory_rate">Respiratory rate:</string>
-    <string name="systolic_blood_pressure">Systolic Blood Pressure:</string>
+    <string name="systolic_blood_pressure">Systolic blood pressure:</string>
     <string name="score">Score:</string>
     <string name="no_registered_records">No registered records</string>
     <string name="format_percent">%1$s%%</string>
@@ -47,6 +47,12 @@
     <string name="respiratory_rate_2">Respiratory Rate</string>
     <string name="invalid_respiratory_rate">Invalid respiratory rate</string>
     <string name="ml_h">ml/h</string>
+    <string name="discard">Discard</string>
+    <string name="save">Save</string>
+    <string name="consciousness_level">Consciousness level:</string>
+    <string name="urine_output">Urine output:</string>
+    <string name="format_milliliter_per_hour">%1$s ml/h</string>
+    <string name="invalid_milliliter_per_hour">Invalid milliliter per hour</string>
     <string-array name="consciousness_levels">
         <item>Alert</item>
         <item>Voice</item>

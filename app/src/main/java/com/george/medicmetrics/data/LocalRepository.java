@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
 
 import com.george.medicmetrics.objects.Patient;
+import com.george.medicmetrics.objects.Record;
 
 public class LocalRepository extends SQLiteOpenHelper {
 
@@ -18,6 +19,7 @@ public class LocalRepository extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(DatabaseSchema.PatientTable.CREATE);
+        db.execSQL(DatabaseSchema.RecordTable.CREATE);
     }
 
     @Override
@@ -48,5 +50,26 @@ public class LocalRepository extends SQLiteOpenHelper {
         cursor.close();
 
         return patientId;
+    }
+
+    void saveRecord(int patientId, @NonNull Record record) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseSchema.RecordTable.Column.PATIENT_ID, patientId);
+        contentValues.put(DatabaseSchema.RecordTable.Column.RESPIRATORY_RATE, record.getRespiratoryRate());
+        contentValues.put(DatabaseSchema.RecordTable.Column.BLOOD_OXYGEN, record.getBloodOxygen());
+        contentValues.put(DatabaseSchema.RecordTable.Column.BODY_TEMPERATURE, record.getBodyTemperature());
+        contentValues.put(DatabaseSchema.RecordTable.Column.SYSTOLIC_BLOOD_PRESSURE, record.getSystolicBloodPressure());
+        contentValues.put(DatabaseSchema.RecordTable.Column.HEART_RATE, record.getHearRate());
+        contentValues.put(DatabaseSchema.RecordTable.Column.CATHETER_USED, record.isCatheterUsed() ? 1 : 0);
+        if (record.isCatheterUsed()) {
+            contentValues.put(DatabaseSchema.RecordTable.Column.MILLILITER_PER_HOUR, record.getMilliliterPerHour());
+        }
+        contentValues.put(DatabaseSchema.RecordTable.Column.CONSCIOUSNESS_LEVEL, record.getConsciousnessLevel());
+        contentValues.put(DatabaseSchema.RecordTable.Column.OXYGEN_SUPPLEMENTED, record.isOxygenSupplemented() ? 1 : 0);
+        contentValues.put(DatabaseSchema.RecordTable.Column.SCORE, record.getScore());
+        contentValues.put(DatabaseSchema.RecordTable.Column.CLINICAL_CONCERN, record.getClinicalConcern());
+        contentValues.put(DatabaseSchema.RecordTable.Column.TIMESTAMP, record.getTimestamp());
+
+        getWritableDatabase().insert(DatabaseSchema.RecordTable.NAME, null, contentValues);
     }
 }

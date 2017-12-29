@@ -30,6 +30,11 @@ public class FakeRepository implements DataSource {
     }
 
     @Override
+    public int getPatientId() {
+        return 0;
+    }
+
+    @Override
     public boolean isUserLoggedIn() {
         return false;
     }
@@ -93,5 +98,10 @@ public class FakeRepository implements DataSource {
         patientList.add(patient);
 
         callback.onSuccess(patientList);
+    }
+
+    @Override
+    public void setRecord(int patientId, @NonNull Record record) {
+        // TODO: Implement
     }
 }

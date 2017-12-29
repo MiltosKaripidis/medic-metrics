@@ -1,0 +1,263 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/vector_back"
+            app:title="Score" />
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar_layout"
+        tools:cardBackgroundColor="@color/green">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/respiratory_rate_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/respiratory_rate"
+                android:textColor="@color/primary_light_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/respiratory_rate_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/secondary_light_text"
+                app:layout_constraintStart_toEndOf="@+id/respiratory_rate_label"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="15 bpm" />
+
+            <TextView
+                android:id="@+id/blood_oxygen_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/blood_oxygen"
+                android:textColor="@color/primary_light_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/respiratory_rate_label" />
+
+            <TextView
+                android:id="@+id/blood_oxygen_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/secondary_light_text"
+                app:layout_constraintStart_toEndOf="@+id/blood_oxygen_label"
+                app:layout_constraintTop_toBottomOf="@+id/respiratory_rate_text_view"
+                tools:text="92%" />
+
+            <TextView
+                android:id="@+id/body_temperature_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/body_temperature"
+                android:textColor="@color/primary_light_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/blood_oxygen_label" />
+
+            <TextView
+                android:id="@+id/body_temperature_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/secondary_light_text"
+                app:layout_constraintStart_toEndOf="@+id/body_temperature_label"
+                app:layout_constraintTop_toBottomOf="@+id/blood_oxygen_text_view"
+                tools:text="37 \u2103" />
+
+            <TextView
+                android:id="@+id/systolic_blood_pressure_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/systolic_blood_pressure"
+                android:textColor="@color/primary_light_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/body_temperature_label" />
+
+            <TextView
+                android:id="@+id/systolic_blood_pressure_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/secondary_light_text"
+                app:layout_constraintStart_toEndOf="@+id/systolic_blood_pressure_label"
+                app:layout_constraintTop_toBottomOf="@+id/body_temperature_text_view"
+                tools:text="105" />
+
+            <TextView
+                android:id="@+id/heart_rate_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/heart_rate"
+                android:textColor="@color/primary_light_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/systolic_blood_pressure_label" />
+
+            <TextView
+                android:id="@+id/heart_rate_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/secondary_light_text"
+                app:layout_constraintStart_toEndOf="@+id/heart_rate_label"
+                app:layout_constraintTop_toBottomOf="@+id/systolic_blood_pressure_text_view"
+                tools:text="72 bpm" />
+
+            <TextView
+                android:id="@+id/urine_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/urine_output"
+                android:textColor="@color/primary_light_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/heart_rate_label" />
+
+            <TextView
+                android:id="@+id/urine_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/secondary_light_text"
+                app:layout_constraintStart_toEndOf="@+id/urine_label"
+                app:layout_constraintTop_toBottomOf="@+id/heart_rate_text_view"
+                tools:text="30 ml/h" />
+
+            <TextView
+                android:id="@+id/oxygen_supplemented_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/oxygen_supplemented"
+                android:textColor="@color/primary_light_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/urine_label" />
+
+            <TextView
+                android:id="@+id/oxygen_supplemented_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/secondary_light_text"
+                app:layout_constraintStart_toEndOf="@+id/oxygen_supplemented_label"
+                app:layout_constraintTop_toBottomOf="@+id/urine_text_view"
+                tools:text="Yes" />
+
+            <TextView
+                android:id="@+id/consciousness_level_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/consciousness_level"
+                android:textColor="@color/primary_light_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/oxygen_supplemented_label" />
+
+            <TextView
+                android:id="@+id/consciousness_level_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/secondary_light_text"
+                app:layout_constraintStart_toEndOf="@+id/consciousness_level_label"
+                app:layout_constraintTop_toBottomOf="@+id/oxygen_supplemented_text_view"
+                tools:text="Alert" />
+
+            <TextView
+                android:id="@+id/score_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/score"
+                android:textColor="@color/primary_light_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/consciousness_level_label" />
+
+            <TextView
+                android:id="@+id/score_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/secondary_light_text"
+                app:layout_constraintBottom_toBottomOf="@+id/score_label"
+                app:layout_constraintStart_toEndOf="@+id/score_label"
+                app:layout_constraintTop_toTopOf="@+id/score_label"
+                tools:text="3" />
+
+            <TextView
+                android:id="@+id/timestamp_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/secondary_light_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/score_label"
+                tools:text="20/12/17 12:51" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/discard_button"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/discard"
+                android:textColor="@color/primary_light_text"
+                app:layout_constraintBottom_toBottomOf="@+id/save_button"
+                app:layout_constraintEnd_toStartOf="@+id/save_button"
+                app:layout_constraintTop_toTopOf="@+id/save_button" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/save_button"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/save"
+                android:textColor="@color/primary_light_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timestamp_text_view" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>

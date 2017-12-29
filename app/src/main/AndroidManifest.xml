@@ -38,6 +38,7 @@
             android:parentActivityName=".ui.anamnesis.AnamnesisActivity" />
         <activity android:name=".ui.register.RegisterActivity" />
         <activity android:name=".ui.parameters.ParametersActivity" />
+        <activity android:name=".ui.score.ScoreActivity" />
 
         <service android:name=".ui.connect.ConnectDeviceService" />
     </application>
