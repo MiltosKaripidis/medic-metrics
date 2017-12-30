@@ -15,7 +15,7 @@ import java.util.Locale;
 
 class MetricsPresenter extends BasePresenter<MetricsContract.View> implements MetricsContract.Presenter {
 
-    private static final int DELAY_IN_MILLIS = 10000;
+    private static final int DELAY_IN_MILLIS = 60000;
     private Handler mHandler;
     private boolean mCounting;
     private int mElapsedSeconds;
