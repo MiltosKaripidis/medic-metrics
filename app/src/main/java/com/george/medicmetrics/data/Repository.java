@@ -57,11 +57,6 @@ public class Repository implements DataSource {
     }
 
     @Override
-    public void getPatientList(@NonNull Callback<List<Patient>> callback) {
-        // TODO: Implement
-    }
-
-    @Override
     public void setRecord(int patientId, @NonNull Record record) {
         mLocalRepository.saveRecord(patientId, record);
     }
@@ -70,5 +65,10 @@ public class Repository implements DataSource {
     public void getRecordList(int patientId, @NonNull Callback<List<Record>> callback) {
         List<Record> recordList = mLocalRepository.getRecordList(patientId);
         callback.onSuccess(recordList);
+    }
+
+    @Override
+    public void deletePatient(int patientId) {
+        mLocalRepository.deletePatient(patientId);
     }
 }

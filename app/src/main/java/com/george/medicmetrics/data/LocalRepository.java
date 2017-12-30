@@ -40,6 +40,20 @@ public class LocalRepository extends SQLiteOpenHelper {
         getWritableDatabase().insert(DatabaseSchema.PatientTable.NAME, null, contentValues);
     }
 
+    void deletePatient(int patientId) {
+        deleteRecords(patientId);
+
+        String query = "delete from " + DatabaseSchema.PatientTable.NAME
+                + " where id = " + patientId;
+        getWritableDatabase().execSQL(query);
+    }
+
+    private void deleteRecords(int patientId) {
+        String query = "delete from " + DatabaseSchema.RecordTable.NAME
+                + " where patient_id = " + patientId;
+        getWritableDatabase().execSQL(query);
+    }
+
     int getPatientId(@NonNull String username, @NonNull String password) {
         int patientId = -1;
         String query = "select * from " + DatabaseSchema.PatientTable.NAME

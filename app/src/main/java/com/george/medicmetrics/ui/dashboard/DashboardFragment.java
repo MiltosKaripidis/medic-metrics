@@ -60,11 +60,13 @@ public class DashboardFragment extends BaseFragment<DashboardContract.Presenter>
         Tile measurementTile = new Tile(1, R.drawable.examine, "New Measurement");
         Tile anamnesisTile = new Tile(2, R.drawable.anamnesis, "Anamnesis");
         Tile aboutTile = new Tile(3, R.drawable.about, "About");
-        Tile logoutTile = new Tile(4, R.drawable.logout, "Logout");
+        Tile unsubscribeTile = new Tile(4, R.drawable.unsubscribe, "Unsubscribe");
+        Tile logoutTile = new Tile(5, R.drawable.logout, "Logout");
         List<Tile> tileList = new ArrayList<>();
         tileList.add(measurementTile);
         tileList.add(anamnesisTile);
         tileList.add(aboutTile);
+        tileList.add(unsubscribeTile);
         tileList.add(logoutTile);
         return tileList;
     }

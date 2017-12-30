@@ -8,7 +8,8 @@ class DashboardPresenter extends BasePresenter<DashboardContract.View> implement
     private static final int ID_NEW_MEASUREMENT = 1;
     private static final int ID_AMNESIS = 2;
     private static final int ID_ABOUT = 3;
-    private static final int ID_LOGOUT = 4;
+    private static final int ID_UNSUBSCRIBE = 4;
+    private static final int ID_LOGOUT = 5;
     private DataSource mDataSource;
 
     DashboardPresenter(DataSource dataSource) {
@@ -25,6 +26,12 @@ class DashboardPresenter extends BasePresenter<DashboardContract.View> implement
                 mView.openAnamnesis();
                 break;
             case ID_ABOUT:
+                break;
+            case ID_UNSUBSCRIBE:
+                int patientId = mDataSource.getPatientId();
+                mDataSource.deletePatient(patientId);
+                mView.openLogin();
+                mView.finish();
                 break;
             case ID_LOGOUT:
                 mDataSource.setPatientId(-1);
