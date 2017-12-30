@@ -3,6 +3,7 @@ package com.george.medicmetrics.ui.report;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ public class ReportFragment extends BaseFragment<ReportContract.Presenter> imple
     private TextView mUrineOutputTextView;
     private TextView mOxygenSupplementedTextView;
     private TextView mConsciousnessLevelTextView;
+    private TextView mDescriptionTextView;
     private TextView mScoreTextView;
     private TextView mTimestampTextView;
 
@@ -60,6 +62,7 @@ public class ReportFragment extends BaseFragment<ReportContract.Presenter> imple
         mUrineOutputTextView = view.findViewById(R.id.urine_text_view);
         mOxygenSupplementedTextView = view.findViewById(R.id.oxygen_supplemented_text_view);
         mConsciousnessLevelTextView = view.findViewById(R.id.consciousness_level_text_view);
+        mDescriptionTextView = view.findViewById(R.id.description_text_view);
         mScoreTextView = view.findViewById(R.id.score_text_view);
         mTimestampTextView = view.findViewById(R.id.timestamp_text_view);
         return view;
@@ -125,6 +128,12 @@ public class ReportFragment extends BaseFragment<ReportContract.Presenter> imple
     @Override
     public void showConsciousnessLevel(@NonNull String consciousnessLevel) {
         mConsciousnessLevelTextView.setText(consciousnessLevel);
+    }
+
+    @Override
+    public void showDescription(@StringRes int description) {
+        String message = getString(description);
+        mDescriptionTextView.setText(message);
     }
 
     @Override

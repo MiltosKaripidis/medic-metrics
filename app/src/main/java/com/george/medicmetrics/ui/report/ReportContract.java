@@ -1,6 +1,7 @@
 package com.george.medicmetrics.ui.report;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
 import com.george.medicmetrics.ui.base.BaseContract;
 
@@ -23,6 +24,8 @@ interface ReportContract {
         void showOxygenSupplemented(@NonNull String oxygenSupplemented);
 
         void showConsciousnessLevel(@NonNull String consciousnessLevel);
+
+        void showDescription(@StringRes int description);
 
         void showScore(@NonNull String score);
 

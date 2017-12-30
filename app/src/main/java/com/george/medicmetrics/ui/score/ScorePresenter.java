@@ -19,30 +19,6 @@ class ScorePresenter extends BasePresenter<ScoreContract.View> implements ScoreC
 
     @Override
     public void loadScore(@NonNull Record record) {
-        switch (record.getClinicalConcern()) {
-            case Record.CLINICAL_CONCERN_LOW:
-                mView.changeCardColor(R.color.green);
-                break;
-            case Record.CLINICAL_CONCERN_MEDIUM:
-                mView.changeCardColor(R.color.orange);
-                break;
-            case Record.CLINICAL_CONCERN_HIGH:
-                mView.changeCardColor(R.color.red);
-                break;
-        }
-
-        switch (record.getClinicalConcern()) {
-            case Record.CLINICAL_CONCERN_LOW:
-                mView.showDescription(R.string.clinical_concern_low);
-                break;
-            case Record.CLINICAL_CONCERN_MEDIUM:
-                mView.showDescription(R.string.clinical_concern_medium);
-                break;
-            case Record.CLINICAL_CONCERN_HIGH:
-                mView.showDescription(R.string.clinical_concern_high);
-                break;
-        }
-
         String respiratoryRate = String.format(Locale.getDefault(), "%.0f", record.getRespiratoryRate());
         mView.showRespiratoryRate(respiratoryRate);
         String bloodOxygen = String.format(Locale.getDefault(), "%.0f", record.getBloodOxygen());
@@ -62,6 +38,36 @@ class ScorePresenter extends BasePresenter<ScoreContract.View> implements ScoreC
         String score = String.valueOf(record.getScore());
         mView.showScore(score);
         mView.showTimestamp(record.getTimestamp());
+        changeCardColor(record.getClinicalConcern());
+        showDescription(record.getClinicalConcern());
+    }
+
+    private void changeCardColor(int clinicalConcern) {
+        switch (clinicalConcern) {
+            case Record.CLINICAL_CONCERN_LOW:
+                mView.changeCardColor(R.color.green);
+                break;
+            case Record.CLINICAL_CONCERN_MEDIUM:
+                mView.changeCardColor(R.color.orange);
+                break;
+            case Record.CLINICAL_CONCERN_HIGH:
+                mView.changeCardColor(R.color.red);
+                break;
+        }
+    }
+
+    private void showDescription(int clinicalConcern) {
+        switch (clinicalConcern) {
+            case Record.CLINICAL_CONCERN_LOW:
+                mView.showDescription(R.string.clinical_concern_low);
+                break;
+            case Record.CLINICAL_CONCERN_MEDIUM:
+                mView.showDescription(R.string.clinical_concern_medium);
+                break;
+            case Record.CLINICAL_CONCERN_HIGH:
+                mView.showDescription(R.string.clinical_concern_high);
+                break;
+        }
     }
 
     @Override

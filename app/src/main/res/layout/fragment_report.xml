@@ -206,6 +206,29 @@
                 tools:text="Alert" />
 
             <TextView
+                android:id="@+id/description_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/description"
+                android:textColor="@color/primary_light_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/consciousness_level_label" />
+
+            <TextView
+                android:id="@+id/description_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/secondary_light_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/description_label"
+                app:layout_constraintTop_toBottomOf="@+id/consciousness_level_text_view"
+                tools:text="Patient should be monitored every 4 hours minimum." />
+
+            <TextView
                 android:id="@+id/score_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -214,7 +237,7 @@
                 android:textColor="@color/primary_light_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/consciousness_level_label" />
+                app:layout_constraintTop_toBottomOf="@+id/description_text_view" />
 
             <TextView
                 android:id="@+id/score_text_view"

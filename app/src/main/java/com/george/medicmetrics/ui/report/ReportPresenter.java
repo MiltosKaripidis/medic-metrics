@@ -32,6 +32,7 @@ class ReportPresenter extends BasePresenter<ReportContract.View> implements Repo
 
                 showMetrics(record);
                 changeCardColor(record.getClinicalConcern());
+                showDescription(record.getClinicalConcern());
             }
 
             @Override
@@ -86,6 +87,20 @@ class ReportPresenter extends BasePresenter<ReportContract.View> implements Repo
                 break;
             case Record.CLINICAL_CONCERN_HIGH:
                 mView.changeCardColor(R.color.red);
+                break;
+        }
+    }
+
+    private void showDescription(int clinicalConcern) {
+        switch (clinicalConcern) {
+            case Record.CLINICAL_CONCERN_LOW:
+                mView.showDescription(R.string.clinical_concern_low);
+                break;
+            case Record.CLINICAL_CONCERN_MEDIUM:
+                mView.showDescription(R.string.clinical_concern_medium);
+                break;
+            case Record.CLINICAL_CONCERN_HIGH:
+                mView.showDescription(R.string.clinical_concern_high);
                 break;
         }
     }
