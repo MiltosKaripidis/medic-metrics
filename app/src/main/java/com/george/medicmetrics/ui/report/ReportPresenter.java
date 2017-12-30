@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import com.george.medicmetrics.R;
 import com.george.medicmetrics.data.Callback;
 import com.george.medicmetrics.data.DataSource;
-import com.george.medicmetrics.objects.Patient;
 import com.george.medicmetrics.objects.Record;
 import com.george.medicmetrics.ui.base.BasePresenter;
 
@@ -25,16 +24,14 @@ class ReportPresenter extends BasePresenter<ReportContract.View> implements Repo
     @Override
     public void loadRecord(final int recordId) {
         final int patientId = mDataSource.getPatientId();
-        mDataSource.getPatientList(new Callback<List<Patient>>() {
+        mDataSource.getRecordList(patientId, new Callback<List<Record>>() {
             @Override
-            public void onSuccess(@NonNull List<Patient> patientList) {
-                Patient patient = getPatient(patientId, patientList);
-                if (patient == null) return;
-                Record record = getRecord(recordId, patient.getRecordList());
+            public void onSuccess(@NonNull List<Record> recordList) {
+                Record record = getRecord(recordId, recordList);
                 if (record == null) return;
 
                 showMetrics(record);
-                changeCardColor(record.getScore());
+                changeCardColor(record.getClinicalConcern());
             }
 
             @Override
@@ -42,19 +39,6 @@ class ReportPresenter extends BasePresenter<ReportContract.View> implements Repo
                 // Do nothing
             }
         });
-    }
-
-    @Nullable
-    private Patient getPatient(int patientId, @NonNull List<Patient> patientList) {
-        for (Patient patient : patientList) {
-            if (patient.getId() != patientId) {
-                continue;
-            }
-
-            return patient;
-        }
-
-        return null;
     }
 
     @Nullable
@@ -81,18 +65,28 @@ class ReportPresenter extends BasePresenter<ReportContract.View> implements Repo
         mView.showSystolicBloodPressure(systolicBloodPressure);
         String heartRate = String.format(Locale.getDefault(), "%.0f", record.getHearRate());
         mView.showHeartRate(heartRate);
+        if (record.isCatheterUsed()) {
+            String milliliterPerHour = String.valueOf(record.getMilliliterPerHour());
+            mView.showUrineOutput(milliliterPerHour);
+        }
+        mView.showOxygenSupplemented(record.isOxygenSupplemented() ? "Yes" : "No");
+        mView.showConsciousnessLevel(record.getConsciousnessLevel());
         String score = String.valueOf(record.getScore());
         mView.showScore(score);
         mView.showTimestamp(record.getTimestamp());
     }
 
-    private void changeCardColor(int score) {
-        if (score == 3 || score == 4) {
-            mView.changeCardColor(R.color.green);
-        } else if (score == 5 || score == 6) {
-            mView.changeCardColor(R.color.orange);
-        } else if (score >= 7) {
-            mView.changeCardColor(R.color.red);
+    private void changeCardColor(int clinicalConcern) {
+        switch (clinicalConcern) {
+            case Record.CLINICAL_CONCERN_LOW:
+                mView.changeCardColor(R.color.green);
+                break;
+            case Record.CLINICAL_CONCERN_MEDIUM:
+                mView.changeCardColor(R.color.orange);
+                break;
+            case Record.CLINICAL_CONCERN_HIGH:
+                mView.changeCardColor(R.color.red);
+                break;
         }
     }
 }

@@ -89,6 +89,7 @@ public class LocalRepository extends SQLiteOpenHelper {
         }
 
         do {
+            int id = cursor.getInt(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.ID));
             double respiratoryRate = cursor.getDouble(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.RESPIRATORY_RATE));
             double bloodOxygen = cursor.getDouble(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.BLOOD_OXYGEN));
             double bodyTemperature = cursor.getDouble(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.BODY_TEMPERATURE));
@@ -103,6 +104,7 @@ public class LocalRepository extends SQLiteOpenHelper {
             String timestamp = cursor.getString(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.TIMESTAMP));
 
             Record record = new Record();
+            record.setId(id);
             record.setRespiratoryRate(respiratoryRate);
             record.setBloodOxygen(bloodOxygen);
             record.setBodyTemperature(bodyTemperature);

@@ -24,6 +24,9 @@ public class ReportFragment extends BaseFragment<ReportContract.Presenter> imple
     private TextView mBodyTemperatureTextView;
     private TextView mSystolicBloodPressureTextView;
     private TextView mHeartRateTextView;
+    private TextView mUrineOutputTextView;
+    private TextView mOxygenSupplementedTextView;
+    private TextView mConsciousnessLevelTextView;
     private TextView mScoreTextView;
     private TextView mTimestampTextView;
 
@@ -54,6 +57,9 @@ public class ReportFragment extends BaseFragment<ReportContract.Presenter> imple
         mBodyTemperatureTextView = view.findViewById(R.id.body_temperature_text_view);
         mSystolicBloodPressureTextView = view.findViewById(R.id.systolic_blood_pressure_text_view);
         mHeartRateTextView = view.findViewById(R.id.heart_rate_text_view);
+        mUrineOutputTextView = view.findViewById(R.id.urine_text_view);
+        mOxygenSupplementedTextView = view.findViewById(R.id.oxygen_supplemented_text_view);
+        mConsciousnessLevelTextView = view.findViewById(R.id.consciousness_level_text_view);
         mScoreTextView = view.findViewById(R.id.score_text_view);
         mTimestampTextView = view.findViewById(R.id.timestamp_text_view);
         return view;
@@ -77,41 +83,57 @@ public class ReportFragment extends BaseFragment<ReportContract.Presenter> imple
     }
 
     @Override
-    public void showRespiratoryRate(String bpm) {
+    public void showRespiratoryRate(@NonNull String bpm) {
         String message = getString(R.string.format_bpm, bpm);
         mRespiratoryTextView.setText(message);
     }
 
     @Override
-    public void showBloodOxygen(String percent) {
+    public void showBloodOxygen(@NonNull String percent) {
         String message = getString(R.string.format_percent, percent);
         mBloodOxygenTextView.setText(message);
     }
 
     @Override
-    public void showBodyTemperature(String celsius) {
+    public void showBodyTemperature(@NonNull String celsius) {
         String message = getString(R.string.format_celsius, celsius);
         mBodyTemperatureTextView.setText(message);
     }
 
     @Override
-    public void showSystolicBloodPressure(String pressure) {
+    public void showSystolicBloodPressure(@NonNull String pressure) {
         mSystolicBloodPressureTextView.setText(pressure);
     }
 
     @Override
-    public void showHeartRate(String bpm) {
+    public void showHeartRate(@NonNull String bpm) {
         String message = getString(R.string.format_bpm, bpm);
         mHeartRateTextView.setText(message);
     }
 
     @Override
-    public void showScore(String score) {
+    public void showUrineOutput(@NonNull String milliliterPerHour) {
+        String message = getString(R.string.format_milliliter_per_hour, milliliterPerHour);
+        mUrineOutputTextView.setText(message);
+    }
+
+    @Override
+    public void showOxygenSupplemented(@NonNull String oxygenSupplemented) {
+        mOxygenSupplementedTextView.setText(oxygenSupplemented);
+    }
+
+    @Override
+    public void showConsciousnessLevel(@NonNull String consciousnessLevel) {
+        mConsciousnessLevelTextView.setText(consciousnessLevel);
+    }
+
+    @Override
+    public void showScore(@NonNull String score) {
         mScoreTextView.setText(score);
     }
 
     @Override
-    public void showTimestamp(String timestamp) {
+    public void showTimestamp(@NonNull String timestamp) {
         mTimestampTextView.setText(timestamp);
     }
 

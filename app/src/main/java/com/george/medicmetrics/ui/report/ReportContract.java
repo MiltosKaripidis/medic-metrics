@@ -1,24 +1,32 @@
 package com.george.medicmetrics.ui.report;
 
+import android.support.annotation.NonNull;
+
 import com.george.medicmetrics.ui.base.BaseContract;
 
 interface ReportContract {
 
     interface View extends BaseContract.View {
 
-        void showRespiratoryRate(String bpm);
+        void showRespiratoryRate(@NonNull String bpm);
 
-        void showBloodOxygen(String percent);
+        void showBloodOxygen(@NonNull String percent);
 
-        void showBodyTemperature(String celsius);
+        void showBodyTemperature(@NonNull String celsius);
 
-        void showSystolicBloodPressure(String pressure);
+        void showSystolicBloodPressure(@NonNull String pressure);
 
-        void showHeartRate(String bpm);
+        void showHeartRate(@NonNull String bpm);
 
-        void showScore(String score);
+        void showUrineOutput(@NonNull String milliliterPerHour);
 
-        void showTimestamp(String timestamp);
+        void showOxygenSupplemented(@NonNull String oxygenSupplemented);
+
+        void showConsciousnessLevel(@NonNull String consciousnessLevel);
+
+        void showScore(@NonNull String score);
+
+        void showTimestamp(@NonNull String timestamp);
 
         void changeCardColor(int colorId);
     }
