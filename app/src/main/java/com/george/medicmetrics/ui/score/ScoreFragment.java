@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ public class ScoreFragment extends BaseFragment<ScoreContract.Presenter> impleme
     private TextView mUrineOutputTextView;
     private TextView mOxygenSupplementedTextView;
     private TextView mConsciousnessLevelTextView;
+    private TextView mDescriptionTextView;
     private TextView mScoreTextView;
     private TextView mTimestampTextView;
 
@@ -62,6 +64,7 @@ public class ScoreFragment extends BaseFragment<ScoreContract.Presenter> impleme
         mUrineOutputTextView = view.findViewById(R.id.urine_text_view);
         mOxygenSupplementedTextView = view.findViewById(R.id.oxygen_supplemented_text_view);
         mConsciousnessLevelTextView = view.findViewById(R.id.consciousness_level_text_view);
+        mDescriptionTextView = view.findViewById(R.id.description_text_view);
         mScoreTextView = view.findViewById(R.id.score_text_view);
         mTimestampTextView = view.findViewById(R.id.timestamp_text_view);
         setupDiscardButton(view);
@@ -146,6 +149,12 @@ public class ScoreFragment extends BaseFragment<ScoreContract.Presenter> impleme
     @Override
     public void showConsciousnessLevel(@NonNull String consciousnessLevel) {
         mConsciousnessLevelTextView.setText(consciousnessLevel);
+    }
+
+    @Override
+    public void showDescription(@StringRes int description) {
+        String message = getString(description);
+        mDescriptionTextView.setText(message);
     }
 
     @Override

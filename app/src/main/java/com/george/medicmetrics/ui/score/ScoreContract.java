@@ -2,6 +2,7 @@ package com.george.medicmetrics.ui.score;
 
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
 import com.george.medicmetrics.objects.Record;
 import com.george.medicmetrics.ui.base.BaseContract;
@@ -27,6 +28,8 @@ interface ScoreContract {
         void showOxygenSupplemented(@NonNull String oxygenSupplemented);
 
         void showConsciousnessLevel(@NonNull String consciousnessLevel);
+
+        void showDescription(@StringRes int description);
 
         void showScore(@NonNull String score);
 

@@ -53,6 +53,10 @@
     <string name="urine_output">Urine output:</string>
     <string name="format_milliliter_per_hour">%1$s ml/h</string>
     <string name="invalid_milliliter_per_hour">Invalid milliliter per hour</string>
+    <string name="description">Description:</string>
+    <string name="clinical_concern_low">Patient should be monitored every 4 hours minimum.</string>
+    <string name="clinical_concern_medium">Patient should be minimum monitored hourly.</string>
+    <string name="clinical_concern_high">Patient should be monitored every 15–30 minutes and 999 should be called for urgent transfer to acute hospital.</string>
     <string-array name="consciousness_levels">
         <item>Alert</item>
         <item>Voice</item>

@@ -31,6 +31,18 @@ class ScorePresenter extends BasePresenter<ScoreContract.View> implements ScoreC
                 break;
         }
 
+        switch (record.getClinicalConcern()) {
+            case Record.CLINICAL_CONCERN_LOW:
+                mView.showDescription(R.string.clinical_concern_low);
+                break;
+            case Record.CLINICAL_CONCERN_MEDIUM:
+                mView.showDescription(R.string.clinical_concern_medium);
+                break;
+            case Record.CLINICAL_CONCERN_HIGH:
+                mView.showDescription(R.string.clinical_concern_high);
+                break;
+        }
+
         String respiratoryRate = String.format(Locale.getDefault(), "%.0f", record.getRespiratoryRate());
         mView.showRespiratoryRate(respiratoryRate);
         String bloodOxygen = String.format(Locale.getDefault(), "%.0f", record.getBloodOxygen());
