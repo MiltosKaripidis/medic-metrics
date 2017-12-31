@@ -12,6 +12,8 @@ interface DashboardContract {
 
         void openLogin();
 
+        void openAbout();
+
         void finish();
     }
 

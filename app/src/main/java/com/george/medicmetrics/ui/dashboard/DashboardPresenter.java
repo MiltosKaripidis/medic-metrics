@@ -26,6 +26,7 @@ class DashboardPresenter extends BasePresenter<DashboardContract.View> implement
                 mView.openAnamnesis();
                 break;
             case ID_ABOUT:
+                mView.openAbout();
                 break;
             case ID_UNSUBSCRIBE:
                 int patientId = mDataSource.getPatientId();

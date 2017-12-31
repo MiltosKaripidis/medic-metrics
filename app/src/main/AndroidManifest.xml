@@ -39,6 +39,9 @@
         <activity android:name=".ui.register.RegisterActivity" />
         <activity android:name=".ui.parameters.ParametersActivity" />
         <activity android:name=".ui.score.ScoreActivity" />
+        <activity
+            android:name=".ui.about.AboutActivity"
+            android:parentActivityName=".ui.dashboard.DashboardActivity" />
 
         <service android:name=".ui.connect.ConnectDeviceService" />
     </application>

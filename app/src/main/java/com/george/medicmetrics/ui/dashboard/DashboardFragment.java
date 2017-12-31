@@ -14,6 +14,7 @@ import com.george.medicmetrics.R;
 import com.george.medicmetrics.data.DataSource;
 import com.george.medicmetrics.injection.Injection;
 import com.george.medicmetrics.objects.Tile;
+import com.george.medicmetrics.ui.about.AboutActivity;
 import com.george.medicmetrics.ui.anamnesis.AnamnesisActivity;
 import com.george.medicmetrics.ui.base.BaseFragment;
 import com.george.medicmetrics.ui.login.LoginActivity;
@@ -86,6 +87,12 @@ public class DashboardFragment extends BaseFragment<DashboardContract.Presenter>
     @Override
     public void openLogin() {
         Intent intent = LoginActivity.newIntent(getContext());
+        startActivity(intent);
+    }
+
+    @Override
+    public void openAbout() {
+        Intent intent = AboutActivity.newIntent(getContext());
         startActivity(intent);
     }
 

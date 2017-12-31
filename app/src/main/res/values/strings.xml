@@ -57,6 +57,7 @@
     <string name="clinical_concern_low">Patient should be monitored every 4 hours minimum.</string>
     <string name="clinical_concern_medium">Patient should be minimum monitored hourly.</string>
     <string name="clinical_concern_high">Patient should be monitored every 15–30 minutes and 999 should be called for urgent transfer to acute hospital.</string>
+    <string name="about_description">This Android application was made from Georgios Christodoulidis within the context of his dissertation for the Masters degree in Computer Science (Mobile Computing). It is a prototype and not an application designed to get into production.</string>
     <string-array name="consciousness_levels">
         <item>Alert</item>
         <item>Voice</item>
