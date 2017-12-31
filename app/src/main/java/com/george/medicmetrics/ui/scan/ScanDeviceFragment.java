@@ -133,7 +133,7 @@ public class ScanDeviceFragment extends BaseFragment<ScanDeviceContract.Presente
     @Override
     public void openBluetoothSettings(int requestCode) {
         Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-        startActivity(intent);
+        startActivityForResult(intent, requestCode);
     }
 
     @Override
