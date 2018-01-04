@@ -29,10 +29,7 @@ class DashboardPresenter extends BasePresenter<DashboardContract.View> implement
                 mView.openAbout();
                 break;
             case ID_UNSUBSCRIBE:
-                int patientId = mDataSource.getPatientId();
-                mDataSource.deletePatient(patientId);
-                mView.openLogin();
-                mView.finish();
+                mView.openDialog();
                 break;
             case ID_LOGOUT:
                 mDataSource.setPatientId(-1);
@@ -40,5 +37,13 @@ class DashboardPresenter extends BasePresenter<DashboardContract.View> implement
                 mView.finish();
                 break;
         }
+    }
+
+    @Override
+    public void deletePatient() {
+        int patientId = mDataSource.getPatientId();
+        mDataSource.deletePatient(patientId);
+        mView.openLogin();
+        mView.finish();
     }
 }

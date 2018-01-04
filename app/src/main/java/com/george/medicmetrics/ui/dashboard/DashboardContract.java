@@ -14,11 +14,15 @@ interface DashboardContract {
 
         void openAbout();
 
+        void openDialog();
+
         void finish();
     }
 
     interface Presenter extends BaseContract.Presenter<View> {
 
         void handleClick(int tileId);
+
+        void deletePatient();
     }
 }

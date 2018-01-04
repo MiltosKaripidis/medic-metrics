@@ -1,9 +1,11 @@
 package com.george.medicmetrics.ui.dashboard;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -61,7 +63,7 @@ public class DashboardFragment extends BaseFragment<DashboardContract.Presenter>
         Tile measurementTile = new Tile(1, R.drawable.examine, "New Measurement");
         Tile anamnesisTile = new Tile(2, R.drawable.anamnesis, "Anamnesis");
         Tile aboutTile = new Tile(3, R.drawable.about, "About");
-        Tile unsubscribeTile = new Tile(4, R.drawable.unsubscribe, "Unsubscribe");
+        Tile unsubscribeTile = new Tile(4, R.drawable.unsubscribe, "Delete Patient");
         Tile logoutTile = new Tile(5, R.drawable.logout, "Logout");
         List<Tile> tileList = new ArrayList<>();
         tileList.add(measurementTile);
@@ -94,6 +96,26 @@ public class DashboardFragment extends BaseFragment<DashboardContract.Presenter>
     public void openAbout() {
         Intent intent = AboutActivity.newIntent(getContext());
         startActivity(intent);
+    }
+
+    @Override
+    public void openDialog() {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Delete Patient")
+                .setMessage("Are you sure you want to delete the current patient?")
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                    }
+                })
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mPresenter.deletePatient();
+                    }
+                })
+                .show();
     }
 
     @Override
