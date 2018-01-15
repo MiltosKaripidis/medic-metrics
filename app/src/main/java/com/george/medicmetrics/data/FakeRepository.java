@@ -29,6 +29,11 @@ public class FakeRepository implements DataSource {
     }
 
     @Override
+    public Patient getPatient(int patientId) {
+        return null;
+    }
+
+    @Override
     public int getPatientId() {
         return 0;
     }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +28,8 @@ import java.util.List;
 
 public class DashboardFragment extends BaseFragment<DashboardContract.Presenter> implements DashboardContract.View {
 
+    private CollapsingToolbarLayout mCollapsingToolbarLayout;
+
     public static DashboardFragment newInstance() {
         return new DashboardFragment();
     }
@@ -42,6 +45,7 @@ public class DashboardFragment extends BaseFragment<DashboardContract.Presenter>
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        mCollapsingToolbarLayout = view.findViewById(R.id.collapsing_toolbar);
         setupRecyclerView(view);
         return view;
     }
@@ -72,6 +76,17 @@ public class DashboardFragment extends BaseFragment<DashboardContract.Presenter>
         tileList.add(unsubscribeTile);
         tileList.add(logoutTile);
         return tileList;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mPresenter.loadUser();
+    }
+
+    @Override
+    public void showFullName(@NonNull String fullName) {
+        mCollapsingToolbarLayout.setTitle(fullName);
     }
 
     @Override

@@ -1,10 +1,14 @@
 package com.george.medicmetrics.ui.dashboard;
 
+import android.support.annotation.NonNull;
+
 import com.george.medicmetrics.ui.base.BaseContract;
 
 interface DashboardContract {
 
     interface View extends BaseContract.View {
+
+        void showFullName(@NonNull String fullName);
 
         void openScan();
 
@@ -20,6 +24,8 @@ interface DashboardContract {
     }
 
     interface Presenter extends BaseContract.Presenter<View> {
+
+        void loadUser();
 
         void handleClick(int tileId);
 

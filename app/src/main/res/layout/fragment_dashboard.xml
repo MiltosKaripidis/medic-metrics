@@ -9,13 +9,13 @@
         android:layout_height="wrap_content">
 
         <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:contentScrim="@color/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:statusBarScrim="@color/colorPrimaryDark"
-            app:title="Medic Metrics">
+            app:statusBarScrim="@color/colorPrimaryDark">
 
             <ImageView
                 android:layout_width="match_parent"

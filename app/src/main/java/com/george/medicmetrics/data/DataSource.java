@@ -11,6 +11,8 @@ public interface DataSource {
 
     void setPatientId(int patientId);
 
+    Patient getPatient(int patientId);
+
     int getPatientId();
 
     boolean isUserLoggedIn();

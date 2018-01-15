@@ -1,6 +1,7 @@
 package com.george.medicmetrics.ui.dashboard;
 
 import com.george.medicmetrics.data.DataSource;
+import com.george.medicmetrics.objects.Patient;
 import com.george.medicmetrics.ui.base.BasePresenter;
 
 class DashboardPresenter extends BasePresenter<DashboardContract.View> implements DashboardContract.Presenter {
@@ -14,6 +15,14 @@ class DashboardPresenter extends BasePresenter<DashboardContract.View> implement
 
     DashboardPresenter(DataSource dataSource) {
         mDataSource = dataSource;
+    }
+
+    @Override
+    public void loadUser() {
+        int patientId = mDataSource.getPatientId();
+        Patient patient = mDataSource.getPatient(patientId);
+        String fullName = patient.getLastName() + " " + patient.getName();
+        mView.showFullName(fullName);
     }
 
     @Override

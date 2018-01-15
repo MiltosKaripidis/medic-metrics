@@ -31,6 +31,11 @@ public class Repository implements DataSource {
     }
 
     @Override
+    public Patient getPatient(int patientId) {
+        return mLocalRepository.getPatient(patientId);
+    }
+
+    @Override
     public int getPatientId() {
         return mPreferencesRepository.getPatientId();
     }

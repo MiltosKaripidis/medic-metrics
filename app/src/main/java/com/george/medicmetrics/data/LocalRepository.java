@@ -40,6 +40,33 @@ public class LocalRepository extends SQLiteOpenHelper {
         getWritableDatabase().insert(DatabaseSchema.PatientTable.NAME, null, contentValues);
     }
 
+    Patient getPatient(int patientId) {
+        String query = "select * from " + DatabaseSchema.PatientTable.NAME
+                + " where id = " + patientId;
+
+        Cursor cursor = getReadableDatabase().rawQuery(query, null);
+        if (!cursor.moveToFirst()) {
+            cursor.close();
+            return null;
+        }
+
+        int id = cursor.getInt(cursor.getColumnIndex(DatabaseSchema.PatientTable.Column.ID));
+        String firstName = cursor.getString(cursor.getColumnIndex(DatabaseSchema.PatientTable.Column.NAME));
+        String lastName = cursor.getString(cursor.getColumnIndex(DatabaseSchema.PatientTable.Column.LAST_NAME));
+        String userName = cursor.getString(cursor.getColumnIndex(DatabaseSchema.PatientTable.Column.USERNAME));
+        String password = cursor.getString(cursor.getColumnIndex(DatabaseSchema.PatientTable.Column.PASSWORD));
+        cursor.close();
+
+        Patient patient = new Patient();
+        patient.setId(id);
+        patient.setName(firstName);
+        patient.setLastName(lastName);
+        patient.setUsername(userName);
+        patient.setPassword(password);
+
+        return patient;
+    }
+
     void deletePatient(int patientId) {
         deleteRecords(patientId);
 
