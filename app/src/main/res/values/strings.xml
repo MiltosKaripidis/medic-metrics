@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Medic Metrics</string>
 
+    <!-- Register-->
+    <string name="personal_information">Personal Information</string>
+    <string name="account_information">Account Information</string>
+
     <!-- Scan-->
     <string name="no_available_devices">No available devices</string>
     <string name="location_dialog">Bluetooth needs the GPS enabled in order to scan devices properly.</string>
@@ -32,7 +36,7 @@
     <string name="invalid_username">Invalid username</string>
     <string name="invalid_password">Invalid password</string>
     <string name="invalid_user">Invalid user</string>
-    <string name="name">Name</string>
+    <string name="name">First name</string>
     <string name="last_name">Last name</string>
     <string name="register">Register</string>
     <string name="invalid_name">Invalid name</string>
