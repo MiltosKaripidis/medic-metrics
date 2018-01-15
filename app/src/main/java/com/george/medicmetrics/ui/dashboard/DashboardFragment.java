@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.george.medicmetrics.R;
 import com.george.medicmetrics.data.DataSource;
-import com.george.medicmetrics.injection.Injection;
+import com.george.medicmetrics.data.Injection;
 import com.george.medicmetrics.objects.Tile;
 import com.george.medicmetrics.ui.about.AboutActivity;
 import com.george.medicmetrics.ui.anamnesis.AnamnesisActivity;

@@ -16,7 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.george.medicmetrics.R;
 import com.george.medicmetrics.data.DataSource;
-import com.george.medicmetrics.injection.Injection;
+import com.george.medicmetrics.data.Injection;
 import com.george.medicmetrics.ui.base.BaseFragment;
 import com.george.medicmetrics.ui.dashboard.DashboardActivity;
 import com.george.medicmetrics.ui.register.RegisterActivity;

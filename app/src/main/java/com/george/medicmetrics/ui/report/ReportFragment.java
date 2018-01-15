@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.george.medicmetrics.R;
 import com.george.medicmetrics.data.DataSource;
-import com.george.medicmetrics.injection.Injection;
+import com.george.medicmetrics.data.Injection;
 import com.george.medicmetrics.ui.base.BaseFragment;
 
 public class ReportFragment extends BaseFragment<ReportContract.Presenter> implements ReportContract.View {

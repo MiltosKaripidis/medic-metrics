@@ -28,7 +28,7 @@ import android.widget.TextView;
 import com.george.medicmetrics.R;
 import com.george.medicmetrics.bluetooth.adapter.Adapter;
 import com.george.medicmetrics.bluetooth.device.Device;
-import com.george.medicmetrics.injection.Injection;
+import com.george.medicmetrics.data.Injection;
 import com.george.medicmetrics.ui.base.BaseFragment;
 import com.george.medicmetrics.ui.metrics.MetricsActivity;
 

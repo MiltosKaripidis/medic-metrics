@@ -1,4 +1,4 @@
-package com.george.medicmetrics.injection;
+package com.george.medicmetrics.data;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
@@ -7,10 +7,6 @@ import android.support.annotation.NonNull;
 
 import com.george.medicmetrics.bluetooth.adapter.Adapter;
 import com.george.medicmetrics.bluetooth.adapter.RealBluetoothAdapter;
-import com.george.medicmetrics.data.DataSource;
-import com.george.medicmetrics.data.LocalRepository;
-import com.george.medicmetrics.data.PreferencesRepository;
-import com.george.medicmetrics.data.Repository;
 
 public class Injection {
 
