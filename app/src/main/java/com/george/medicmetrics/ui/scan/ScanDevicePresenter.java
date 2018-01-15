@@ -26,6 +26,10 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
     private Adapter.ScanDeviceCallback mScanDeviceCallback = new Adapter.ScanDeviceCallback() {
         @Override
         public void onDeviceScanned(@NonNull Device device) {
+            if (!isEimoDevice(device.getAddress())) {
+                return;
+            }
+
             if (mDeviceList.contains(device)) {
                 return;
             }
@@ -134,5 +138,9 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
         }
         mScanning = false;
         mAdapter.stopScanning(mScanDeviceCallback);
+    }
+
+    private boolean isEimoDevice(@NonNull String address) {
+        return address.startsWith("OBP");
     }
 }
