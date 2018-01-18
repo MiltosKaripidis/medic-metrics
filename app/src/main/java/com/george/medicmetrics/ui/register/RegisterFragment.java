@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
@@ -88,6 +89,12 @@ public class RegisterFragment extends BaseFragment<RegisterContract.Presenter> i
     @Override
     public void showInvalidPassword() {
         mPasswordEditText.setError(getString(R.string.invalid_password));
+    }
+
+    @Override
+    public void showUserExists() {
+        if (getView() == null) return;
+        Snackbar.make(getView(), "User already exists", Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

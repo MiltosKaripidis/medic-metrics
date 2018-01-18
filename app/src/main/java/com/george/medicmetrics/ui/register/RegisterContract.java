@@ -18,6 +18,8 @@ interface RegisterContract {
 
         void showInvalidPassword();
 
+        void showUserExists();
+
         void showRegisterSuccess();
 
         void finish();
