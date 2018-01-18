@@ -235,6 +235,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/score"
                 android:textColor="@color/primary_light_text"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/description_text_view" />
 
@@ -244,6 +245,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:textColor="@color/secondary_light_text"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/score_label"
                 app:layout_constraintStart_toEndOf="@+id/score_label"
                 app:layout_constraintTop_toTopOf="@+id/score_label"
