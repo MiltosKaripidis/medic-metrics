@@ -57,17 +57,8 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
 
     @Override
     public void detachView() {
-        super.detachView();
         mHandler.removeCallbacks(mRunnable);
-    }
-
-    @Override
-    public void handleSettingsResult(int requestCode, int resultCode) {
-        if (requestCode == REQUEST_ENABLE_BLUETOOTH && resultCode == Activity.RESULT_OK) {
-            return;
-        }
-
-        mView.finish();
+        super.detachView();
     }
 
     @Override
@@ -86,6 +77,15 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
     }
 
     @Override
+    public void handleSettingsResult(int requestCode, int resultCode) {
+        if (requestCode == REQUEST_ENABLE_BLUETOOTH && resultCode == Activity.RESULT_OK) {
+            return;
+        }
+
+        mView.finish();
+    }
+
+    @Override
     public void handleAccessFineLocationPermissionResult(int[] grantResults) {
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             // Permission granted.
@@ -96,8 +96,6 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
 
     @Override
     public void scanDevices() {
-        mView.hideEmptyDevices();
-
         if (!mAdapter.isEnabled()) {
             mView.openBluetoothSettings(REQUEST_ENABLE_BLUETOOTH);
             return;
@@ -113,8 +111,11 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
         }
 
         mView.showProgressIndicator();
-        mDeviceList.clear();
         mScanning = true;
+
+        // Resets previous values.
+        mView.hideEmptyDevices();
+        mDeviceList.clear();
 
         // Stops scanning after the given period.
         mHandler.postDelayed(mRunnable, SCAN_PERIOD);
@@ -131,13 +132,14 @@ class ScanDevicePresenter extends BasePresenter<ScanDeviceContract.View> impleme
     @Override
     public void stopScanning() {
         mView.hideProgressIndicator();
+        mScanning = false;
+        mAdapter.stopScanning(mScanDeviceCallback);
+
         if (mDeviceList.isEmpty()) {
             mView.showEmptyDevices();
         } else {
             mView.hideEmptyDevices();
         }
-        mScanning = false;
-        mAdapter.stopScanning(mScanDeviceCallback);
     }
 
     private boolean isEimoDevice(@NonNull String address) {

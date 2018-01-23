@@ -38,9 +38,9 @@ interface ScanDeviceContract {
 
     interface Presenter extends BaseContract.Presenter<View> {
 
-        void handleSettingsResult(int requestCode, int resultCode);
-
         void tryToScanDevices();
+
+        void handleSettingsResult(int requestCode, int resultCode);
 
         void handleAccessFineLocationPermissionResult(int[] grantResults);
 
