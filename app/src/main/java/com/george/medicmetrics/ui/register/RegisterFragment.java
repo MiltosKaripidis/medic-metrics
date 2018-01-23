@@ -98,6 +98,12 @@ public class RegisterFragment extends BaseFragment<RegisterContract.Presenter> i
     }
 
     @Override
+    public void showInvalidRegistration() {
+        if (getView() == null) return;
+        Snackbar.make(getView(), "There was a problem", Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void showRegisterSuccess() {
         getActivity().setResult(Activity.RESULT_OK);
     }

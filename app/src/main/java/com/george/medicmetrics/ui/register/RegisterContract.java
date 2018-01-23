@@ -20,6 +20,8 @@ interface RegisterContract {
 
         void showUserExists();
 
+        void showInvalidRegistration();
+
         void showRegisterSuccess();
 
         void finish();

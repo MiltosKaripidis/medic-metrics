@@ -59,7 +59,7 @@ class RegisterPresenter extends BasePresenter<RegisterContract.View> implements 
 
             @Override
             public void onFailure() {
-                // Do nothing.
+                mView.showInvalidRegistration();
             }
         });
     }
