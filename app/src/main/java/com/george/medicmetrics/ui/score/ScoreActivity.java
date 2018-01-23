@@ -12,7 +12,7 @@ public class ScoreActivity extends BaseActivity {
 
     private static final String EXTRA_RECORD = "com.george.medicmetrics.ui.score.extra.RECORD";
 
-    public static Intent newIntent(Context context, Record record) {
+    public static Intent newIntent(@NonNull Context context,@NonNull Record record) {
         Intent intent = new Intent(context, ScoreActivity.class);
         intent.putExtra(EXTRA_RECORD, record);
         return intent;

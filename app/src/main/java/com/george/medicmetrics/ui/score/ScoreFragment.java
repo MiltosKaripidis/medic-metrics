@@ -35,7 +35,7 @@ public class ScoreFragment extends BaseFragment<ScoreContract.Presenter> impleme
     private TextView mScoreTextView;
     private TextView mTimestampTextView;
 
-    public static ScoreFragment newInstance(Record record) {
+    public static ScoreFragment newInstance(@NonNull Record record) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARG_RECORD, record);
 

@@ -13,7 +13,7 @@ class ScorePresenter extends BasePresenter<ScoreContract.View> implements ScoreC
 
     private DataSource mDataSource;
 
-    ScorePresenter(DataSource dataSource) {
+    ScorePresenter(@NonNull DataSource dataSource) {
         mDataSource = dataSource;
     }
 
