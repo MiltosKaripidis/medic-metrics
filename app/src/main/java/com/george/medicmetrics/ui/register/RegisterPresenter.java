@@ -15,7 +15,6 @@ class RegisterPresenter extends BasePresenter<RegisterContract.View> implements 
         mDataSource = dataSource;
     }
 
-
     @Override
     public void register(@NonNull final String name, @NonNull final String lastName, @NonNull final String username, @NonNull final String password) {
         if (name.isEmpty()) {
@@ -45,21 +44,16 @@ class RegisterPresenter extends BasePresenter<RegisterContract.View> implements 
         mDataSource.validateUser(username, password, new Callback<Integer>() {
             @Override
             public void onSuccess(@NonNull Integer patientId) {
-                if (patientId != -1) {
-                    mView.closeKeyboard();
-                    mView.showUserExists();
-                    return;
-                }
-
-                Patient patient = new Patient(name, lastName, username, password);
-                mDataSource.setPatient(patient);
-                mView.showRegisterSuccess();
-                mView.finish();
+                mView.closeKeyboard();
+                mView.showUserExists();
             }
 
             @Override
             public void onFailure() {
-                mView.showInvalidRegistration();
+                Patient patient = new Patient(name, lastName, username, password);
+                mDataSource.setPatient(patient);
+                mView.showRegisterSuccess();
+                mView.finish();
             }
         });
     }
