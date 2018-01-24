@@ -64,6 +64,11 @@ public class FakeRepository implements DataSource {
     }
 
     @Override
+    public void getRecord(int patientId, int recordId, @NonNull Callback<Record> callback) {
+        // TODO: Implement
+    }
+
+    @Override
     public void deletePatient(int patientId) {
         // TODO: Implement
     }

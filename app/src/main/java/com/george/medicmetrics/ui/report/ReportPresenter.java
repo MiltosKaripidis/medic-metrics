@@ -1,14 +1,12 @@
 package com.george.medicmetrics.ui.report;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.george.medicmetrics.data.Callback;
 import com.george.medicmetrics.data.DataSource;
 import com.george.medicmetrics.objects.Record;
 import com.george.medicmetrics.ui.base.BasePresenter;
 
-import java.util.List;
 import java.util.Locale;
 
 class ReportPresenter extends BasePresenter<ReportContract.View> implements ReportContract.Presenter {
@@ -22,12 +20,9 @@ class ReportPresenter extends BasePresenter<ReportContract.View> implements Repo
     @Override
     public void loadRecord(final int recordId) {
         final int patientId = mDataSource.getPatientId();
-        mDataSource.getRecordList(patientId, new Callback<List<Record>>() {
+        mDataSource.getRecord(patientId, recordId, new Callback<Record>() {
             @Override
-            public void onSuccess(@NonNull List<Record> recordList) {
-                Record record = getRecord(recordId, recordList);
-                if (record == null) return;
-
+            public void onSuccess(@NonNull Record record) {
                 showMetrics(record);
             }
 
@@ -36,19 +31,6 @@ class ReportPresenter extends BasePresenter<ReportContract.View> implements Repo
                 // Do nothing
             }
         });
-    }
-
-    @Nullable
-    private Record getRecord(int recordId, List<Record> recordList) {
-        for (Record record : recordList) {
-            if (record.getId() != recordId) {
-                continue;
-            }
-
-            return record;
-        }
-
-        return null;
     }
 
     private void showMetrics(Record record) {

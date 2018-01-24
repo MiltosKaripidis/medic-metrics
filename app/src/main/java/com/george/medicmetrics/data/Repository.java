@@ -1,6 +1,7 @@
 package com.george.medicmetrics.data;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.george.medicmetrics.objects.Patient;
 import com.george.medicmetrics.objects.Record;
@@ -70,6 +71,30 @@ public class Repository implements DataSource {
     public void getRecordList(int patientId, @NonNull Callback<List<Record>> callback) {
         List<Record> recordList = mLocalRepository.getRecordList(patientId);
         callback.onSuccess(recordList);
+    }
+
+    @Override
+    public void getRecord(int patientId, int recordId, @NonNull Callback<Record> callback) {
+        List<Record> recordList = mLocalRepository.getRecordList(patientId);
+        Record record = getRecord(recordId, recordList);
+        if (record == null) {
+            callback.onFailure();
+            return;
+        }
+        callback.onSuccess(record);
+    }
+
+    @Nullable
+    private Record getRecord(int recordId, List<Record> recordList) {
+        for (Record record : recordList) {
+            if (record.getId() != recordId) {
+                continue;
+            }
+
+            return record;
+        }
+
+        return null;
     }
 
     @Override

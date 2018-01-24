@@ -25,5 +25,7 @@ public interface DataSource {
 
     void getRecordList(int patientId, @NonNull Callback<List<Record>> callback);
 
+    void getRecord(int patientId, int recordId, @NonNull Callback<Record> callback);
+
     void deletePatient(int patientId);
 }
