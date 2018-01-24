@@ -31,7 +31,7 @@ interface MetricsContract {
 
     interface Presenter extends BaseContract.Presenter<View> {
 
-        void handleGattServices(@Nullable List<GattService> gattServiceList);
+        void notifyMetrics(@Nullable List<GattService> gattServiceList);
 
         void handleData(@NonNull String uuid, @NonNull Record record);
     }

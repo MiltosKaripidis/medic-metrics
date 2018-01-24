@@ -66,7 +66,7 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
                     showDeviceDisconnected();
                     break;
                 case ConnectDeviceService.ACTION_GATT_SERVICES_DISCOVERED:
-                    mPresenter.handleGattServices(mDeviceConnection.getGattServices());
+                    mPresenter.notifyMetrics(mDeviceConnection.getGattServices());
                     break;
                 case ConnectDeviceService.ACTION_DATA_AVAILABLE:
                     String uuid = intent.getStringExtra(ConnectDeviceService.EXTRA_UUID);

@@ -25,7 +25,7 @@ class MetricsPresenter extends BasePresenter<MetricsContract.View> implements Me
     }
 
     @Override
-    public void handleGattServices(@Nullable List<GattService> gattServiceList) {
+    public void notifyMetrics(@Nullable List<GattService> gattServiceList) {
         GattCharacteristic characteristic = getCharacteristic(gattServiceList, GattCharacteristic.UUID_METRICS);
         notifyCharacteristic(characteristic);
     }
