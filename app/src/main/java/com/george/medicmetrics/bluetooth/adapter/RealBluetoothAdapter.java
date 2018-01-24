@@ -53,7 +53,7 @@ public class RealBluetoothAdapter implements Adapter {
         mBluetoothAdapter.stopLeScan(mLeScanCallback);
     }
 
-    @Nullable
+    @NonNull
     @Override
     public Device getDevice(@Nullable String address) {
         BluetoothDevice bluetoothDevice = mBluetoothAdapter.getRemoteDevice(address);

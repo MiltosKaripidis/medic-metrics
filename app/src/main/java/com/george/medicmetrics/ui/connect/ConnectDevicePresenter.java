@@ -66,8 +66,6 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
     @Override
     public void connect(@NonNull String deviceAddress) {
         Device device = mAdapter.getDevice(deviceAddress);
-        if (device == null) return;
-
         mGatt = mView.getDeviceGatt(device, false, mConnectGattCallback);
     }
 
@@ -96,7 +94,6 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
     @Override
     public void notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled) {
         if ((mAdapter == null || mGatt == null)) return;
-
         mGatt.notifyCharacteristic(characteristic, enabled);
 
         String uuid = characteristic.getUuid().toString();

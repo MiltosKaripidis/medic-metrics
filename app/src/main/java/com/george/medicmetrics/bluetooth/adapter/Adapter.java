@@ -13,7 +13,7 @@ public interface Adapter {
 
     void stopScanning(@Nullable ScanDeviceCallback callback);
 
-    @Nullable
+    @NonNull
     Device getDevice(@Nullable String address);
 
     interface ScanDeviceCallback {
