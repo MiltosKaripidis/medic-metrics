@@ -101,8 +101,7 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
 
         String uuid = characteristic.getUuid().toString();
         switch (uuid) {
-            case GattCharacteristic.UUID_HEART_RATE:
-            case GattCharacteristic.UUID_BODY_TEMPERATURE:
+            case GattCharacteristic.UUID_METRICS:
                 Descriptor descriptor = characteristic.getDescriptor(UUID.fromString(GattCharacteristic.UUID_CONFIG_CHARACTERISTIC));
                 if (descriptor == null) return;
                 descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
@@ -112,7 +111,7 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
 
     @Nullable
     private Record getRecord(@NonNull String uuid, @NonNull GattCharacteristic characteristic) {
-        if (uuid.equals(GattCharacteristic.UUID_BODY_TEMPERATURE)) {
+        if (uuid.equals(GattCharacteristic.UUID_METRICS)) {
             double heartRate = getHeartRate(characteristic);
             double bloodOxygen = getBloodOxygen(characteristic);
             double bloodPressureSystolic = getBloodPressureSystolic(characteristic, heartRate);
@@ -128,19 +127,6 @@ class ConnectDevicePresenter extends BasePresenter<ConnectDeviceContract.View> i
 
         return null;
     }
-
-//    @NonNull
-//    private String getHeartRate(@NonNull GattCharacteristic characteristic) {
-//        int flag = characteristic.getProperties();
-//        int format;
-//        if ((flag & 0x01) != 0) {
-//            format = BluetoothGattCharacteristic.FORMAT_UINT16;
-//        } else {
-//            format = BluetoothGattCharacteristic.FORMAT_UINT8;
-//        }
-//        Integer heartRate = characteristic.getIntValue(format, 1);
-//        return String.valueOf(heartRate);
-//    }
 
     private double getHeartRate(@NonNull GattCharacteristic characteristic) {
         byte[] data = characteristic.getValue();

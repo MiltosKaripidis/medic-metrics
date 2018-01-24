@@ -60,10 +60,10 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
             if (action == null) return;
             switch (action) {
                 case ConnectDeviceService.ACTION_GATT_CONNECTED:
-                    mPresenter.handleDeviceConnected();
+                    showDeviceConnected();
                     break;
                 case ConnectDeviceService.ACTION_GATT_DISCONNECTED:
-                    mPresenter.handleDeviceDisconnected();
+                    showDeviceDisconnected();
                     break;
                 case ConnectDeviceService.ACTION_GATT_SERVICES_DISCOVERED:
                     mPresenter.handleGattServices(mDeviceConnection.getGattServices());
@@ -156,14 +156,12 @@ public class MetricsFragment extends BaseFragment<MetricsContract.Presenter> imp
         super.onDestroy();
     }
 
-    @Override
-    public void showDeviceConnected() {
+    private void showDeviceConnected() {
         String message = getString(R.string.connected, mDeviceName);
         showSnackbar(message, Snackbar.LENGTH_LONG);
     }
 
-    @Override
-    public void showDeviceDisconnected() {
+    private void showDeviceDisconnected() {
         String message = getString(R.string.disconnected);
         showSnackbar(message, Snackbar.LENGTH_LONG);
     }

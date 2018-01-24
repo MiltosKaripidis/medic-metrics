@@ -14,10 +14,6 @@ interface MetricsContract {
 
     interface View extends BaseContract.View {
 
-        void showDeviceConnected();
-
-        void showDeviceDisconnected();
-
         void notifyGattCharacteristic(@NonNull GattCharacteristic characteristic, boolean enabled);
 
         void showHeartRate(@NonNull String bpm);
@@ -34,10 +30,6 @@ interface MetricsContract {
     }
 
     interface Presenter extends BaseContract.Presenter<View> {
-
-        void handleDeviceConnected();
-
-        void handleDeviceDisconnected();
 
         void handleGattServices(@Nullable List<GattService> gattServiceList);
 

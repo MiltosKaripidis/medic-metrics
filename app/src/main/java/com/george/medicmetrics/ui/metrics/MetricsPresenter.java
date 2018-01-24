@@ -25,22 +25,9 @@ class MetricsPresenter extends BasePresenter<MetricsContract.View> implements Me
     }
 
     @Override
-    public void handleDeviceConnected() {
-        mView.showDeviceConnected();
-    }
-
-    @Override
-    public void handleDeviceDisconnected() {
-        mView.showDeviceDisconnected();
-    }
-
-    @Override
     public void handleGattServices(@Nullable List<GattService> gattServiceList) {
-        GattCharacteristic heartRateCharacteristic = getCharacteristic(gattServiceList, GattCharacteristic.UUID_HEART_RATE);
-        GattCharacteristic bodyTemperatureCharacteristic = getCharacteristic(gattServiceList, GattCharacteristic.UUID_BODY_TEMPERATURE);
-
-        notifyCharacteristic(heartRateCharacteristic);
-        notifyCharacteristic(bodyTemperatureCharacteristic);
+        GattCharacteristic characteristic = getCharacteristic(gattServiceList, GattCharacteristic.UUID_METRICS);
+        notifyCharacteristic(characteristic);
     }
 
     @Override
@@ -54,7 +41,7 @@ class MetricsPresenter extends BasePresenter<MetricsContract.View> implements Me
             }, DELAY_IN_MILLIS);
         }
 
-        if (uuid.equals(GattCharacteristic.UUID_BODY_TEMPERATURE)) {
+        if (uuid.equals(GattCharacteristic.UUID_METRICS)) {
             String bloodOxygen = String.format(Locale.getDefault(), "%.0f", record.getBloodOxygen());
             mView.showBloodOxygen(bloodOxygen);
             String systolicBloodPressure = String.format(Locale.getDefault(), "%.0f", record.getSystolicBloodPressure());
