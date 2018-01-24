@@ -1,7 +1,10 @@
 package com.george.medicmetrics.ui.parameters;
 
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
+import com.george.medicmetrics.R;
 import com.george.medicmetrics.objects.Record;
 import com.george.medicmetrics.ui.base.BasePresenter;
 
@@ -36,6 +39,8 @@ class ParametersPresenter extends BasePresenter<ParametersContract.View> impleme
         record.setConsciousnessLevel(consciousnessLevel);
         record.setScore(calculateScore(record));
         record.setClinicalConcern(calculateClinicalConcern(record));
+        record.setColor(getColor(record.getClinicalConcern()));
+        record.setDescription(getDescription(record.getClinicalConcern()));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault());
         String timestamp = simpleDateFormat.format(new Date());
         record.setTimestamp(timestamp);
@@ -184,5 +189,33 @@ class ParametersPresenter extends BasePresenter<ParametersContract.View> impleme
 
     private boolean calculateCatheterUsed(boolean catheterUsed, int milliliterPerHour) {
         return catheterUsed && milliliterPerHour >= 30;
+    }
+
+    @ColorRes
+    private int getColor(int clinicalConcern) {
+        switch (clinicalConcern) {
+            case Record.CLINICAL_CONCERN_LOW:
+                return R.color.green;
+            case Record.CLINICAL_CONCERN_MEDIUM:
+                return R.color.orange;
+            case Record.CLINICAL_CONCERN_HIGH:
+                return R.color.red;
+            default:
+                return R.color.green;
+        }
+    }
+
+    @StringRes
+    private int getDescription(int clinicalConcern) {
+        switch (clinicalConcern) {
+            case Record.CLINICAL_CONCERN_LOW:
+                return R.string.clinical_concern_low;
+            case Record.CLINICAL_CONCERN_MEDIUM:
+                return R.string.clinical_concern_medium;
+            case Record.CLINICAL_CONCERN_HIGH:
+                return R.string.clinical_concern_high;
+            default:
+                return R.string.clinical_concern_low;
+        }
     }
 }

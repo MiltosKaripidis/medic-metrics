@@ -3,7 +3,6 @@ package com.george.medicmetrics.ui.report;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.george.medicmetrics.R;
 import com.george.medicmetrics.data.Callback;
 import com.george.medicmetrics.data.DataSource;
 import com.george.medicmetrics.objects.Record;
@@ -20,7 +19,6 @@ class ReportPresenter extends BasePresenter<ReportContract.View> implements Repo
         mDataSource = dataSource;
     }
 
-
     @Override
     public void loadRecord(final int recordId) {
         final int patientId = mDataSource.getPatientId();
@@ -31,8 +29,6 @@ class ReportPresenter extends BasePresenter<ReportContract.View> implements Repo
                 if (record == null) return;
 
                 showMetrics(record);
-                changeCardColor(record.getClinicalConcern());
-                showDescription(record.getClinicalConcern());
             }
 
             @Override
@@ -75,33 +71,7 @@ class ReportPresenter extends BasePresenter<ReportContract.View> implements Repo
         String score = String.valueOf(record.getScore());
         mView.showScore(score);
         mView.showTimestamp(record.getTimestamp());
-    }
-
-    private void changeCardColor(int clinicalConcern) {
-        switch (clinicalConcern) {
-            case Record.CLINICAL_CONCERN_LOW:
-                mView.changeCardColor(R.color.green);
-                break;
-            case Record.CLINICAL_CONCERN_MEDIUM:
-                mView.changeCardColor(R.color.orange);
-                break;
-            case Record.CLINICAL_CONCERN_HIGH:
-                mView.changeCardColor(R.color.red);
-                break;
-        }
-    }
-
-    private void showDescription(int clinicalConcern) {
-        switch (clinicalConcern) {
-            case Record.CLINICAL_CONCERN_LOW:
-                mView.showDescription(R.string.clinical_concern_low);
-                break;
-            case Record.CLINICAL_CONCERN_MEDIUM:
-                mView.showDescription(R.string.clinical_concern_medium);
-                break;
-            case Record.CLINICAL_CONCERN_HIGH:
-                mView.showDescription(R.string.clinical_concern_high);
-                break;
-        }
+        mView.changeCardColor(record.getColor());
+        mView.showDescription(record.getDescription());
     }
 }

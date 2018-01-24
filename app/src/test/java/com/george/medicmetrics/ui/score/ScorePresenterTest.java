@@ -56,6 +56,8 @@ public class ScorePresenterTest {
         Record record = createRecord();
         record.setOxygenSupplemented(true);
         record.setClinicalConcern(Record.CLINICAL_CONCERN_LOW);
+        record.setColor(R.color.green);
+        record.setDescription(R.string.clinical_concern_low);
 
         mPresenter.loadScore(record);
 
@@ -72,6 +74,8 @@ public class ScorePresenterTest {
         record.setCatheterUsed(true);
         record.setMilliliterPerHour(MILLILITER_PER_HOUR);
         record.setClinicalConcern(Record.CLINICAL_CONCERN_MEDIUM);
+        record.setColor(R.color.orange);
+        record.setDescription(R.string.clinical_concern_medium);
 
         mPresenter.loadScore(record);
 
@@ -88,6 +92,8 @@ public class ScorePresenterTest {
         record.setCatheterUsed(true);
         record.setMilliliterPerHour(MILLILITER_PER_HOUR);
         record.setClinicalConcern(Record.CLINICAL_CONCERN_HIGH);
+        record.setColor(R.color.red);
+        record.setDescription(R.string.clinical_concern_high);
 
         mPresenter.loadScore(record);
 

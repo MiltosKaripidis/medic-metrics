@@ -76,32 +76,23 @@ public class RegisterTest {
     }
 
     @Test
-    public void register_fails() {
+    public void register_registersPatient_whenValidateUserFails() {
         mPresenter.register(FIRST_NAME, LAST_NAME, USERNAME, PASSWORD);
 
         verify(mDataSource).validateUser(anyString(), anyString(), mCallbackArgumentCaptor.capture());
         mCallbackArgumentCaptor.getValue().onFailure();
-        verify(mView).showInvalidRegistration();
+        verify(mDataSource).setPatient(any(Patient.class));
+        verify(mView).showRegisterSuccess();
+        verify(mView).finish();
     }
 
     @Test
-    public void register_showsUserExists_whenUserExists() {
+    public void register_showsPatientExists_whenPatientExists() {
         mPresenter.register(FIRST_NAME, LAST_NAME, USERNAME, PASSWORD);
 
         verify(mDataSource).validateUser(anyString(), anyString(), mCallbackArgumentCaptor.capture());
         mCallbackArgumentCaptor.getValue().onSuccess(EXISTING_PATIENT_ID);
         verify(mView).closeKeyboard();
         verify(mView).showUserExists();
-    }
-
-    @Test
-    public void register_registersUser_whenUserNotExists() {
-        mPresenter.register(FIRST_NAME, LAST_NAME, USERNAME, PASSWORD);
-
-        verify(mDataSource).validateUser(anyString(), anyString(), mCallbackArgumentCaptor.capture());
-        mCallbackArgumentCaptor.getValue().onSuccess(PATIENT_ID);
-        verify(mDataSource).setPatient(any(Patient.class));
-        verify(mView).showRegisterSuccess();
-        verify(mView).finish();
     }
 }

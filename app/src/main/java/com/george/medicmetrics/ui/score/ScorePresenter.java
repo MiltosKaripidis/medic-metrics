@@ -2,7 +2,6 @@ package com.george.medicmetrics.ui.score;
 
 import android.support.annotation.NonNull;
 
-import com.george.medicmetrics.R;
 import com.george.medicmetrics.data.DataSource;
 import com.george.medicmetrics.objects.Record;
 import com.george.medicmetrics.ui.base.BasePresenter;
@@ -38,36 +37,8 @@ class ScorePresenter extends BasePresenter<ScoreContract.View> implements ScoreC
         String score = String.valueOf(record.getScore());
         mView.showScore(score);
         mView.showTimestamp(record.getTimestamp());
-        changeCardColor(record.getClinicalConcern());
-        showDescription(record.getClinicalConcern());
-    }
-
-    private void changeCardColor(int clinicalConcern) {
-        switch (clinicalConcern) {
-            case Record.CLINICAL_CONCERN_LOW:
-                mView.changeCardColor(R.color.green);
-                break;
-            case Record.CLINICAL_CONCERN_MEDIUM:
-                mView.changeCardColor(R.color.orange);
-                break;
-            case Record.CLINICAL_CONCERN_HIGH:
-                mView.changeCardColor(R.color.red);
-                break;
-        }
-    }
-
-    private void showDescription(int clinicalConcern) {
-        switch (clinicalConcern) {
-            case Record.CLINICAL_CONCERN_LOW:
-                mView.showDescription(R.string.clinical_concern_low);
-                break;
-            case Record.CLINICAL_CONCERN_MEDIUM:
-                mView.showDescription(R.string.clinical_concern_medium);
-                break;
-            case Record.CLINICAL_CONCERN_HIGH:
-                mView.showDescription(R.string.clinical_concern_high);
-                break;
-        }
+        mView.changeCardColor(record.getColor());
+        mView.showDescription(record.getDescription());
     }
 
     @Override

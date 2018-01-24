@@ -1,6 +1,8 @@
 package com.george.medicmetrics.objects;
 
+import android.support.annotation.ColorRes;
 import android.support.annotation.IntDef;
+import android.support.annotation.StringRes;
 
 import java.io.Serializable;
 import java.lang.annotation.Retention;
@@ -31,6 +33,8 @@ public class Record implements Serializable {
     private int mScore;
     private String mTimestamp;
     private int mClinicalConcern;
+    private int mColor;
+    private int mDescription;
 
     public int getId() {
         return mId;
@@ -135,5 +139,23 @@ public class Record implements Serializable {
 
     public void setClinicalConcern(@ClinicalConcern int clinicalConcern) {
         mClinicalConcern = clinicalConcern;
+    }
+
+    @ColorRes
+    public int getColor() {
+        return mColor;
+    }
+
+    public void setColor(@ColorRes int color) {
+        mColor = color;
+    }
+
+    @StringRes
+    public int getDescription() {
+        return mDescription;
+    }
+
+    public void setDescription(@StringRes int description) {
+        mDescription = description;
     }
 }

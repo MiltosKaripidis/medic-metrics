@@ -42,6 +42,8 @@ public interface DatabaseSchema {
                 + Column.OXYGEN_SUPPLEMENTED + " integer, "
                 + Column.SCORE + " integer, "
                 + Column.CLINICAL_CONCERN + " integer, "
+                + Column.COLOR + " integer, "
+                + Column.DESCRIPTION + " integer, "
                 + Column.TIMESTAMP + " text, "
                 + " foreign key (patient_id) references Patient(id));";
 
@@ -60,6 +62,8 @@ public interface DatabaseSchema {
             String OXYGEN_SUPPLEMENTED = "oxygen_supplemented";
             String SCORE = "score";
             String CLINICAL_CONCERN = "clinical_concern";
+            String COLOR = "color";
+            String DESCRIPTION = "description";
             String TIMESTAMP = "timestamp";
         }
     }

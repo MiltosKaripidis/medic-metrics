@@ -113,6 +113,8 @@ public class LocalRepository extends SQLiteOpenHelper {
         contentValues.put(DatabaseSchema.RecordTable.Column.SCORE, record.getScore());
         contentValues.put(DatabaseSchema.RecordTable.Column.CLINICAL_CONCERN, record.getClinicalConcern());
         contentValues.put(DatabaseSchema.RecordTable.Column.TIMESTAMP, record.getTimestamp());
+        contentValues.put(DatabaseSchema.RecordTable.Column.COLOR, record.getColor());
+        contentValues.put(DatabaseSchema.RecordTable.Column.DESCRIPTION, record.getDescription());
 
         getWritableDatabase().insert(DatabaseSchema.RecordTable.NAME, null, contentValues);
     }
@@ -142,6 +144,8 @@ public class LocalRepository extends SQLiteOpenHelper {
             int oxygenSupplemented = cursor.getInt(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.OXYGEN_SUPPLEMENTED));
             int score = cursor.getInt(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.SCORE));
             int clinicalConcern = cursor.getInt(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.CLINICAL_CONCERN));
+            int color = cursor.getInt(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.COLOR));
+            int description = cursor.getInt(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.DESCRIPTION));
             String timestamp = cursor.getString(cursor.getColumnIndex(DatabaseSchema.RecordTable.Column.TIMESTAMP));
 
             Record record = new Record();
@@ -159,6 +163,8 @@ public class LocalRepository extends SQLiteOpenHelper {
             record.setOxygenSupplemented(oxygenSupplemented == 1);
             record.setScore(score);
             record.setClinicalConcern(clinicalConcern);
+            record.setColor(color);
+            record.setDescription(description);
             record.setTimestamp(timestamp);
 
             recordList.add(record);
